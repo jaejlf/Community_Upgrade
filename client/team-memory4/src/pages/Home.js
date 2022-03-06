@@ -1,12 +1,12 @@
 import React from 'react';
 
 
-const PostDetail = () => {
+const Home = () => {
     return (
         <div>
-            PostDetail
+            Home
         </div>
     );
 };
 
-export default PostDetail;
+export default Home;
