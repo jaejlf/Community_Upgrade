@@ -36,6 +36,19 @@ const getAllPost = (req, res) => {
   })
 }
 
+const editPost = (req, res) => {
+  const { title, content, postNumber } = req.body
+  db.collection("posts").updateOne(
+    { postNumber: postNumber },
+    { $set: { title: req.body.title, content: req.body.content, date: Date(Date.now()) } }, function (err, data) {
+      if (err)
+        return res.status(500).json({ error: error.message })
+
+      res.status(200).send({ message: "수정 완료" });
+    }
+  );
+}
+
 const deletePost = (req, res) => {
   const postNumber = parseInt(req.params.postNumber)
   db.collection("posts").deleteOne({ postNumber: postNumber }, function (err, data) {
@@ -54,5 +67,6 @@ const deletePost = (req, res) => {
 module.exports = {
   createPost,
   getAllPost,
+  editPost,
   deletePost
 }
