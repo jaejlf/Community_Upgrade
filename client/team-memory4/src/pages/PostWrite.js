@@ -10,7 +10,6 @@ const PostWrite = () => {
 
     return (
         <div>
-            글 작성
             <Editor value={desc} onChange={onEditorChange} />
         </div>
     );
