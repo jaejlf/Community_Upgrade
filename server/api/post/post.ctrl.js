@@ -25,6 +25,18 @@ const createPost = (req, res) => {
   })
 }
 
+const getAllPost = (req, res) => {
+  db.collection("posts").find().toArray(function (err, data) {
+    if (err)
+      return res.status(500).json({ error: error.message })
+
+    res.status(200).json({
+      allPost: data
+    })
+  })
+}
+
 module.exports = {
   createPost,
+  getAllPost
 }
