@@ -36,7 +36,23 @@ const getAllPost = (req, res) => {
   })
 }
 
+const deletePost = (req, res) => {
+  const postNumber = parseInt(req.params.postNumber)
+  db.collection("posts").deleteOne({ postNumber: postNumber }, function (err, data) {
+    if (err)
+      return res.status(500).json({ error: error.message })
+
+    db.collection("counter").updateOne(
+      { name: "postNumber" },
+      { $inc: { postNumber: -1 } }
+    );
+
+    res.status(200).send({ message: "삭제 완료" });
+  })
+}
+
 module.exports = {
   createPost,
-  getAllPost
+  getAllPost,
+  deletePost
 }
