@@ -1,5 +1,5 @@
-const mongoose = require("mongoose")
-const moment = require("../controller/moment")
+const mongoose = require("mongoose");
+const moment = require("../controller/moment");
 
 const PostSchema = new mongoose.Schema(
   {
@@ -9,10 +9,10 @@ const PostSchema = new mongoose.Schema(
     postNumber: Number,
   },
   { versionKey: false }
-)
+);
 
 PostSchema.pre("save", function () {
-  this.date = moment.dateNow()
-})
+  this.date = moment.dateNow();
+});
 
-module.exports = mongoose.model("post", PostSchema)
+module.exports = mongoose.model("post", PostSchema);

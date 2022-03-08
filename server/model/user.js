@@ -8,13 +8,6 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     maxlength: 50,
   },
-  roles: {
-    type: String,
-    required: true,
-    trim: true,
-    maxlength: 50,
-    default: "일반",
-  },
 
   email: {
     type: String,
@@ -28,9 +21,11 @@ const UserSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+
   role: {
     type: Number,
-    default: 0, //0은 일반 사용자 1은 관리자
+    required: true,
+    // default: 0, //0은 일반 사용자 1은 관리자
   },
 
   token: {
