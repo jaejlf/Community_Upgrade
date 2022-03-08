@@ -128,8 +128,7 @@ const checkAuth = (req, res, next) => {
       if (!result) return res.render("user/login");
       res.locals.user = {
         name: result.name,
-        channel: result.channel,
-        roles: result.roles,
+        email: result.email,
         role: result.role,
       };
       next();
