@@ -42,7 +42,7 @@ const Board = () => {
     const [list, setList] = useState(initialList);
 
     const contentsClickHandler = (postNumber) => {  // 클릭 시 글 상세 페이지로 이동
-        console.log(postNumber);
+        // console.log(postNumber);
         navigate(`/post/${postNumber}`);
     }
 
