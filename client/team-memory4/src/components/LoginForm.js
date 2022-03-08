@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { postApi } from "../api";
 import { AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import '../styles/Login.css';
 
 //로그인
 // - 성공 : email, password가 일치하면 성공(200)
@@ -101,7 +102,7 @@ const LoginForm = () => {
             <button
                 className="Login-button"
                 type="submit"
-            >LOG IN</button>
+            >로그인</button>
             <br />
         </form>
     );

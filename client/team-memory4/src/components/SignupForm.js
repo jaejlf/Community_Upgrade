@@ -59,8 +59,8 @@ const SignupForm = () => {
     return (
         <form className="Signup-outer-form" onSubmit={submitHandler}>
             <div className="form-group">
-                <div className="form-group-with-btn">
-                    <div className="form-item-with-btn">
+                <div className="form-group">
+                    <div className="form-item">
                         <input
                             type="text"
                             name="email"
@@ -101,9 +101,9 @@ const SignupForm = () => {
             <p>{checkMsg}</p>
             <br />
             <button 
-                className="Signup-submit-button"
+                className="Login-button"
                 type="submit"
-            >SUBMIT</button>
+            >회원가입</button>
         </form>
     );
 };

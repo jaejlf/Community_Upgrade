@@ -94,10 +94,10 @@ function App() {
           <Route path="/" exact={true} element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/logout' element={<Logout />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/postdetail' element={<PostDetail />} />
+          <Route path='/signup/:roleid' element={<Signup />} />
+          <Route path='/postdetail/:id' element={<PostDetail />} />
           <Route path='/board' element={<Board />} />
-          <Route path='/write' element={<PostWrite />} />
+          <Route path='/write/:id' element={<PostWrite />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </AuthContext.Provider>
