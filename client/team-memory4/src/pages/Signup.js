@@ -23,7 +23,7 @@ const Signup = () => {
     
     return (
         <div>
-            <Logo className="login-logo"/>
+            {/* <Logo className="login-logo"/> */}
             <p className='login-role-ment'>
                 {userRole}으로 회원가입합니다.
             </p>

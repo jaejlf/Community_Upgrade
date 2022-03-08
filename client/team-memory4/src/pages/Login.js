@@ -19,7 +19,7 @@ const Login = () => {
 
     return (
         <div>
-            <Logo className="login-logo"/>
+            {/* <Logo className="login-logo"/> */}
             <p className='login-role-ment'>
                 {userRole}으로 로그인합니다.
             </p>

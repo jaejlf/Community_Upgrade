@@ -21,10 +21,10 @@ import { ReactComponent as Logo } from './assets/images/Logo.svg';
 
 const Header = () => {
   const authContext = useContext(AuthContext);
-  if (window.location.pathname === "/login" ||
-    window.location.pathname === "/signup") {
-    return null;
-  }
+  // if (window.location.pathname === "/login" ||
+  //   window.location.pathname === "/signup") {
+  //   return null;
+  // }
   
   return (
     <header className="App-header">
