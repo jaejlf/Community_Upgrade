@@ -1,12 +1,12 @@
 import React from 'react';
 
 
-const PostList = () => {
+const Board = () => {
     return (
         <div>
-            PostList
+            Board
         </div>
     );
 };
 
-export default PostList;
+export default Board;

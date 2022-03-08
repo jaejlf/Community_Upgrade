@@ -6,7 +6,7 @@ import {
   Login,
   Logout,
   PostDetail,
-  PostList,
+  Board,
   PostWrite,
   NotFound,
 } from "./pages";
@@ -96,7 +96,7 @@ function App() {
           <Route path='/logout' element={<Logout />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/postdetail' element={<PostDetail />} />
-          <Route path='/postlist' element={<PostList />} />
+          <Route path='/board' element={<Board />} />
           <Route path='/write' element={<PostWrite />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
