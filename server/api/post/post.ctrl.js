@@ -42,9 +42,14 @@ const getAllPost = (req, res) => {
 
 const getPost = async (req, res) => {
   const postNumber = parseInt(req.params.postNumber);
-  const data = await db.collection("posts").findOne({ postNumber: postNumber });
-  res.status(200).json(data);
-  console.log(data);
+  PostModel.findOne({ postNumber: postNumber }, (err, result) => {
+    if (err) return res.status(500).end();
+    if (!result) return res.status(404).end();
+
+    result.viewCnt++;
+    result.save();
+    res.status(200).json(result);
+  });
 };
 
 const editPost = (req, res) => {
