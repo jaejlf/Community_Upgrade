@@ -1,0 +1,84 @@
+.Login-outer-form {
+
+}
+
+.form-group {
+
+}
+
+.form-item input {
+    width: 380px;
+    height: 56px;
+    border-radius: 20px;
+    margin: 10px;
+    border: 1px solid #c4c4c4;
+}
+
+.form-item input::placeholder {
+    padding-left: 10px;
+}
+
+.login-roles {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+/* .login-role-select {
+    width: 175px;
+    height: 56px;
+    border-radius: 20px;
+    background-color: #0053FD;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0 15px;
+    text-align:center;
+    display:table-cell;
+    vertical-align:middle;
+} */
+
+.login-role-select-o {
+    width: 175px;
+    height: 56px;
+    border-radius: 20px;
+    background-color: #0053FD;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0 15px;
+    border: none;
+}
+
+.login-role-select-x {
+    width: 175px;
+    height: 56px;
+    border-radius: 20px;
+    background-color: #c4c4c4;
+    color: #000000;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0 15px;
+    border: none;
+}
+
+.login-role-select-o input,
+.login-role-select-x input {
+    display: none;
+}
+
+.Login-button {
+    width: 380px;
+    height: 56px;
+    border-radius: 20px;
+    background-color: #0053FD;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.login-role-ment {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}

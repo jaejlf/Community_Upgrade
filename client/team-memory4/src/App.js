@@ -1,23 +1,106 @@
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route, Link } from "react-router-dom";
+import {
+  Home,
+  Signup,
+  Login,
+  Logout,
+  PostDetail,
+  Board,
+  PostWrite,
+  NotFound,
+} from "./pages";
+import {
+  useReducer,
+  createContext,
+  useContext,
+  useEffect,
+} from "react";
+
+const Header = () => {
+  return (
+    <div>
+      메뉴구성
+    </div>
+  )
+}
+
+
+export const AuthContext = createContext();
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "login":
+      return {
+        token: action.token,
+        email: action.email,
+        role: action.role,
+        name: action.name,
+      };
+    case "logout":
+      return {
+        token: null,
+        email: null,
+        role: null,
+        name: null,
+      };
+    default:
+      return state;
+  }
+};
+
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, {
+    token: null,
+    email: null,
+    role: null,
+    name: null,
+  });
+
+  useEffect(() => {
+    console.log(JSON.parse(localStorage.getItem("loggedInfo")));
+
+    const initUserInfo = async () => {
+        const loggedInfo = await JSON.parse(
+            localStorage.getItem("loggedInfo")
+        );
+        console.log("-------------새로 고침------------");
+        console.log(loggedInfo);
+
+        if (loggedInfo) {
+            const { token, email, role, name } = loggedInfo;
+            await dispatch({
+                type: "login",
+                token: token,
+                email: email,
+                role: role,
+                name: name,
+            });
+        } else {
+            await dispatch({
+                type: "logout",
+            });
+        }
+    };
+    initUserInfo();
+  }, [state.token]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AuthContext.Provider value={{ state, dispatch }}>
+        <Header />
+        <Routes>
+          <Route path="/" exact={true} element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/logout' element={<Logout />} />
+          <Route path='/signup/:roleid' element={<Signup />} />
+          <Route path='/postdetail/:id' element={<PostDetail />} />
+          <Route path='/board' element={<Board />} />
+          <Route path='/write/:id' element={<PostWrite />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </AuthContext.Provider>
     </div>
   );
 }
