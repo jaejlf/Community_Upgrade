@@ -7,6 +7,10 @@ const PostSchema = new mongoose.Schema(
     content: { type: String, required: true },
     date: { type: String, required: false },
     postNumber: Number,
+    viewCnt: {
+      type: Number,
+      default: 0,
+    },
   },
   { versionKey: false }
 );
