@@ -9,10 +9,12 @@ import '../styles/Login.css';
 // - 실패 : 필수 입력값이 없는 경우 400 (Bad Request)
 //         없는 email인 경우 404 (Not Found)
 //         password가 틀린경우 500 ( Server Error )
-const LoginForm = () => {
+const LoginForm = (roleid) => {
+    console.log(roleid);
     const [details, setDetails] = useState({
         email: "",
         password: "",
+        role: roleid,
     });
 
     const [emailValid, setEmailValid] = useState();  // email 형식 확인

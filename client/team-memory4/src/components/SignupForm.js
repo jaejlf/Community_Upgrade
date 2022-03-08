@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 // - 성공 : 201 응답 (Created), 생성된 User객체 반환
 // - 실패 :필수 입력값이 누락 시 400 리턴 (Bad Request)
 //        email이 중복된 경우 409 리턴 (Conflict)
-const SignupForm = () => {
+const SignupForm = (roleid) => {
+    console.log(roleid);
 
     const [details, setDetails] = useState({
         email: "",
         password: "",
         name: "",
+        role: roleid,
     });
     
     const [emailValid, setEmailValid] = useState();  // email 형식 확인

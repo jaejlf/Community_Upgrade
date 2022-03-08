@@ -16,12 +16,34 @@ import {
   useContext,
   useEffect,
 } from "react";
+import { ReactComponent as Logo } from './assets/images/Logo.svg';
+
 
 const Header = () => {
+  const authContext = useContext(AuthContext);
+  
   return (
-    <div>
-      메뉴구성
-    </div>
+    <header className="App-header">
+      <div className="header-links">
+        {!authContext.state.token ? (
+          <>
+            <Logo width={100} height={60}/>
+            <div>
+              <Link to="/login" className="my-page-plain">
+                로그인
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <Logo width={60} height={60} />
+            <div>
+              <Link to="/logout" className='my-page-plain' >Logout</Link>
+            </div>
+          </>
+        )}
+      </div>
+    </header>
   )
 }
 
@@ -95,7 +117,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/logout' element={<Logout />} />
           <Route path='/signup/:roleid' element={<Signup />} />
-          <Route path='/postdetail/:id' element={<PostDetail />} />
+          <Route path='/post/:id' element={<PostDetail />} />
           <Route path='/board' element={<Board />} />
           <Route path='/write/:id' element={<PostWrite />} />
           <Route path='*' element={<NotFound />} />

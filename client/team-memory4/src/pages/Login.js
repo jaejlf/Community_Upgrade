@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { LoginForm } from '../components';
-import { ReactComponent as Logo } from '../assets/images/Logo.svg';
 import '../styles/Login.css';
 
 const Login = () => {
@@ -19,7 +18,6 @@ const Login = () => {
 
     return (
         <div>
-            <Logo />
             <p className='login-role-ment'>
                 {userRole}으로 로그인합니다.
             </p>
@@ -51,7 +49,7 @@ const Login = () => {
                     />기업회원
                 </button>
             </div>
-            <LoginForm />
+            <LoginForm roleid={roleid}/>
             <p className='login-goto-signup'>레디미 커뮤니티가 처음이신가요?&nbsp;
                 <Link to={`/signup/${roleid}`}>
                     회원가입
