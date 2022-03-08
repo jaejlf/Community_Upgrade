@@ -1,5 +1,6 @@
 const { db } = require("../../model/post")
 const PostModel = require("../../model/post")
+const moment = require("../../controller/moment")
 
 const createPost = (req, res) => {
   const { title, content } = req.body
@@ -7,7 +8,7 @@ const createPost = (req, res) => {
     return res.status(400).send("제목과 내용을 모두 입력해주세요.")
 
   db.collection("counter").findOne({ name: "postNumber" }, (err, data) => {
-    const postNumber = data.postNumber
+    const postNumber = data.postNumber + 1
     new PostModel({
       title: title,
       content: content,
@@ -40,7 +41,7 @@ const editPost = (req, res) => {
   const { title, content, postNumber } = req.body
   db.collection("posts").updateOne(
     { postNumber: postNumber },
-    { $set: { title: req.body.title, content: req.body.content, date: Date(Date.now()) } }, function (err, data) {
+    { $set: { title: req.body.title, content: req.body.content, date: moment.dateNow() } }, function (err, data) {
       if (err)
         return res.status(500).json({ error: error.message })
 
