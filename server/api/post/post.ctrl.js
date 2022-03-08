@@ -3,6 +3,8 @@ const PostModel = require("../../model/post");
 const moment = require("../../controller/moment");
 
 const createPost = (req, res) => {
+  const name = res.locals.user.name;
+  console.log("creator : " + name); //지금 로그인된 유저(작성자)의 정보 받아오기
   const { title, content } = req.body;
   if (!title || !content)
     return res.status(400).send("제목과 내용을 모두 입력해주세요.");
@@ -27,7 +29,6 @@ const createPost = (req, res) => {
 };
 
 const getAllPost = (req, res) => {
-  console.log(res.locals);
   db.collection("posts")
     .find()
     .toArray(function (err, data) {
