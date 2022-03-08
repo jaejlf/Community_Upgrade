@@ -21,6 +21,10 @@ import { ReactComponent as Logo } from './assets/images/Logo.svg';
 
 const Header = () => {
   const authContext = useContext(AuthContext);
+  if (window.location.pathname === "/login" ||
+    window.location.pathname === "/signup") {
+    return null;
+  }
   
   return (
     <header className="App-header">
@@ -119,7 +123,7 @@ function App() {
           <Route path='/signup/:roleid' element={<Signup />} />
           <Route path='/post/:id' element={<PostDetail />} />
           <Route path='/board' element={<Board />} />
-          <Route path='/write/:id' element={<PostWrite />} />
+          <Route path='/write' element={<PostWrite />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </AuthContext.Provider>

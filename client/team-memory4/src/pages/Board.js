@@ -1,10 +1,10 @@
 import React from 'react';
-
+import { PostList } from '../components';
 
 const Board = () => {
     return (
         <div>
-            Board
+            <PostList />
         </div>
     );
 };

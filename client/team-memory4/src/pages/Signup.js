@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SignupForm } from '../components';
+import {ReactComponent as Logo} from '../assets/images/Logo.svg';
 import '../styles/Login.css';
 
 
@@ -22,6 +23,7 @@ const Signup = () => {
     
     return (
         <div>
+            <Logo className="login-logo"/>
             <p className='login-role-ment'>
                 {userRole}으로 회원가입합니다.
             </p>

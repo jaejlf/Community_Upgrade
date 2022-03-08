@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { LoginForm } from '../components';
+import {ReactComponent as Logo} from '../assets/images/Logo.svg';
 import '../styles/Login.css';
 
 const Login = () => {
@@ -18,6 +19,7 @@ const Login = () => {
 
     return (
         <div>
+            <Logo className="login-logo"/>
             <p className='login-role-ment'>
                 {userRole}으로 로그인합니다.
             </p>
