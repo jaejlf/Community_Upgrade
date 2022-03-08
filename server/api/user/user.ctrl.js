@@ -100,12 +100,13 @@ const checkAuth = (req, res, next) => {
   //쿠키에서 토큰 가져오기
   const token = req.cookies.token;
 
-  if (!token) {
+  if (!token || token == "") {
     //정상적으로 토큰이 없는 경우
     if (
       req.url === "/" ||
       req.url === "/api/user/signup" ||
-      req.url === "/api/user/login"
+      req.url === "/api/user/login" ||
+      req.url === "/api/post/getAllPost"
     )
       return next();
     // 비정상적으로 토큰이 없는 경우
@@ -125,6 +126,7 @@ const checkAuth = (req, res, next) => {
     UserModel.findOne({ _id, token }, (err, result) => {
       if (err)
         return res.status(500).send("사용자 인증 시 오류가 발생했습니다");
+      console.log("testTokenVerify : " + result);
       if (!result) return res.render("user/login");
       res.locals.user = {
         name: result.name,
