@@ -27,47 +27,64 @@ const createPost = (req, res) => {
 }
 
 const getAllPost = (req, res) => {
-  db.collection("posts").find().toArray(function (err, data) {
-    if (err)
-      return res.status(500).json({ error: error.message })
+  db.collection("posts")
+    .find()
+    .toArray(function (err, data) {
+      if (err) return res.status(500).json({ error: error.message })
 
-    res.status(200).json({
-      allPost: data
+      res.status(200).json({
+        allPost: data,
+      })
     })
-  })
+}
+
+const getPost = async (req, res) => {
+  const postNumber = parseInt(req.params.postNumber)
+  const data = await db.collection("posts").findOne({ postNumber: postNumber })
+  res.status(200).json(data)
+  console.log(data)
 }
 
 const editPost = (req, res) => {
   const { title, content, postNumber } = req.body
   db.collection("posts").updateOne(
     { postNumber: postNumber },
-    { $set: { title: req.body.title, content: req.body.content, date: moment.dateNow() } }, function (err, data) {
-      if (err)
-        return res.status(500).json({ error: error.message })
+    {
+      $set: {
+        title: req.body.title,
+        content: req.body.content,
+        date: moment.dateNow(),
+      },
+    },
+    function (err, data) {
+      if (err) return res.status(500).json({ error: error.message })
 
-      res.status(200).send({ message: "수정 완료" });
+      res.status(200).send({ message: "수정 완료" })
     }
-  );
+  )
 }
 
 const deletePost = (req, res) => {
   const postNumber = parseInt(req.params.postNumber)
-  db.collection("posts").deleteOne({ postNumber: postNumber }, function (err, data) {
-    if (err)
-      return res.status(500).json({ error: error.message })
+  db.collection("posts").deleteOne(
+    { postNumber: postNumber },
+    function (err, data) {
+      if (err) return res.status(500).json({ error: error.message })
 
-    db.collection("counter").updateOne(
-      { name: "postNumber" },
-      { $inc: { postNumber: -1 } }
-    );
+      db.collection("counter").updateOne(
+        { name: "postNumber" },
+        { $inc: { postNumber: -1 } }
+      )
 
-    res.status(200).send({ message: "삭제 완료" });
-  })
+      res.status(200).send({ message: "삭제 완료" })
+    }
+  )
 }
 
 module.exports = {
   createPost,
   getAllPost,
+  getPost,
   editPost,
-  deletePost
+  deletePost,
 }

@@ -5,8 +5,7 @@ const PostSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     content: { type: String, required: true },
-    //date: { type: Date, default: Date.now() },
-    date : { type: String, required: false },
+    date: { type: String, required: false },
     postNumber: Number,
   },
   { versionKey: false }
