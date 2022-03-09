@@ -85,19 +85,24 @@ const editPost = (req, res) => {
 
 const deletePost = (req, res) => {
   const postNumber = parseInt(req.params.postNumber);
-  db.collection("posts").deleteOne(
-    { postNumber: postNumber },
-    function (err, data) {
-      if (err) return res.status(500).json({ error: error.message });
+  db.collection("posts").findOne({ postNumber: postNumber }, function (err, data) {
+    if (err) return res.status(500).json({ error: error.message });
+    if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 삭제할 수 있습니다." });
 
-      db.collection("counter").updateOne(
-        { name: "postNumber" },
-        { $inc: { postNumber: -1 } }
-      );
-
-      res.status(200).send({ message: "삭제 완료" });
-    }
-  );
+    db.collection("posts").deleteOne(
+      { postNumber: postNumber },
+      function (err, data) {
+        if (err) return res.status(500).json({ error: error.message });
+  
+        db.collection("counter").updateOne(
+          { name: "postNumber" },
+          { $inc: { postNumber: -1 } }
+        );
+  
+        res.status(200).send({ message: "삭제 완료" });
+      }
+    );
+  })
 };
 
 module.exports = {
