@@ -35,23 +35,23 @@ const signup = (req, res) => {
         return res.status(500).send("암호화 처리 시 오류가 발생했습니다");
 
       db.collection("counter").findOne({ name: "userCnt" }, (err, data) => {
-        const userCnt = data.userCnt + 1
+        const userCnt = data.userCnt + 1;
         const user = new UserModel({
           userId: userCnt,
           name: name,
           role: role,
           email: email,
           password: hash,
-        })
+        });
         user.save((err, result) => {
-          if (err) return res.status(500).send("등록 시 오류가 발생했습니다.")
-          res.status(201).json(result)
-        })
+          if (err) return res.status(500).send("등록 시 오류가 발생했습니다.");
+          res.status(201).json(result);
+        });
 
         db.collection("counter").updateOne(
           { name: "userCnt" },
           { $inc: { userCnt: 1 } }
-        )
+        );
       });
     });
   });
@@ -78,10 +78,6 @@ const login = (req, res) => {
         return res.status(500).send("암호화 처리 시 오류가 발생했습니다");
       if (!isMatch) return res.status(404).send("비밀번호가 올바르지 않습니다");
 
-      //비밀번호가 맞다면 signed token생성 (json webtoken)
-      const token = jwt.sign(user._id.toHexString(), "secretToken");
-      console.log(token);
-
       /*
       user.token = token;
       user.save((err, result) => {
@@ -91,10 +87,14 @@ const login = (req, res) => {
             .send("사용자 정보 수정 시 오류가 발생했습니다.");
             */
 
+      //비밀번호가 맞다면 signed token생성 (json webtoken)
+      const token = jwt.sign(user._id.toHexString(), "secretToken");
+
       UserModel.findByIdAndUpdate(user._id, { token }, (err, result) => {
         if (err) return res.status(500).send("로그인 시 에러가 발생했습니다.");
 
         //토큰 저장 : cookie, local storage..
+        console.log("로그인 성공 : " + token);
         res.cookie("token", token, { httpOnly: true });
         res.json(result);
       });
@@ -110,6 +110,8 @@ const checkAuth = (req, res, next) => {
   //쿠키에서 토큰 가져오기
   const token = req.cookies.token;
 
+  console.log("checkAuth - token test : " + req.cookies.token);
+
   if (!token || token == "") {
     //정상적으로 토큰이 없는 경우
     if (
@@ -120,7 +122,7 @@ const checkAuth = (req, res, next) => {
     )
       return next();
     // 비정상적으로 토큰이 없는 경우
-    else return res.render("user/login");
+    else return res.send("쿠키에 토큰 없음");
   }
 
   //토큰이 있는 경우
@@ -129,15 +131,14 @@ const checkAuth = (req, res, next) => {
   jwt.verify(token, "secretToken", (err, _id) => {
     if (err) {
       res.clearCookie("token");
-      return res.render("user/login");
+      return res.send("clear Cookie");
     }
 
     //쿠키의 token, DB에 저장된 token비교
     UserModel.findOne({ _id, token }, (err, result) => {
       if (err)
         return res.status(500).send("사용자 인증 시 오류가 발생했습니다");
-      console.log("testTokenVerify : " + result);
-      if (!result) return res.render("user/login");
+      if (!result) return res.send("토큰 값이 없습니다");
       res.locals.user = {
         userId :result.userId,
         name: result.name,
@@ -156,6 +157,7 @@ const logout = (req, res) => {
     UserModel.findByIdAndUpdate(_id, { token: "" }, (err, result) => {
       if (err) return res.status(500).send("로그아웃 시 오류가 발생했습니다");
       res.clearCookie("token");
+      res.clearCookie();
       res.redirect("/");
     });
   });
