@@ -139,6 +139,7 @@ const checkAuth = (req, res, next) => {
       console.log("testTokenVerify : " + result);
       if (!result) return res.render("user/login");
       res.locals.user = {
+        userId :result.userId,
         name: result.name,
         email: result.email,
         role: result.role,
