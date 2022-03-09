@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.use("/api", require("./api"));
+//app.use("/api", require("./api"));
 
 //-------------
 if (process.env.NODE_ENV === "production") {
@@ -85,5 +85,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+
 
 module.exports = app;
