@@ -1,6 +1,7 @@
 const UserModel = require("../../model/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { db } = require("../../model/user");
 
 /** 
 const showSignupPage = (req, res) => {
@@ -33,15 +34,24 @@ const signup = (req, res) => {
       if (err)
         return res.status(500).send("암호화 처리 시 오류가 발생했습니다");
 
-      const user = new UserModel({
-        name: name,
-        role: role,
-        email: email,
-        password: hash,
-      });
-      user.save((err, result) => {
-        if (err) return res.status(500).send("등록 시 오류가 발생했습니다.");
-        res.status(201).json(result);
+      db.collection("counter").findOne({ name: "userCnt" }, (err, data) => {
+        const userCnt = data.userCnt + 1
+        const user = new UserModel({
+          userId: userCnt,
+          name: name,
+          role: role,
+          email: email,
+          password: hash,
+        })
+        user.save((err, result) => {
+          if (err) return res.status(500).send("등록 시 오류가 발생했습니다.")
+          res.status(201).json(result)
+        })
+
+        db.collection("counter").updateOne(
+          { name: "userCnt" },
+          { $inc: { userCnt: 1 } }
+        )
       });
     });
   });
