@@ -25,7 +25,7 @@ const PostDetail = () => {
         const getPosting = async () => {
             await getApi(
                 {},
-                `api/post/getPost/${params.id}`,
+                `/board/${params.id}`,
                 authContext.state.token
             )
                 .then(({ status, data }) => {

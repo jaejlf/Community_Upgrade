@@ -51,7 +51,7 @@ const Board = () => {
         // setList([]);
         const getList = async () => {
             await getApi({},
-                `/api/post/getAllPost`,
+                `/board/posts`,
                 authContext.state.token
                 )
                 .then(({ status, data }) => {

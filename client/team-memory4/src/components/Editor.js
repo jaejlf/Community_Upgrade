@@ -19,7 +19,7 @@ const Editor = () => {
                 title: title,
                 content: value,
             },
-            "/api/post/createPost",
+            "/board/write",
             authContext.state.token
         )
         .then(({ status, data }) => {
@@ -47,7 +47,7 @@ const Editor = () => {
             const formData = new FormData();
             formData.append('img', file);
             try {
-                const result = await axios.post('http://--/img', formData);
+                const result = await axios.post('http://localhost:5000/img', formData);
                 console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
                 const IMG_URL = result.data.url;
 

@@ -34,7 +34,7 @@ const SignupForm = (roleid) => {
         } else {
             setCheckMsg("");
             await axios.post(
-                "http://--/api/user/signup",
+                "http://localhost:5000/user/signup",
                 details,
                 {
                     headers: {
