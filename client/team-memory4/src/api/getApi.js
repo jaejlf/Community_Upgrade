@@ -7,10 +7,10 @@ const getApi = async (params, end_url, token) => {
             Accept: "application/json",
         },
     };
-    // if (token) {
-    //     config.headers["Authorization"] = `Bearer ${token}`;
-    // }
-    return await axios.get("http://" + end_url, config);
+    if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return await axios.get("http://localhost:5000" + end_url, config);
 };
 
 export default getApi;

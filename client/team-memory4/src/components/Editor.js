@@ -1,9 +1,38 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useContext } from 'react';
 import axios from 'axios';
+import { postApi } from '../api';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { AuthContext } from '../App';
+import { useNavigate } from "react-router-dom";
+import '../styles/Write.css';
 
 const Editor = () => {
+    const authContext = useContext(AuthContext);
+    const navigate = useNavigate();    
+
+    const [title, setTitle] = useState("");
+
+    const postHandler = async() => {
+        await postApi(
+            {
+                title: title,
+                content: value,
+            },
+            "/board/write",
+            authContext.state.token
+        )
+        .then(({ status, data }) => {
+            if (status === 200) {
+                console.log(data.postNumber);
+                navigate("/board");
+            }
+        })
+        .catch((e) => {
+            alert("인터넷 연결이 불안정합니다.");
+        });
+    }
+
     const imageHandler = () => {
         console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
 
@@ -18,7 +47,7 @@ const Editor = () => {
             const formData = new FormData();
             formData.append('img', file);
             try {
-                const result = await axios.post('http://localhost:3001/img', formData);
+                const result = await axios.post('http://localhost:5000/img', formData);
                 console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
                 const IMG_URL = result.data.url;
 
@@ -69,11 +98,26 @@ const Editor = () => {
     const quillRef = useRef();
 
     return (
-        <div>
-            <h1>Quill 에디터 입니다.</h1>
-
+        <div className='write-outer'>
+            <div className='write-header'>
+                <p className='write-title'>새 글 작성하기</p>
+                <button
+                    className='write-button'
+                    onClick={postHandler}>
+                        등록
+                </button>
+            </div>
+            <input
+                type="text"
+                name="title"
+                className='write-title-input'
+                placeholder='제목을 입력해주세요'
+                onChange={(e) => 
+                    setTitle(e.target.value)
+                }
+            />
             <ReactQuill
-                style={{height: "600px"}} 
+                style={{height: "300px"}} 
                 ref={quillRef}
                 theme="snow"
                 placeholder="글을 입력하세요"
@@ -83,6 +127,7 @@ const Editor = () => {
                 formats={formats}
             />
             <p>{value}</p>
+            
         </div>
     )
 }

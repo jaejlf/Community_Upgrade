@@ -9,10 +9,12 @@ import '../styles/Login.css';
 // - 실패 : 필수 입력값이 없는 경우 400 (Bad Request)
 //         없는 email인 경우 404 (Not Found)
 //         password가 틀린경우 500 ( Server Error )
-const LoginForm = () => {
+const LoginForm = (roleid) => {
+    console.log(roleid);
     const [details, setDetails] = useState({
         email: "",
         password: "",
+        role: roleid,
     });
 
     const [emailValid, setEmailValid] = useState();  // email 형식 확인
@@ -32,13 +34,35 @@ const LoginForm = () => {
         } else if (!emailValid) {
             setLoginErrorMsg("이메일 형식에 맞게 입력해주세요.");
         } else {
-            await postApi(details, "/api/user/login")
+            ////////////// 임시 data로 로그인 /////////////
+            // authContext.dispatch({
+            //     type: "login",
+            //     // token: data.token,
+            //     token: "1243232",
+            //     email: details.email,
+            //     name: details.name,
+            //     role: 0,
+            // });
+            // localStorage.setItem(
+            //     "loggedInfo",
+            //     JSON.stringify({
+            //         email: details.email,
+            //         role: 0,
+            //         name: details.name,
+            //         // token: data.token
+            //         token: "1243232",
+            //     })
+            // );
+            // navigate("/");
+            //////////////////////////////////////////
+            await postApi(details, "/user/login")
                 .then(({ status, data }) => {
                     if (status === 200) {
                         setLoginErrorMsg("");
                         authContext.dispatch({
                             type: "login",
-                            token: data.token,
+                            // token: data.token,
+                            token: "1243232",
                             email: details.email,
                             name: details.name,
                             role: data.role,
@@ -49,7 +73,8 @@ const LoginForm = () => {
                                 email: details.email,
                                 role: data.role,
                                 name: details.name,
-                                token: data.token
+                                // token: data.token
+                                token: "1243232",
                             })
                         );
                         navigate("/");

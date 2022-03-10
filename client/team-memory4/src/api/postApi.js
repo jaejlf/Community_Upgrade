@@ -6,11 +6,11 @@ const postApi = async (data, end_url, token) => {
             Accept: "application/json",
         },
     };
-    // if (token) {
-    //     config.headers["Authorization"] = `Bearer ${token}`;
-    // }
+    if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+    }
     return await axios.post(
-        "http://" + end_url,
+        "http://localhost:5000" + end_url,
         data,
         config
     );

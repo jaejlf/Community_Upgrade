@@ -1,0 +1,35 @@
+.write-outer {
+    margin: 0 20px;
+}
+
+.write-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.write-title {
+    font-size: 30px;
+}
+
+.write-button {
+    width: 90px;
+    height: 40px;
+    background-color: #407EFE;
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+}
+
+.write-title-input {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+    border: 1px solid #cccccc;
+}
+
+.write-title-input::placeholder {
+    padding-left: 10px;
+}
