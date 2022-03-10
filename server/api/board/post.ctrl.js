@@ -60,7 +60,8 @@ const getPost = async (req, res) => {
 };
 
 const editPost = (req, res) => {
-  const { title, content, postNumber } = req.body;
+  const postNumber = parseInt(req.params.postNumber);
+  const { title, content } = req.body;
   db.collection("posts").findOne({ postNumber: postNumber }, function (err, data) {
     if (err) return res.status(500).json({ error: error.message });
     if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 수정할 수 있습니다." });

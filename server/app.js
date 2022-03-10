@@ -26,11 +26,10 @@ app.use(express.static(path.join(__dirname, "public")));
 var userCtrl = require("./api/user/user.ctrl");
 app.use(userCtrl.checkAuth);
 
-
 //api모듈 설정
 //app.use("/api", require("./api"));
 app.use("/user", require("./api/user"))
-app.use("/post", require("./api/post"));
+app.use("/board", require("./api/board"));
 app.use("/comment", require("./api/comment"));
 app.use("/search", require("./api/search"));
 

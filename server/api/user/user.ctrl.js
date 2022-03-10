@@ -107,9 +107,9 @@ const checkAuth = (req, res, next) => {
     //정상적으로 토큰이 없는 경우
     if (
       req.url === "/" ||
-      req.url === "/api/user/signup" ||
-      req.url === "/api/user/login" ||
-      req.url === "/api/post/getAllPost"
+      req.url === "/user/signup" ||
+      req.url === "/user/login" ||
+      req.url === "/board/posts"
     )
       return next();
     // 비정상적으로 토큰이 없는 경우
