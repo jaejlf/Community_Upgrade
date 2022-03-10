@@ -3,15 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { db } = require("../../model/user");
 
-/** 
-const showSignupPage = (req, res) => {
-  res.render("user/signup");
-};
-
-const showLoginPage = (req, res) => {
-  res.render("user/login");
-};
-*/
 
 //회원가입
 // - 성공 : 201 응답 (Created), 생성된 User객체 반환
@@ -140,7 +131,7 @@ const checkAuth = (req, res, next) => {
         return res.status(500).send("사용자 인증 시 오류가 발생했습니다");
       if (!result) return res.send("토큰 값이 없습니다");
       res.locals.user = {
-        userId :result.userId,
+        userId: result.userId,
         name: result.name,
         email: result.email,
         role: result.role,
@@ -164,8 +155,6 @@ const logout = (req, res) => {
 };
 
 module.exports = {
-  //   showSignupPage,
-  //   showLoginPage,
   signup,
   login,
   checkAuth,

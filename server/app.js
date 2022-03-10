@@ -5,17 +5,9 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 require("dotenv").config();
-var userCtrl = require("./api/user/user.ctrl");
-
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
 
 var app = express();
-mongoose.connect(process.env.MONGO_URL, {
-  //   useNewUrlParser: true,
-  //   useUnifiedTopology: true,
-  //   useCreateIndex: true,
-});
+mongoose.connect(process.env.MONGO_URL, {});
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -24,26 +16,28 @@ db.once("open", function () {
   console.log("Database connected!!");
 });
 
-// view engine setup
-// reat로 작업시 필요 없는 부분
-/**
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
- */
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+
+var userCtrl = require("./api/user/user.ctrl");
 app.use(userCtrl.checkAuth);
 
+
+//api모듈 설정
+//app.use("/api", require("./api"));
+app.use("/user", require("./api/user"))
+app.use("/post", require("./api/post"));
+app.use("/comment", require("./api/comment"));
+app.use("/search", require("./api/search"));
+
 app.get("/", (req, res) => {
-  res.render("index");
+  res.send("Hello World !");
 });
 
-//app.use("/api", require("./api"));
 
 //-------------
 if (process.env.NODE_ENV === "production") {
@@ -55,7 +49,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const port = process.env.PORT || 5000;
-
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);
 });
@@ -67,13 +60,12 @@ app.all("/*", function (req, res, next) {
 });
 //----------------------
 
-//api모듈 설정
-app.use("/api", require("./api"));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function (err, req, res, next) {
