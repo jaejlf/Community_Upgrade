@@ -48,6 +48,11 @@ const Board = () => {
 
 
     useEffect(() => {
+        // try {
+        //     axios.get('https://kusitms-readyme-4.herokuapp.com/board/posts');
+        //   } catch (error) {
+        //     console.error(error);
+        //   }
         // setList([]);
         const getList = async () => {
             await getApi({},
@@ -65,28 +70,6 @@ const Board = () => {
                 });
         };
         getList();
-
-        // const getPostList = async () => {
-        //     const config = {
-        //         headers: {
-        //             "Content-type": "application/json",
-        //             Accept: "application/json",
-        //         },
-        //     };
-        //     // const token = authContext.state.token;
-        //     // if (token) {
-        //     //     config.headers["Authorization"] = `Bearer ${token}`;
-        //     // }
-        //     await axios.get(`http://--/api/post/getAllPost`, config)
-        //         .then(({ status, data }) => {
-        //             console.log(status, data);
-        //             if (data.allPost) setList(data.allPost);
-        //         })
-        //         .catch((e) => {
-        //             console.log(e);
-        //         });
-        // };
-        // // getPostList();
 
     }, [authContext.state.token]);
 

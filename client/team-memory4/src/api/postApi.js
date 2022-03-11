@@ -1,4 +1,6 @@
 import axios from "axios";
+import { getCookie } from "./cookie";
+
 const postApi = async (data, end_url, token) => {
     const config = {
         headers: {
@@ -7,10 +9,11 @@ const postApi = async (data, end_url, token) => {
         },
     };
     if (token) {
-        config.headers["Authorization"] = `Bearer ${token}`;
+        // config.headers["Authorization"] = `Bearer ${token}`;
+        config.headers["Authorization"] = `Bearer ${getCookie('myToken')}`;
     }
     return await axios.post(
-        "http://localhost:5000" + end_url,
+        "https://kusitms-readyme-4.herokuapp.com" + end_url,
         data,
         config
     );

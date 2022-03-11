@@ -10,7 +10,7 @@ const deleteApi = async (params, end_url, token) => {
     if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
     }
-    return await axios.delete("http://localhost:5000" + end_url, config);
+    return await axios.delete("https://kusitms-readyme-4.herokuapp.com" + end_url, config);
 };
 
 export default deleteApi;

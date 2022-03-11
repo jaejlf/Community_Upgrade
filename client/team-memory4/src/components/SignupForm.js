@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { postApi } from "../api";
 
 //회원가입
 // - 성공 : 201 응답 (Created), 생성된 User객체 반환
 // - 실패 :필수 입력값이 누락 시 400 리턴 (Bad Request)
 //        email이 중복된 경우 409 리턴 (Conflict)
 const SignupForm = (roleid) => {
-    console.log(roleid);
 
     const [details, setDetails] = useState({
         email: "",
@@ -33,15 +33,11 @@ const SignupForm = (roleid) => {
             setCheckMsg("이메일 형식에 맞게 입력해주세요.");
         } else {
             setCheckMsg("");
+            
             await axios.post(
-                "http://localhost:5000/user/signup",
+                "https://kusitms-readyme-4.herokuapp.com/user/signup",
                 details,
-                {
-                    headers: {
-                        "Content-type": "application/json",
-                        Accept: "application/json",
-                    },
-                }
+                
             ).then(({ status, data }) => {
                 if (status === 201 || status === 200) {
                     setCheckMsg("");
