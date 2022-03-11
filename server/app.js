@@ -4,9 +4,13 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var session = require('express-session');
 require("dotenv").config();
 
 var app = express();
+
+app.set("trust proxy", 1);
+
 mongoose.connect(process.env.MONGO_URL, {});
 
 var db = mongoose.connection;
@@ -21,21 +25,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
-
-var userCtrl = require("./api/user/user.ctrl");
-app.use(userCtrl.checkAuth);
-
-//api모듈 설정
-//app.use("/api", require("./api"));
-app.use("/user", require("./api/user"))
-app.use("/board", require("./api/board"));
-app.use("/comment", require("./api/comment"));
-app.use("/search", require("./api/search"));
-
-app.get("/", (req, res) => {
-  res.send("Hello World !");
-});
 
 
 //-------------
@@ -59,6 +48,27 @@ app.all("/*", function (req, res, next) {
 });
 //----------------------
 
+//cors 설정
+const cors = require('cors');
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true
+}
+app.use(cors(corsOptions));
+
+var userCtrl = require("./api/user/user.ctrl");
+app.use(userCtrl.checkAuth);
+
+//api모듈 설정
+//app.use("/api", require("./api"));
+app.use("/user", require("./api/user"))
+app.use("/board", require("./api/board"));
+app.use("/comment", require("./api/comment"));
+app.use("/search", require("./api/search"));
+
+app.get("/", (req, res) => {
+  res.send("Hello World !");
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -76,6 +86,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-
 
 module.exports = app;
