@@ -3,6 +3,7 @@ import { postApi } from "../api";
 import { AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import '../styles/Login.css';
+import { setCookie } from "../api/cookie";
 
 //로그인
 // - 성공 : email, password가 일치하면 성공(200)
@@ -61,8 +62,7 @@ const LoginForm = (roleid) => {
                         setLoginErrorMsg("");
                         authContext.dispatch({
                             type: "login",
-                            // token: data.token,
-                            token: "1243232",
+                            token: data.token,
                             email: details.email,
                             name: details.name,
                             role: data.role,
@@ -73,10 +73,16 @@ const LoginForm = (roleid) => {
                                 email: details.email,
                                 role: data.role,
                                 name: details.name,
-                                // token: data.token
-                                token: "1243232",
+                                token: data.token,
                             })
                         );
+                        if (data.token) {
+                            setCookie('myToken', data.token, {
+                                path: "/",
+                                secure: true,
+                                sameSite: "none",
+                            })
+                        };
                         navigate("/");
                     } else if (status === 400) {
                         setLoginErrorMsg("필수 입력값을 모두 입력해주세요.");
