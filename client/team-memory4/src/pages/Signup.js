@@ -14,7 +14,7 @@ const Signup = () => {
     const [userRole, setUserRole] = useState();
 
     useEffect(() => {
-        if (params === 0) {
+        if (params === 1) {
             setUserRole("일반회원");
         } else {
             setUserRole("기업회원");

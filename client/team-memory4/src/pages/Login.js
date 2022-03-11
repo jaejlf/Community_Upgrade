@@ -6,11 +6,11 @@ import '../styles/Login.css';
 
 const Login = () => {
     const [userRole, setUserRole] = useState("일반회원");
-    const [roleid, setRoleid] = useState(0);  // 0: 일반회원, 1: 기업회원
+    const [roleid, setRoleid] = useState(1);  // 1: 일반회원, 2: 기업회원
 
     const roleClickHandler = async (id) => {
         setRoleid(id);
-        if (id === 0) {
+        if (id === 1) {
             setUserRole("일반회원");
         } else {
             setUserRole("기업회원");
@@ -27,10 +27,10 @@ const Login = () => {
                 <button
                     // className='login-role-select'
                     className={
-                        roleid === 0 ? 
+                        roleid === 1 ? 
                         'login-role-select-o' : 'login-role-select-x'
                     }
-                    onClick={() => roleClickHandler(0)}>
+                    onClick={() => roleClickHandler(1)}>
                     <input
                         id="일반"
                         type="radio"
@@ -40,10 +40,10 @@ const Login = () => {
                 <button
                     // className='login-role-select'
                     className={
-                        roleid === 1 ? 
+                        roleid === 2 ? 
                         'login-role-select-o' : 'login-role-select-x'
                     }
-                    onClick={() => roleClickHandler(1)}>
+                    onClick={() => roleClickHandler(2)}>
                     <input
                         id="기업"
                         type="radio"
