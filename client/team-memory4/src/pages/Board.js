@@ -5,16 +5,21 @@ import axios from "axios";
 import '../styles/Board.css';
 import { getApi } from '../api';
 import { useNavigate } from "react-router-dom";
+import Search from '../assets/images/search.png';
 
 
 const Board = () => {
     const authContext = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const [option, setOption] = useState("title");  // title, content, user
+
+
     const initialList =
         [
             {
                 "_id": "6226ecb59ae535d10e6e484c",
+                "viewCnt": 3,
                 "title": "제목1",
                 "content": "내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ\
                 dlㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ이렇게 내용이 길면은ㅇ잘려요ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ\
@@ -24,6 +29,7 @@ const Board = () => {
             },
             {
                 "_id": "6226ecba9ae535d10e6e4851",
+                "viewCnt": 3,
                 "title": "제목2",
                 "content": "내용2",
                 "postNumber": 2,
@@ -31,6 +37,7 @@ const Board = () => {
             },
             {
                 "_id": "6226ecbd9ae535d10e6e4856",
+                "viewCnt": 3,
                 "title": "제목3",
                 "content": "내용3",
                 "postNumber": 3,
@@ -46,6 +53,25 @@ const Board = () => {
         navigate(`/post/${postNumber}`);
     }
 
+    const enterSearchInput = async (e) => {
+        if (e.key === 'Enter') {
+            console.log(e.target.value);
+            await getApi({},
+                `/search/${option}/${e.target.value}`,
+                authContext.state.token
+            )
+                .then(({ status, data }) => {
+                    console.log(status, data);
+                    if (data) {
+                        setList(data);
+                    }
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+        }
+    }
+
 
     useEffect(() => {
         // try {
@@ -58,7 +84,7 @@ const Board = () => {
             await getApi({},
                 `/board/posts`,
                 authContext.state.token
-                )
+            )
                 .then(({ status, data }) => {
                     console.log(status, data);
                     if (data.allPost) {
@@ -75,15 +101,43 @@ const Board = () => {
 
     return (
         <div className='board-page'>
-            {/* 추후 Search Bar */}
-            <SearchBar />
+            <div className="searchbar">
+                <img src={Search} className="search-img" />
+                <input
+                    className="search-input"
+                    onKeyPress={enterSearchInput}
+                />
+                <div className="search-options">
+                    <button
+                        className={
+                            option === "title" ?
+                                'search-option-select-o' : 'search-option-select-x'
+                        }
+                        onClick={() => setOption("title")}
+                    >글제목</button>
+                    <button
+                        className={
+                            option === "content" ?
+                                'search-option-select-o' : 'search-option-select-x'
+                        }
+                        onClick={() => setOption("content")}
+                    >글내용</button>
+                    <button
+                        className={
+                            option === "writer" ?
+                                'search-option-select-o' : 'search-option-select-x'
+                        }
+                        onClick={() => setOption("user")}
+                    >작성자</button>
+                </div>
+            </div>
 
             <div className="board-list-contents">
                 {
                     list.length ?
-                    list.map((e, idx) => (
-                            <div 
-                                className="content-section" 
+                        list.map((e, idx) => (
+                            <div
+                                className="content-section"
                                 key={idx}
                                 onClick={() => contentsClickHandler(e.postNumber)}
                             >
