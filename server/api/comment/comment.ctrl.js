@@ -1,5 +1,7 @@
 const CommentModel = require("../../model/comment")
-const moment = require("../../controller/moment")
+const moment = require("../../controller/moment");
+const { ObjectId } = require("mongodb");
+const { db } = require("../../model/comment");
 
 const createComment = async (req, res) => {
   //const post = req.params.postId
@@ -10,6 +12,7 @@ const createComment = async (req, res) => {
   if (res.locals.user.userId != null) {
     new CommentModel({
       //post: post,
+      _id: ObjectId().toString(),
       postNumber: postNumber,
       userId: res.locals.user.userId,
       writer: res.locals.user.name,
@@ -31,7 +34,51 @@ const getAllComment = async (req, res) => {
   res.status(200).json({ allComment: data })
 }
 
+const editComment = (req, res) => {
+  const id = req.params.id;
+  db.collection("comments").findOne({ _id: id }, function (err, data) {
+    console.log(data)
+    if (err) return res.status(500).json({ error: error.message });
+    if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 댓글을 수정할 수 있습니다." });
+
+    db.collection("comments").updateOne(
+      { _id: id },
+      {
+        $set: {
+          content: req.body.content,
+          date: moment.dateNow(),
+        },
+      },
+      function (err, data) {
+        if (err) return res.status(500).json({ error: error.message });
+
+        res.status(200).send({ message: "수정 완료" });
+      }
+    );
+  })
+}
+
+const deleteComment = (req, res) => {
+  const id = req.params.id;
+  db.collection("comments").findOne({ _id: id }, function (err, data) {
+    console.log(data)
+    if (err) return res.status(500).json({ error: error.message });
+    if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 댓글을 삭제할 수 있습니다." });
+
+    db.collection("posts").deleteOne(
+      { _id: id },
+
+      function (err, data) {
+        if (err) return res.status(500).json({ error: error.message });
+        res.status(200).send({ message: "삭제 완료" });
+      }
+    );
+  })
+}
+
 module.exports = {
   createComment,
   getAllComment,
+  editComment,
+  deleteComment
 }
