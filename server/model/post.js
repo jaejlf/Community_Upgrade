@@ -3,12 +3,12 @@ const moment = require("../controller/moment");
 
 const PostSchema = new mongoose.Schema(
   {
-    userId: { type: Number, required: false },
-    writer: { type: String, required: false },
+    postNumber: Number,
     title: { type: String, required: true },
     content: { type: String, required: true },
     date: { type: String, required: false },
-    postNumber: Number,
+    userId: { type: Number, required: false },
+    writer: { type: String, required: false },
     viewCnt: {
       type: Number,
       default: 0,
