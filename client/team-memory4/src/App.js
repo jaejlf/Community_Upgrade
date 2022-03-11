@@ -62,6 +62,7 @@ const reducer = (state, action) => {
         email: action.email,
         role: action.role,
         name: action.name,
+        userId: action.userId,
       };
     case "logout":
       return {
@@ -69,6 +70,7 @@ const reducer = (state, action) => {
         email: null,
         role: null,
         name: null,
+        userId: null,
       };
     default:
       return state;
@@ -82,6 +84,7 @@ function App() {
     email: null,
     role: null,
     name: null,
+    userId: null,
   });
 
   useEffect(() => {
@@ -95,13 +98,14 @@ function App() {
         console.log(loggedInfo);
 
         if (loggedInfo) {
-            const { token, email, role, name } = loggedInfo;
+            const { token, email, role, name, userId } = loggedInfo;
             await dispatch({
                 type: "login",
                 token: token,
                 email: email,
                 role: role,
                 name: name,
+                userId: userId,
             });
         } else {
             await dispatch({

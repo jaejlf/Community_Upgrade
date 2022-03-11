@@ -18,6 +18,8 @@ const Editor = () => {
             {
                 title: title,
                 content: value,
+                userId: authContext.state.userId,
+                writer: authContext.state.name,
             },
             "/board/write",
             authContext.state.token
@@ -26,6 +28,10 @@ const Editor = () => {
             if (status === 200) {
                 console.log(data.postNumber);
                 navigate("/board");
+            } else if (status === 500) {
+                alert("게시글 등록 시 오류가 발생했습니다.");
+            } else if (status === 501) {
+                alert("로그인을 해야 게시글을 작성할 수 있습니다.");
             }
         })
         .catch((e) => {
@@ -47,7 +53,7 @@ const Editor = () => {
             const formData = new FormData();
             formData.append('img', file);
             try {
-                const result = await axios.post('http://localhost:5000/img', formData);
+                const result = await axios.post('https://kusitms-readyme-4.herokuapp.com/img', formData);
                 console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
                 const IMG_URL = result.data.url;
 

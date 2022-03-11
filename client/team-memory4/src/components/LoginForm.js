@@ -43,6 +43,7 @@ const LoginForm = (roleid) => {
             //     email: details.email,
             //     name: details.name,
             //     role: 0,
+            //     userId: 1,
             // });
             // localStorage.setItem(
             //     "loggedInfo",
@@ -52,6 +53,7 @@ const LoginForm = (roleid) => {
             //         name: details.name,
             //         // token: data.token
             //         token: "1243232",
+            //         userId: 1,
             //     })
             // );
             // navigate("/");
@@ -66,6 +68,7 @@ const LoginForm = (roleid) => {
                             email: details.email,
                             name: details.name,
                             role: data.role,
+                            userId: data.userId,
                         });
                         localStorage.setItem(
                             "loggedInfo",
@@ -74,6 +77,7 @@ const LoginForm = (roleid) => {
                                 role: data.role,
                                 name: details.name,
                                 token: data.token,
+                                userId: data.userId,
                             })
                         );
                         if (data.token) {

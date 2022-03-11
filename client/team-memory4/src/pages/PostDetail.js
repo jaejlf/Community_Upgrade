@@ -19,7 +19,7 @@ const PostDetail = () => {
     // });
 
     const params = useParams();
-    console.log('params', params.id);
+    console.log('postid(params)', params.id);
 
     useEffect(() => {
         const getPosting = async () => {
