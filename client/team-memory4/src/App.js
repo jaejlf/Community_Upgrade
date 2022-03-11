@@ -8,6 +8,7 @@ import {
   PostDetail,
   Board,
   PostWrite,
+  PostModify,
   NotFound,
 } from "./pages";
 import {
@@ -121,12 +122,12 @@ function App() {
       <AuthContext.Provider value={{ state, dispatch }}>
         <Header />
         <Routes>
-          <Route path="/" exact={true} element={<Home />} />
+          <Route path="/" exact={true} element={<Board />} />
           <Route path='/login' element={<Login />} />
           <Route path='/logout' element={<Logout />} />
           <Route path='/signup/:roleid' element={<Signup />} />
           <Route path='/post/:id' element={<PostDetail />} />
-          <Route path='/board' element={<Board />} />
+          <Route path='/modify/:id' element={<PostModify />} />
           <Route path='/write' element={<PostWrite />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

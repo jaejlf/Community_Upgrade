@@ -7,7 +7,8 @@ import { AuthContext } from '../App';
 import { useNavigate } from "react-router-dom";
 import '../styles/Write.css';
 
-const Editor = () => {
+const Editor = (desc) => {
+    console.log(desc);
     const authContext = useContext(AuthContext);
     const navigate = useNavigate();    
 
