@@ -11,7 +11,6 @@ import { setCookie } from "../api/cookie";
 //         없는 email인 경우 404 (Not Found)
 //         password가 틀린경우 500 ( Server Error )
 const LoginForm = (roleid) => {
-    console.log(roleid);
     const [details, setDetails] = useState({
         email: "",
         password: "",
@@ -56,7 +55,7 @@ const LoginForm = (roleid) => {
             //         userId: 1,
             //     })
             // );
-            // navigate("/");
+            // navigate("/board");
             //////////////////////////////////////////
             await postApi(details, "/user/login")
                 .then(({ status, data }) => {
@@ -87,7 +86,7 @@ const LoginForm = (roleid) => {
                                 sameSite: "none",
                             })
                         };
-                        navigate("/");
+                        navigate("/board");
                     } else if (status === 400) {
                         setLoginErrorMsg("필수 입력값을 모두 입력해주세요.");
                     } else if (status === 404) {
@@ -100,6 +99,7 @@ const LoginForm = (roleid) => {
                     setLoginErrorMsg("로그인 실패");
                     console.log(e.response);
                 });
+            //////////////////////////////////////////////////
         }
     }
     return (

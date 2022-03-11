@@ -64,6 +64,8 @@ const Board = () => {
                     console.log(status, data);
                     if (data) {
                         setList(data);
+                    } else {
+                        setList([]);
                     }
                 })
                 .catch((e) => {
@@ -74,12 +76,6 @@ const Board = () => {
 
 
     useEffect(() => {
-        // try {
-        //     axios.get('https://kusitms-readyme-4.herokuapp.com/board/posts');
-        //   } catch (error) {
-        //     console.error(error);
-        //   }
-        // setList([]);
         const getList = async () => {
             await getApi({},
                 `/board/posts`,
@@ -124,7 +120,7 @@ const Board = () => {
                     >글내용</button>
                     <button
                         className={
-                            option === "writer" ?
+                            option === "user" ?
                                 'search-option-select-o' : 'search-option-select-x'
                         }
                         onClick={() => setOption("user")}
