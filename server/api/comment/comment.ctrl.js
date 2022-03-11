@@ -1,6 +1,5 @@
 const CommentModel = require("../../model/comment")
 const moment = require("../../controller/moment")
-const { db } = require("../../model/post")
 
 const createComment = async (req, res) => {
   //const post = req.params.postId

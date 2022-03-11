@@ -32,6 +32,7 @@ app.use("/user", require("./api/user"))
 app.use("/board", require("./api/board"));
 app.use("/comment", require("./api/comment"));
 app.use("/search", require("./api/search"));
+app.use("/mypage", require("./api/mypage"))
 
 app.get("/", (req, res) => {
   res.send("Hello World !");
