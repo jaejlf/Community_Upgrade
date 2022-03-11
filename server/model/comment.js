@@ -5,7 +5,7 @@ const CommentSchema = new mongoose.Schema(
   {
     //post: { type: mongoose.Schema.Types.ObjectId, ref: "post" },
     userId: { type: Number, required: false },
-    writer: { type: String, required: false},
+    writer: { type: String, required: false },
     postNumber: { type: Number, required: false },
     content: { type: String, required: true },
     isDeleted: {

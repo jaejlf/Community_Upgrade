@@ -23,16 +23,16 @@ const getContent = (req, res) => {
   });
 };
 
-//   const getUser = (req, res) => {
-//     const keyworld = req.params.keyword;
-//     console.log("keyworld in search : " + keyworld);
-//     PostModel.find({ title: { $regex: req.params.keyword } }, (err, result) => {
-//       if (err) return res.status(500).end();
-//       if (!result) return res.status(404).send("검색 결과가 없습니다.");
+// const getUser = (req, res) => {
+//   const keyworld = req.params.keyword;
+//   console.log("keyworld in search : " + keyworld);
+//   PostModel.find({ title: { $regex: req.params.keyword } }, (err, result) => {
+//     if (err) return res.status(500).end();
+//     if (!result) return res.status(404).send("검색 결과가 없습니다.");
 
-//       return res.status(200).json(result);
-//     });
-//   };
+//     return res.status(200).json(result);
+//   });
+// };
 
 module.exports = {
   getTitle,

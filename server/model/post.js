@@ -4,7 +4,7 @@ const moment = require("../controller/moment");
 const PostSchema = new mongoose.Schema(
   {
     userId: { type: Number, required: false },
-    writer: { type: String, required: false},
+    writer: { type: String, required: false },
     title: { type: String, required: true },
     content: { type: String, required: true },
     date: { type: String, required: false },
