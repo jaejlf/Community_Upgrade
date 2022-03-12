@@ -11,7 +11,6 @@ import { setCookie } from "../api/cookie";
 //         없는 email인 경우 404 (Not Found)
 //         password가 틀린경우 500 ( Server Error )
 const LoginForm = (roleid) => {
-    console.log(roleid);
     const [details, setDetails] = useState({
         email: "",
         password: "",
@@ -43,6 +42,7 @@ const LoginForm = (roleid) => {
             //     email: details.email,
             //     name: details.name,
             //     role: 0,
+            //     userId: 1,
             // });
             // localStorage.setItem(
             //     "loggedInfo",
@@ -52,9 +52,10 @@ const LoginForm = (roleid) => {
             //         name: details.name,
             //         // token: data.token
             //         token: "1243232",
+            //         userId: 1,
             //     })
             // );
-            // navigate("/");
+            // navigate("/board");
             //////////////////////////////////////////
             await postApi(details, "/user/login")
                 .then(({ status, data }) => {
@@ -66,6 +67,7 @@ const LoginForm = (roleid) => {
                             email: details.email,
                             name: details.name,
                             role: data.role,
+                            userId: data.userId,
                         });
                         localStorage.setItem(
                             "loggedInfo",
@@ -74,6 +76,7 @@ const LoginForm = (roleid) => {
                                 role: data.role,
                                 name: details.name,
                                 token: data.token,
+                                userId: data.userId,
                             })
                         );
                         if (data.token) {
@@ -83,7 +86,7 @@ const LoginForm = (roleid) => {
                                 sameSite: "none",
                             })
                         };
-                        navigate("/");
+                        navigate("/board");
                     } else if (status === 400) {
                         setLoginErrorMsg("필수 입력값을 모두 입력해주세요.");
                     } else if (status === 404) {
@@ -96,6 +99,7 @@ const LoginForm = (roleid) => {
                     setLoginErrorMsg("로그인 실패");
                     console.log(e.response);
                 });
+            //////////////////////////////////////////////////
         }
     }
     return (

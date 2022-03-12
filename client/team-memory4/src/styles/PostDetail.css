@@ -41,6 +41,24 @@
     height: 1px;
 }
 
+.detail-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-modify-del {
+    display: flex;
+    flex-direction: row;
+    color:#A2A2A2;
+    margin-left: auto;
+    font-size: 14px;
+}
+
+.detail-modify,
+.detail-del {
+    cursor: pointer;
+}
+
 .detail-content {
     text-align: left;
     margin: 10px;

@@ -10,8 +10,6 @@
     height: 50px;
     border: 2px solid #407EFE;
     border-radius: 40px 0px 0px 40px;
-    /* border-radius: 40px; */
-    /* margin: 0 10px; */
 }
 
 .search-img {
@@ -29,7 +27,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+    white-space: nowrap;
 }
 
 /* .search-option {

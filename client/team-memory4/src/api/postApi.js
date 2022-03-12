@@ -13,7 +13,7 @@ const postApi = async (data, end_url, token) => {
         config.headers["Authorization"] = `Bearer ${getCookie('myToken')}`;
     }
     return await axios.post(
-        "https://kusitms-readyme-4.herokuapp.com" + end_url,
+        process.env.REACT_APP_BACK_BASE_URL + end_url,
         data,
         config
     );
