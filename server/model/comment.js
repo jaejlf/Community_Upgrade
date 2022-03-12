@@ -4,6 +4,7 @@ const moment = require("../controller/moment")
 const CommentSchema = new mongoose.Schema(
   {
     //post: { type: mongoose.Schema.Types.ObjectId, ref: "post" },
+    _id: { type: String, required: false },
     userId: { type: Number, required: false },
     writer: { type: String, required: false },
     postNumber: { type: Number, required: false },

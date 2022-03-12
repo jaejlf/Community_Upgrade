@@ -7,5 +7,7 @@ const ctrl = require("./comment.ctrl")
 
 router.post("/:postNumber", ctrl.createComment) //댓글 작성
 router.get("/:postNumber", ctrl.getAllComment) //댓글들 보여주기
+router.put("/:id", ctrl.editComment) // 댓글 수정
+router.delete("/:id", ctrl.deleteComment) //댓글 삭제
 
 module.exports = router
