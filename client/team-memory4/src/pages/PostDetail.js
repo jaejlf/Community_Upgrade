@@ -64,8 +64,10 @@ const PostDetail = () => {
                 if (status === 200) {
                     alert("삭제되었습니다.");
                     navigate("/board");
-                } else if (status === 500) {
+                } else if (status === 501) {
                     alert("작성자만 게시글을 삭제할 수 있습니다.");
+                } else { 
+                    alert("삭제에 실패했습니다.");
                 }
             })
             .catch((e) => {
@@ -94,7 +96,10 @@ const PostDetail = () => {
                 <div className='detail-content'>{postData.content}</div>
             </div>
             <div className='detail-hr'></div>
-            댓글들
+
+            <div className='comments'>
+                
+            </div>
         </div>
     );
 };

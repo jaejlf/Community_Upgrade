@@ -12,7 +12,7 @@ const putApi = async (data, end_url, token) => {
         // config.headers["Authorization"] = `Bearer ${token}`;
         config.headers["Authorization"] = `Bearer ${getCookie('myToken')}`;
     }
-    return await axios.put("https://kusitms-readyme-4.herokuapp.com" + end_url, data, config);
+    return await axios.put(process.env.REACT_APP_BACK_BASE_URL + end_url, data, config);
 };
 
 export default putApi;

@@ -54,7 +54,7 @@ const Editor = (desc) => {
             const formData = new FormData();
             formData.append('img', file);
             try {
-                const result = await axios.post('https://kusitms-readyme-4.herokuapp.com/img', formData);
+                const result = await axios.post(`${process.env.REACT_APP_BACK_BASE_URL}/img`, formData);
                 console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
                 const IMG_URL = result.data.url;
 

@@ -35,9 +35,8 @@ const SignupForm = (roleid) => {
             setCheckMsg("");
             
             await axios.post(
-                "https://kusitms-readyme-4.herokuapp.com/user/signup",
+                `${process.env.REACT_APP_BACK_BASE_URL}/user/signup`,
                 details,
-                
             ).then(({ status, data }) => {
                 if (status === 201 || status === 200) {
                     setCheckMsg("");
