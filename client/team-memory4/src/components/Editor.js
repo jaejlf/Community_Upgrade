@@ -27,7 +27,7 @@ const Editor = (desc) => {
         )
         .then(({ status, data }) => {
             if (status === 200) {
-                console.log(data.postNumber);
+                console.log(data);
                 navigate("/board");
             } else if (status === 500) {
                 alert("게시글 등록 시 오류가 발생했습니다.");
