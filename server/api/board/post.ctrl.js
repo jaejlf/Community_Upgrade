@@ -1,6 +1,7 @@
 const { db } = require("../../model/post");
 const PostModel = require("../../model/post");
 const moment = require("../../controller/moment");
+const auth = require("../../controller/auth");
 
 const createPost = (req, res) => {
   const name = res.locals.user.name;
@@ -55,7 +56,22 @@ const getPost = async (req, res) => {
 
     result.viewCnt++;
     result.save();
-    res.status(200).json(result);
+
+    var authCk = auth.check(res.locals.user.userId, result.userId);
+
+    const exData = {
+      "_id": result._id,
+      "userId": result.userId,  
+      "writer": result.writer,
+      "title": result.title,
+      "content": result.content,
+      "postNumber": result.postNumber,
+      "viewCnt": result.viewCnt,
+      "date": result.date,
+      "auth": authCk
+    }
+
+    res.status(200).json(exData);
   });
 };
 
@@ -64,7 +80,7 @@ const editPost = (req, res) => {
   const { title, content } = req.body;
   db.collection("posts").findOne({ postNumber: postNumber }, function (err, data) {
     if (err) return res.status(500).json({ error: error.message });
-    if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 수정할 수 있습니다." });
+    //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 수정할 수 있습니다." });
 
     db.collection("posts").updateOne(
       { postNumber: postNumber },
@@ -88,7 +104,7 @@ const deletePost = (req, res) => {
   const postNumber = parseInt(req.params.postNumber);
   db.collection("posts").findOne({ postNumber: postNumber }, function (err, data) {
     if (err) return res.status(500).json({ error: error.message });
-    if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 삭제할 수 있습니다." });
+    //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 삭제할 수 있습니다." });
 
     db.collection("posts").deleteOne(
       { postNumber: postNumber },
