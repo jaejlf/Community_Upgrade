@@ -89,12 +89,17 @@ const deleteComment = (req, res) => {
     console.log(data)
     if (err) return res.status(500).json({ error: error.message })
     //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 댓글을 삭제할 수 있습니다." });
-
-    db.collection("posts").deleteOne(
+    
+    db.collection("comments").updateOne(
       { _id: id },
-
+      {
+        $set: {
+          isDeleted: true
+        },
+      },
       function (err, data) {
         if (err) return res.status(500).json({ error: error.message })
+
         res.status(200).send({ message: "삭제 완료" })
       }
     )
