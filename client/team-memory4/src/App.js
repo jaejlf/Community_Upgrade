@@ -33,14 +33,14 @@ const Header = () => {
       <div className="header-links">
         {!authContext.state.token ? (
           <>
-            <Logo width={100} height={60} />
+              <Link to="/"><Logo width={100} height={60} /></Link>
               <Link to="/login">
                 <button className="header-btn">로그인</button>
               </Link>
           </>
         ) : (
           <>
-            <Logo width={60} height={60} />
+            <Link to="/"><Logo width={100} height={60} /></Link>
             <div className='header-right'>
               <Link to="/write">
                 <button className="header-btn">글쓰기</button>

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -31,7 +32,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 40px;
+  margin: 0 40px 10px 40px;
   /* justify-content: flex-start; */
   /* font-size: calc(10px + 1vmin); */
 }

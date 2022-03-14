@@ -152,16 +152,16 @@ const PostDetail = () => {
                 <div className='detail-content'>{postData.content}</div>
             </div>
             <div className='detail-hr'></div>
+            
+            <RecommentContext.Provider value={{ state, dispatch }}>
+                <AllComments props={postId}/>
+                <MyComment props={postId}/>
+            </RecommentContext.Provider>
             <div className='goboard-btn'>
                 <Link to='/'>
                 <button className='detail-goboard-btn'>목록보기</button>
                 </Link>
             </div>
-            <RecommentContext.Provider value={{ state, dispatch }}>
-                <AllComments props={postId}/>
-                <MyComment props={postId}/>
-            </RecommentContext.Provider>
-            
         </div>
     );
 };
