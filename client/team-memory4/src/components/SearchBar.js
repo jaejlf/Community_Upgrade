@@ -10,7 +10,9 @@ const SearchBar = () => {
         <div className="searchbar">
             <img src={Search} className="search-img" />
             <input
-                className="search-input" />
+                className="search-input" 
+                placeholder="검색어 입력 후 엔터키를 입력하세요."
+                />
             <div className="search-options">
                 <button
                     className={

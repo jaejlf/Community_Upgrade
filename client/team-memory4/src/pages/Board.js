@@ -102,6 +102,7 @@ const Board = () => {
                 <input
                     className="search-input"
                     onKeyPress={enterSearchInput}
+                    placeholder="검색어 입력 후 Enter 키를 입력하세요."
                 />
                 <div className="search-options">
                     <button

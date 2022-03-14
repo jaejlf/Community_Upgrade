@@ -64,6 +64,7 @@ const MyComment = ({ props }) => {
                     (e) => setMyComment(e.target.value)
                 }
                 value={myComment}
+                placeholder="댓글을 입력하세요"
             ></textarea>
         </div>
     )

@@ -6,4 +6,5 @@ export { default as PostDetail } from './PostDetail';
 export { default as Board } from "./Board";
 export { default as PostWrite } from "./PostWrite";
 export { default as PostModify } from "./PostModify";
+export { default as MyPage } from "./MyPage";
 export { default as NotFound } from "./NotFound";
