@@ -1,0 +1,93 @@
+.my-comments-section {
+    border: 1px solid #407EFE;
+    width: 100%;
+    min-height: 100px;
+    margin-bottom: 30px;
+}
+
+.my-comment-upper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 10px;
+    height: 40px;
+}
+
+.my-comment-upper button {
+    background-color: #407EFE;
+    width: 120px;
+    height: 30px;
+    color: #ffffff;
+    border: none;
+}
+
+.input-comment {
+    width: 98%;
+    height: 100px;
+    border: none;
+}
+
+.all-comment-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.one-comment-1,
+.one-comment-2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.one-comment-2 {
+    padding-left: 40px;
+}
+
+.comment-upper {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.comment-upper p {
+    padding: 0 5px;
+}
+
+.comment-upper-writer {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.comment-upper-role {
+    font-size: 14px;
+}
+
+.comment-upper-date {
+    font-size: 12px;
+    color: #A2A2A2;
+}
+
+.comment-content {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.comment-lower {
+    text-align: left;
+    color: #A2A2A2;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.recomment-btn,
+.comment-del-btn {
+    cursor: pointer;
+    padding-right: 10px;
+}
+
+.recomment-to-whom {
+    text-align: left;
+    padding-left: 10px;
+    color: #A2A2A2;
+    margin: 0;
+}
