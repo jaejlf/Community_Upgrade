@@ -3,6 +3,7 @@ const moment = require("../../controller/moment")
 const { ObjectId } = require("mongodb")
 const { db } = require("../../model/comment")
 const auth = require("../../controller/auth")
+const userInfo = require("../../controller/userinfo");
 
 const createComment = async (req, res) => {
   //const post = req.params.postId
@@ -35,21 +36,25 @@ const getAllComment = async (req, res) => {
 
   var exData = []
   var authCk = false
-  result.forEach(async (element) => {
+  for (let element of result) {
     authCk = auth.check(res.locals.user.userId, element.userId)
+    var user = await userInfo.findUser(element.userId);
+
     const data = {
-      _id: element._id,
-      userId: element.userId,
-      writer: element.writer,
-      postNumber: element.postNumber,
-      content: element.content,
-      isDeleted: element.isDeleted,
-      depth: element.depth,
-      date: element.date,
-      auth: authCk,
+      "_id": element._id,
+      "userId": element.userId,
+      "userRole": user.role,
+      "writer": element.writer,
+      "postNumber": element.postNumber,
+      "content": element.content,
+      "isDeleted": element.isDeleted,
+      "depth": element.depth,
+      "date": element.date,
+      "auth": authCk,
     }
     await exData.push(data)
-  })
+
+  }
 
   res.status(200).json(exData)
 }
