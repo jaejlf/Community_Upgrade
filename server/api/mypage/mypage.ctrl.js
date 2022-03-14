@@ -48,8 +48,17 @@ const scrapping = async (req, res) => {
     );
 }
 
+const getMyScrap = async (req, res) => {
+    var user = await userInfo.findUser(res.locals.user.userId);
+
+    res.status(200).json({
+        scraps: user.scrap
+    })
+}
+
 module.exports = {
     getMyPost,
     getMyComment,
-    scrapping
+    scrapping,
+    getMyScrap
 };
