@@ -116,7 +116,7 @@ const deletePost = (req, res) => {
 
         db.collection("counter").updateOne(
           { name: "postNumber" },
-          { $inc: { postNumber: -1 } }
+          //{ $inc: { postNumber: -1 } } 게시글을 삭제하더라도 postNumber는 계속 증가하도록함.
         );
 
         res.status(200).send({ message: "삭제 완료" });
