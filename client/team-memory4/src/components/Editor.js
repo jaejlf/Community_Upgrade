@@ -1,14 +1,14 @@
 import React, { useState, useRef, useMemo, useContext } from "react"
 import axios from "axios"
 import { postApi } from "../api"
-import ReactQuill from "react-quill"
-// import { ImageResize } from "quill-image-resize-module"
+import ReactQuill, { Quill } from "react-quill"
+// import { Quill } from "quill"
 import "react-quill/dist/quill.snow.css"
 import { AuthContext } from "../App"
 import { useNavigate } from "react-router-dom"
 import "../styles/Write.css"
-
-// Quill.register("modules/imageResize", ImageResize)
+import ImageResize from "@looop/quill-image-resize-module-react"
+Quill.register("modules/ImageResize", ImageResize)
 
 const Editor = (desc) => {
   console.log(desc)
@@ -97,9 +97,10 @@ const Editor = (desc) => {
           image: imageHandler,
         },
       },
-      // ImageResize: {
-      //   parchment: Quill.import("parchment"),
-      // },
+      ImageResize: {
+        // parchment: Quill.import("parchment"),
+        modules: ["Resize"],
+      },
     }
   }, [])
 

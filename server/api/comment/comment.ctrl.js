@@ -2,6 +2,7 @@ const CommentModel = require("../../model/comment")
 const moment = require("../../controller/moment")
 const { ObjectId } = require("mongodb")
 const { db } = require("../../model/comment")
+const auth = require("../../controller/auth")
 
 const createComment = async (req, res) => {
   //const post = req.params.postId
@@ -29,8 +30,28 @@ const createComment = async (req, res) => {
 const getAllComment = async (req, res) => {
   //const post = req.params.postId
   const postNumber = parseInt(req.params.postNumber)
-  const data = await CommentModel.find({ postNumber: postNumber })
-  res.status(200).json({ allComment: data })
+  const result = await CommentModel.find({ postNumber: postNumber })
+  // res.status(200).json({ allComment: data })
+
+  var exData = []
+  var authCk = false
+  result.forEach(async (element) => {
+    authCk = auth.check(res.locals.user.userId, element.userId)
+    const data = {
+      _id: element._id,
+      userId: element.userId,
+      writer: element.writer,
+      postNumber: element.postNumber,
+      content: element.content,
+      isDeleted: element.isDeleted,
+      depth: element.depth,
+      date: element.date,
+      auth: authCk,
+    }
+    await exData.push(data)
+  })
+
+  res.status(200).json(exData)
 }
 
 const editComment = (req, res) => {
@@ -38,10 +59,7 @@ const editComment = (req, res) => {
   db.collection("comments").findOne({ _id: id }, function (err, data) {
     console.log(data)
     if (err) return res.status(500).json({ error: error.message })
-    if (data.userId != res.locals.user.userId)
-      return res
-        .status(501)
-        .json({ error: "작성자만 댓글을 수정할 수 있습니다." })
+    //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 댓글을 수정할 수 있습니다." });
 
     db.collection("comments").updateOne(
       { _id: id },
@@ -65,10 +83,7 @@ const deleteComment = (req, res) => {
   db.collection("comments").findOne({ _id: id }, function (err, data) {
     console.log(data)
     if (err) return res.status(500).json({ error: error.message })
-    if (data.userId != res.locals.user.userId)
-      return res
-        .status(501)
-        .json({ error: "작성자만 댓글을 삭제할 수 있습니다." })
+    //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 댓글을 삭제할 수 있습니다." });
 
     db.collection("posts").deleteOne(
       { _id: id },
