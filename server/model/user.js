@@ -35,6 +35,9 @@ const UserSchema = new mongoose.Schema({
   token: {
     type: String,
   },
+  scrap: [ 
+    { type: Number, required: false } //스크랩한 게시물 번호
+  ]
 });
 
 //스키마를 통한 모델 객체 생성
