@@ -1,3 +1,4 @@
+
 import React, { useEffect, useContext, useState, useReducer, createContext } from 'react';
 import { useParams } from "react-router-dom";
 import { deleteApi, getApi } from '../api';
@@ -5,6 +6,7 @@ import { AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { AllComments, MyComment } from "../components";
+import parse from "html-react-parser"
 import "../styles/PostDetail.css";
 
 
@@ -12,7 +14,7 @@ export const RecommentContext = createContext();
 const reducer = (state, action) => {
     switch (action.type) {
         case "recommentClick":
-            return { 
+            return {
                 recommentId: action.recommentId,
                 recomment2Whom: action.recomment2Whom,
             };
@@ -91,9 +93,18 @@ const PostDetail = () => {
         getPosting();
     }, []);
 
+    // const [postData, setPostData] = useState({
+    //     title: "제목테스트",
+    //     content: "내용",
+    //     date: "232",
+    // })
+    // const [postData, setPostData] = useState({
+    //     title: "",
+    //     content: "",
+    //     date: "",
+    // });
 
-    const modifyHandler = async () => {
-
+    const modifyHandler = () => {
     }
 
     const deleteHandler = async () => {
@@ -121,8 +132,6 @@ const PostDetail = () => {
         }
     }
 
-    
-
     return (
         <div className='post-detail'>
             <div className='detail-header'>
@@ -149,21 +158,21 @@ const PostDetail = () => {
                             <></>
                         )}
                 </div>
-                <div className='detail-content'>{postData.content}</div>
+                <div className='detail-content'>{parse("" + postData.content)}</div>
             </div>
             <div className='detail-hr'></div>
-            
+
             <RecommentContext.Provider value={{ state, dispatch }}>
-                <AllComments props={postId}/>
-                <MyComment props={postId}/>
+                <AllComments props={postId} />
+                <MyComment props={postId} />
             </RecommentContext.Provider>
             <div className='goboard-btn'>
                 <Link to='/'>
-                <button className='detail-goboard-btn'>목록보기</button>
+                    <button className='detail-goboard-btn'>목록보기</button>
                 </Link>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default PostDetail;
