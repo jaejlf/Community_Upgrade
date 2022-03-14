@@ -10,6 +10,7 @@
     height: 50px;
     border: 2px solid #407EFE;
     border-radius: 40px 0px 0px 40px;
+    padding-left: 20px;
 }
 
 .search-img {

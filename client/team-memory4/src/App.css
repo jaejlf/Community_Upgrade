@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -13,27 +14,8 @@
   }
 }
 
-.App-header {
-  min-height: 10vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: calc(10px + 1vmin);
-}
-
-.App-header a {
-  text-decoration: none;
-  margin: 0;
-  color: black;
-}
-
 a {
   text-decoration: none;
-}
-
-.App-header a:hover {
-  color:#5EB88A;
 }
 
 @keyframes App-logo-spin {
@@ -45,6 +27,21 @@ a {
   }
 }
 
+.App-header {
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 40px 10px 40px;
+  /* justify-content: flex-start; */
+  /* font-size: calc(10px + 1vmin); */
+}
+
+.App-header a {
+  text-decoration: none;
+  margin: 0;
+  color: black;
+}
 
 .header-links {
   justify-content: space-between;
@@ -54,37 +51,29 @@ a {
   margin: 0 12px 0 35px;
 }
 
-.my-page-plain {
-  color: #443826 !important;
+.header-right {
+  display: flex;
+  flex-direction: row;
+}
+
+.header-btn {
+  color: #ffffff !important;
   font-size: 14px;
   margin: 0 5px !important;
+  width: 110px;
+  height: 30px;
+  background-color: #0053FD;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
 }
 
-.my-page-full {
-  background-color: #443826 !important;
-  color: #F2F2F2 !important;
-  font-size: 14px;
-  margin: 0 5px !important;
-  padding: 3px 5px;
+#header-black-btn {
+  background-color: #2C2D31;
 }
 
-.my-page-btn {
-  background-color: #443826;
-  color: white !important;
-  font-size: 14px;
-  padding: 5px 12px;
-  margin: 0 10px !important;
-}
-
-#wrapper {
-  height: auto;
-  min-height: 100%;
-  padding-bottom: 100px;
-}
-
-footer {
-  background-color: #443826;
-  height: 100px;
-  position : relative;
-  color: #F2F2F2;
+.header-line {
+  width: 100%;
+  height: 1px;
+  background-color: #0053FD;
 }

@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SearchBar } from '../components';
 import { AuthContext } from '../App';
-import axios from "axios";
-import '../styles/Board.css';
 import { getApi } from '../api';
 import { useNavigate } from "react-router-dom";
+import parse from "html-react-parser"
 import Search from '../assets/images/search.png';
+import '../styles/Board.css';
 
 
 const Board = () => {
@@ -31,7 +30,7 @@ const Board = () => {
                 "_id": "6226ecba9ae535d10e6e4851",
                 "viewCnt": 3,
                 "title": "제목2",
-                "content": "내용2",
+                "content": "<p>내용2</p>",
                 "postNumber": 2,
                 "date": "2022-03-08 14:42:18"
             },
@@ -39,7 +38,7 @@ const Board = () => {
                 "_id": "6226ecbd9ae535d10e6e4856",
                 "viewCnt": 3,
                 "title": "제목3",
-                "content": "내용3",
+                "content": "<h3>내용3</h3>",
                 "postNumber": 3,
                 "date": "2022-03-08 14:42:21"
             }
@@ -102,6 +101,7 @@ const Board = () => {
                 <input
                     className="search-input"
                     onKeyPress={enterSearchInput}
+                    placeholder="검색어 입력 후 Enter 키를 입력하세요."
                 />
                 <div className="search-options">
                     <button
@@ -139,7 +139,7 @@ const Board = () => {
                             >
                                 <div className='content-section-contents'>
                                     <div className="content-section-title">{e.title}</div>
-                                    <div className="content-section-content">{e.content}</div>
+                                    <div className="content-section-content">{parse("" + e.content)}</div>
                                     <div className="content-section-date">{e.date}</div>
                                 </div>
                             </div>

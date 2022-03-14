@@ -86,7 +86,7 @@ const LoginForm = (roleid) => {
                                 sameSite: "none",
                             })
                         };
-                        navigate("/board");
+                        navigate("/");
                     } else if (status === 400) {
                         setLoginErrorMsg("필수 입력값을 모두 입력해주세요.");
                     } else if (status === 404) {
