@@ -99,3 +99,19 @@
     color: #A2A2A2;
     margin-right: auto;
 }
+
+.content-section-cnt {
+    display: flex;
+    flex-direction: row;
+}
+
+.content-section-goodcnt,
+.content-section-viewcnt {
+    font-size: 16px;
+    color: #A2A2A2;
+    padding-right: 5px;
+}
+
+.empty-title {
+    margin-top: 30px;
+}
