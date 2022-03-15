@@ -44,23 +44,33 @@ const Board = () => {
             }
         ];
 
-    // const [list, setList] = useState([]);
-    const [list, setList] = useState(initialList);
+    const searchDumpData = 
+        [
+            {
+                "viewCnt": 0,
+                "_id": "62279c3e0852694605079440",
+                "title": "test-gaeun",
+                "content": "test-gaeunt",
+                "postNumber": 8,
+                "date": "2022-03-09 03:11:10"
+            }
+        ];
+
+    const [list, setList] = useState([]);
+    // const [list, setList] = useState(initialList);
 
     const contentsClickHandler = (postNumber) => {  // 클릭 시 글 상세 페이지로 이동
-        // console.log(postNumber);
         navigate(`/post/${postNumber}`);
     }
 
     const enterSearchInput = async (e) => {
         if (e.key === 'Enter') {
-            console.log(e.target.value);
             await getApi({},
                 `/search/${option}/${e.target.value}`,
                 authContext.state.token
             )
                 .then(({ status, data }) => {
-                    console.log(status, data);
+                    console.log('search 결과', status, data);
                     if (data) {
                         setList(data);
                     } else {
