@@ -2,6 +2,7 @@ const { db } = require("../../model/post");
 const PostModel = require("../../model/post");
 const moment = require("../../controller/moment");
 const auth = require("../../controller/auth");
+const userInfo = require("../../controller/userinfo");
 
 const createPost = (req, res) => {
   const name = res.locals.user.name;
@@ -50,7 +51,7 @@ const getAllPost = (req, res) => {
 
 const getPost = async (req, res) => {
   const postNumber = parseInt(req.params.postNumber);
-  PostModel.findOne({ postNumber: postNumber }, (err, result) => {
+  PostModel.findOne({ postNumber: postNumber }, async (err, result) => {
     if (err) return res.status(500).end();
     if (!result) return res.status(404).end();
 
@@ -58,10 +59,12 @@ const getPost = async (req, res) => {
     result.save();
 
     var authCk = auth.check(res.locals.user.userId, result.userId);
+    var user = await userInfo.findUser(result.userId);
 
     const exData = {
       "_id": result._id,
-      "userId": result.userId,  
+      "userId": result.userId,
+      "userRole": user.role,
       "writer": result.writer,
       "title": result.title,
       "content": result.content,
@@ -113,7 +116,7 @@ const deletePost = (req, res) => {
 
         db.collection("counter").updateOne(
           { name: "postNumber" },
-          { $inc: { postNumber: -1 } }
+          //{ $inc: { postNumber: -1 } } 게시글을 삭제하더라도 postNumber는 계속 증가하도록함.
         );
 
         res.status(200).send({ message: "삭제 완료" });
