@@ -91,20 +91,12 @@ const PostDetail = () => {
                 });
         }
         getPosting();
-    }, []);
+    }, [mine]);
 
-    // const [postData, setPostData] = useState({
-    //     title: "제목테스트",
-    //     content: "내용",
-    //     date: "232",
-    // })
-    // const [postData, setPostData] = useState({
-    //     title: "",
-    //     content: "",
-    //     date: "",
-    // });
+    
 
     const modifyHandler = () => {
+        navigate(`/modify/${postId}`);
     }
 
     const deleteHandler = async () => {
@@ -147,7 +139,7 @@ const PostDetail = () => {
             <div className='detail-hr'></div>
             <div className='detail-container'>
                 <div className='detail-modify-del'>
-                    {mine == true ?
+                    {mine === true ?
                         (<>
                             <p className='detail-modify' onClick={modifyHandler}>수정</p>
                             &nbsp;&nbsp;
