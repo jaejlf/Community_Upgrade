@@ -30,8 +30,7 @@ const createPost = (req, res) => {
         { name: "postNumber" },
         { $inc: { postNumber: 1 } }
       );
-    }
-    else {
+    } else {
       return res.status(501).send("로그인을 해야 게시글을 작성할 수 있습니다.");
     }
   });
@@ -62,17 +61,17 @@ const getPost = async (req, res) => {
     var user = await userInfo.findUser(result.userId);
 
     const exData = {
-      "_id": result._id,
-      "userId": result.userId,
-      "userRole": user.role,
-      "writer": result.writer,
-      "title": result.title,
-      "content": result.content,
-      "postNumber": result.postNumber,
-      "viewCnt": result.viewCnt,
-      "date": result.date,
-      "auth": authCk
-    }
+      _id: result._id,
+      userId: result.userId,
+      userRole: user.role,
+      writer: result.writer,
+      title: result.title,
+      content: result.content,
+      postNumber: result.postNumber,
+      viewCnt: result.viewCnt,
+      date: result.date,
+      auth: authCk,
+    };
 
     res.status(200).json(exData);
   });
@@ -81,54 +80,124 @@ const getPost = async (req, res) => {
 const editPost = (req, res) => {
   const postNumber = parseInt(req.params.postNumber);
   const { title, content } = req.body;
-  db.collection("posts").findOne({ postNumber: postNumber }, function (err, data) {
-    if (err) return res.status(500).json({ error: error.message });
-    //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 수정할 수 있습니다." });
+  db.collection("posts").findOne(
+    { postNumber: postNumber },
+    function (err, data) {
+      if (err) return res.status(500).json({ error: error.message });
+      //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 수정할 수 있습니다." });
 
-    db.collection("posts").updateOne(
-      { postNumber: postNumber },
-      {
-        $set: {
-          title: req.body.title,
-          content: req.body.content,
-          date: moment.dateNow(),
+      db.collection("posts").updateOne(
+        { postNumber: postNumber },
+        {
+          $set: {
+            title: req.body.title,
+            content: req.body.content,
+            date: moment.dateNow(),
+          },
         },
-      },
-      function (err, data) {
-        if (err) return res.status(500).json({ error: error.message });
+        function (err, data) {
+          if (err) return res.status(500).json({ error: error.message });
 
-        res.status(200).send({ message: "수정 완료" });
-      }
-    );
-  })
+          res.status(200).send({ message: "수정 완료" });
+        }
+      );
+    }
+  );
 };
 
 const deletePost = (req, res) => {
   const postNumber = parseInt(req.params.postNumber);
-  db.collection("posts").findOne({ postNumber: postNumber }, function (err, data) {
-    if (err) return res.status(500).json({ error: error.message });
-    //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 삭제할 수 있습니다." });
+  db.collection("posts").findOne(
+    { postNumber: postNumber },
+    function (err, data) {
+      if (err) return res.status(500).json({ error: error.message });
+      //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 삭제할 수 있습니다." });
 
-    db.collection("posts").deleteOne(
-      { postNumber: postNumber },
-      function (err, data) {
-        if (err) return res.status(500).json({ error: error.message });
+      db.collection("posts").deleteOne(
+        { postNumber: postNumber },
+        function (err, data) {
+          if (err) return res.status(500).json({ error: error.message });
 
-        db.collection("counter").updateOne(
-          { name: "postNumber" },
-          //{ $inc: { postNumber: -1 } } 게시글을 삭제하더라도 postNumber는 계속 증가하도록함.
-        );
+          db.collection("counter").updateOne(
+            { name: "postNumber" }
+            //{ $inc: { postNumber: -1 } } 게시글을 삭제하더라도 postNumber는 계속 증가하도록함.
+          );
 
-        res.status(200).send({ message: "삭제 완료" });
-      }
-    );
-  })
+          res.status(200).send({ message: "삭제 완료" });
+        }
+      );
+    }
+  );
 };
 
+const pushGood = (req, res) => {
+  const postNumber = parseInt(req.params.postNumber);
+
+  var pushGoodList = eval({ user: "", userId: "", role: "" });
+  pushGoodList.user = res.locals.user.name;
+  pushGoodList.userId = res.locals.user.userId;
+  pushGoodList.role = res.locals.user.role;
+
+  const userId = res.locals.user.userId;
+
+  db.collection("posts").findOne(
+    { postNumber: postNumber },
+    function (err, data) {
+      if (err) return res.status(500).json({ error: error.message });
+      db.collection("posts").findOne(
+        { good: { $elemMatch: { userId: userId } } },
+        (err, result) => {
+          if (err) return res.send("pushGood check error!");
+          console.log(result);
+          if (!result) {
+            //좋아요 누름
+            pushGoodFunction();
+          } else {
+            //좋아요 삭제
+            deleteGoodFunction();
+          }
+        }
+      );
+
+      const pushGoodFunction = (err, result) => {
+        db.collection("posts").updateOne(
+          { postNumber: postNumber },
+          {
+            $push: {
+              good: pushGoodList,
+            },
+          },
+          (err, data) => {
+            if (err) return res.status(500).json({ error: error.message });
+
+            res.status(200).send({ message: "좋아요 누름" });
+          }
+        );
+      };
+
+      const deleteGoodFunction = (err, result) => {
+        db.collection("posts").updateOne(
+          { postNumber: postNumber },
+          {
+            $pull: {
+              good: { userId: userId },
+            },
+          },
+          (err, data) => {
+            if (err) return res.status(500).json({ error: error.message });
+
+            res.status(200).send({ message: "좋아요 삭제" });
+          }
+        );
+      };
+    }
+  );
+};
 module.exports = {
   createPost,
   getAllPost,
   getPost,
   editPost,
   deletePost,
+  pushGood,
 };

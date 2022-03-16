@@ -8,4 +8,7 @@ router.put("/:postNumber", ctrl.editPost); // 게시글 수정
 router.get("/:postNumber", ctrl.getPost); // 게시글 상세조회
 router.delete("/:postNumber", ctrl.deletePost); // 게시글 삭제
 
+//추가기능
+router.put("/:postNumber/good", ctrl.pushGood); //좋아요 누르기
+
 module.exports = router;
