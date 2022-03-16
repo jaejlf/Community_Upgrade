@@ -32,7 +32,7 @@ const MyComment = ({ props }) => {
                 authContext.state.token
             )
             .then(({ status, data }) => {
-                if (status === 200) {
+                if (status === 200 || status === 201) {
                     console.log('댓글 작성 post api', status);
                     window.location.replace(`/post/${postId}`);  // 새로고침하여 댓글 다시 불러오기
                 } else if (status === 500) {
@@ -55,7 +55,7 @@ const MyComment = ({ props }) => {
                 authContext.state.token
             )
             .then(({ status, data }) => {
-                if (status === 200) {
+                if (status === 200 || status === 201) {
                     console.log('대댓글 post api', status);
                     window.location.replace(`/post/${postId}`);  // 새로고침하여 댓글 다시 불러오기
                 } else if (status === 500) {
