@@ -103,7 +103,7 @@ const PostDetail = () => {
         .then(({ status, data }) => {
           if (status === 200) {
             alert("삭제되었습니다.")
-            navigate("/board")
+            navigate("/")
           } else if (status === 501) {
             alert("작성자만 게시글을 삭제할 수 있습니다.")
           } else {

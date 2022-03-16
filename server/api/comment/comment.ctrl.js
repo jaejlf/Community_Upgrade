@@ -59,6 +59,12 @@ const getAllComment = async (req, res) => {
   res.status(200).json(exData)
 }
 
+const getReplyComment = async (req, res) => {
+  const parentId = req.params.parentId
+  const childComment = await CommentModel.find({ parentId: parentId, depth: 2 })
+  res.status(200).json(childComment)
+}
+
 const editComment = (req, res) => {
   const id = req.params.id
   db.collection("comments").findOne({ _id: id }, function (err, data) {
@@ -135,6 +141,7 @@ const replyComment = async (req, res) => {
 module.exports = {
   createComment,
   getAllComment,
+  getReplyComment,
   editComment,
   deleteComment,
   replyComment,
