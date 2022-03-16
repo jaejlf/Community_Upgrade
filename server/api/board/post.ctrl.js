@@ -30,6 +30,10 @@ const createPost = (req, res) => {
         { name: "postNumber" },
         { $inc: { postNumber: 1 } }
       );
+      db.collection("counter").updateOne(
+        { name: "postCnt" },
+        { $inc: { postCnt: 1 } }
+      );
     } else {
       return res.status(501).send("로그인을 해야 게시글을 작성할 수 있습니다.");
     }
@@ -117,6 +121,11 @@ const deletePost = (req, res) => {
         { postNumber: postNumber },
         function (err, data) {
           if (err) return res.status(500).json({ error: error.message });
+
+          db.collection("counter").updateOne(
+            { name: "postCnt" },
+            { $inc: { postCnt: -1 } }
+          );
 
           res.status(200).send({ message: "삭제 완료" });
         }
