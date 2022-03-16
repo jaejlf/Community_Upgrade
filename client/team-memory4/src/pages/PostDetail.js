@@ -102,19 +102,19 @@ const PostDetail = () => {
       await deleteApi({}, `/board/${postId}`, authContext.state.token)
         .then(({ status, data }) => {
           if (status === 200) {
-            alert("삭제되었습니다.")
-            navigate("/board")
+            alert("삭제되었습니다.");
+            navigate("/");
           } else if (status === 501) {
-            alert("작성자만 게시글을 삭제할 수 있습니다.")
+            alert("작성자만 게시글을 삭제할 수 있습니다.");
           } else {
-            alert("삭제에 실패했습니다.")
+            alert("삭제에 실패했습니다.");
           }
         })
         .catch((e) => {
-          console.log(e.response)
+          console.log(e.response);
         })
     } else {
-      alert("취소합니다.")
+      alert("취소합니다.");
     }
   }
 

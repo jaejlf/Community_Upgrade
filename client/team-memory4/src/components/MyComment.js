@@ -51,7 +51,7 @@ const MyComment = ({ props }) => {
                 {
                     content: myComment,
                 },
-                `/comment/${recommentContext.state.recommentId}`,
+                `/comment/${recommentContext.state.recommentId}/parent`,
                 authContext.state.token
             )
             .then(({ status, data }) => {

@@ -28,8 +28,8 @@ const Editor = (desc) => {
     useEffect(() => {  // 수정하는 글이라면, 기존 내용 불러오기
         if (wm === 'modify') {
             /// Test Code ///
-            setTitle("제목 테스트");
-            setValue("수정 내용 테스트");
+            // setTitle("제목 테스트");
+            // setValue("수정 내용 테스트");
             ///////////////////
             const getPosting = async () => {
                 await getApi(
@@ -51,11 +51,8 @@ const Editor = (desc) => {
                     });
             }
             getPosting();
-        } else {
-            setTitle("");
-            setValue("");
         }
-    }, [title, value]);
+    }, []);
 
     const postHandler = async () => {
         if (wm === 'write') {
@@ -70,9 +67,9 @@ const Editor = (desc) => {
                 authContext.state.token
             )
                 .then(({ status, data }) => {
-                    if (status === 200) {
+                    if (status === 200 || status === 201) {
                         console.log(data);
-                        navigate("/board");
+                        navigate("/");
                     } else if (status === 500) {
                         alert("게시글 등록 시 오류가 발생했습니다.");
                     } else if (status === 501) {
@@ -92,9 +89,9 @@ const Editor = (desc) => {
                 authContext.state.token
             )
                 .then(({ status, data }) => {
-                    if (status === 200) {
+                    if (status === 200 || status === 201) {
                         console.log(data);
-                        navigate("/board");
+                        navigate("/");
                     } else if (status === 500) {
                         alert("게시글 등록 시 오류가 발생했습니다.");
                     } else if (status === 501) {

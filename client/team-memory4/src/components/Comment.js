@@ -34,6 +34,8 @@ const Comment = ({ comment }) => {
         .then(({ status, data }) => {
             if (status === 200) {
                 console.log('댓글삭제', status, data);
+                alert('삭제되었습니다.');
+                window.location.reload();  // 새로고침하여 댓글 다시 불러오기
             } else if (status === 501) {
                 alert("작성자만 댓글을 삭제할 수 있습니다.");
             }

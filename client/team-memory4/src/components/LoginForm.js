@@ -35,25 +35,25 @@ const LoginForm = (roleid) => {
             setLoginErrorMsg("이메일 형식에 맞게 입력해주세요.");
         } else {
             ////////////// 임시 data로 로그인 /////////////
-            authContext.dispatch({
-                type: "login",
-                // token: data.token,
-                token: "1243232",
-                email: details.email,
-                role: 1,
-                userId: 1,
-            });
-            localStorage.setItem(
-                "loggedInfo",
-                JSON.stringify({
-                    email: details.email,
-                    role: 1,
-                    // token: data.token
-                    token: "1243232",
-                    userId: 1,
-                })
-            );
-            navigate("/");
+            // authContext.dispatch({
+            //     type: "login",
+            //     // token: data.token,
+            //     token: "1243232",
+            //     email: details.email,
+            //     role: 1,
+            //     userId: 1,
+            // });
+            // localStorage.setItem(
+            //     "loggedInfo",
+            //     JSON.stringify({
+            //         email: details.email,
+            //         role: 1,
+            //         // token: data.token
+            //         token: "1243232",
+            //         userId: 1,
+            //     })
+            // );
+            // navigate("/");
             //////////////////////////////////////////
             await postApi(details, "/user/login")
                 .then(({ status, data }) => {
@@ -64,6 +64,7 @@ const LoginForm = (roleid) => {
                             token: data.token,
                             email: details.email,
                             role: data.role,
+                            name: data.name,
                             userId: data.userId,
                         });
                         localStorage.setItem(
@@ -72,6 +73,7 @@ const LoginForm = (roleid) => {
                                 email: details.email,
                                 role: data.role,
                                 token: data.token,
+                                name: data.name,
                                 userId: data.userId,
                             })
                         );
