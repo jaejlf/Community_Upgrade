@@ -1,0 +1,17 @@
+.mypage {
+    display: flex;
+    flex-direction: column;
+}
+
+.mypage-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 20vw 0;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.mypage-options p {
+    cursor: pointer;
+}
