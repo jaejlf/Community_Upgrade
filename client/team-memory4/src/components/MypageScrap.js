@@ -8,7 +8,7 @@ import { Post } from '../components';
 const MypageScrap = () => {
     let dumpdata = {
         "scraps": [
-            1,    //postNumber¸¦ ¸®ÅÏÇÔ.
+            1,    //postNumberë¥¼ ë¦¬í„´í•¨.
             5
         ]
     };
@@ -38,7 +38,16 @@ const MypageScrap = () => {
 
     return (
         <div>
-            MypageScrap
+            {myScrapList.length === 0 ? (
+                <p>ìŠ¤í¬ë©í•œ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.</p>
+            ): (
+                myScrapList.map(post => (
+                        <Post
+                            key={post._id}
+                            post={post}
+                        />
+                ))
+            )}
         </div>
     )
 }

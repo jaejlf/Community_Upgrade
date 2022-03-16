@@ -18,8 +18,12 @@ const MyPage = () => {
     return (
         <div className='mypage'>
             <div className='mypage-info-section'>
-                <p>{authContext.state.email}</p>
-                <p>닉네임</p>
+                <div className='mypage-info-name-section'>
+                    <p className='mypage-info-name'>{authContext.state.name}</p>
+                    <p className='mypage-info-name-text'>님의 마이페이지</p>
+                </div>
+                <p className='mypage-info-email'>{authContext.state.email}</p>
+                <p className='mypage-info-role'>{authContext.state.role === 2 ? '기업회원' : '개인회원'}</p>
             </div>
             <div className='mypage-options'>
                 <p onClick={() => optionclickHandler("post")}>작성 글</p>
