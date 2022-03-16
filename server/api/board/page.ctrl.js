@@ -25,6 +25,9 @@ const paging = async (req, res) => {
         if (allPosts[i]) {
             await exData.push(allPosts[i]);
         }
+        else{
+            break;
+        }
     }
     console.log(exData);
     res.status(200).json({
