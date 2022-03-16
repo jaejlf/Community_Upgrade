@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../App';
 import { getApi } from '../api';
 import { useNavigate } from "react-router-dom";
-import parse from "html-react-parser"
 import Search from '../assets/images/search.png';
+import { Post } from '../components';
 import '../styles/Board.css';
 
 
@@ -64,12 +64,8 @@ const Board = () => {
             }
         ];
 
-    const [list, setList] = useState([]);
-    // const [list, setList] = useState(initialList);
-
-    const contentsClickHandler = (postNumber) => {  // 클릭 시 글 상세 페이지로 이동
-        navigate(`/post/${postNumber}`);
-    }
+    // const [list, setList] = useState([]);
+    const [list, setList] = useState(initialList);  // API TEST
 
     const enterSearchInput = async (e) => {
         if (e.key === 'Enter') {
@@ -150,21 +146,11 @@ const Board = () => {
                 {
                     list.length ?
                         list.map((e, idx) => (
-                            <div
-                                className="content-section"
+                            <Post
                                 key={idx}
-                                onClick={() => contentsClickHandler(e.postNumber)}
-                            >
-                                <div className='content-section-contents'>
-                                    <div className="content-section-title">{e.title}</div>
-                                    <div className="content-section-content">{parse("" + e.content)}</div>
-                                    <div className="content-section-date">{e.date}</div>
-                                    <div className='content-section-cnt'>
-                                        <div className="content-section-goodcnt">{e.goodCnt}</div>
-                                        <div className="content-section-viewcnt">{e.viewCnt}</div>
-                                    </div>
-                                </div>
-                            </div>
+                                post={e}
+                            />
+                                
                         )) :
                         <div className="empty-title">
                             글 없음

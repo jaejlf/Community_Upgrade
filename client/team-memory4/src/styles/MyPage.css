@@ -15,3 +15,7 @@
 .mypage-options p {
     cursor: pointer;
 }
+
+.mypage-list-section {
+    margin: 0 50px;
+}

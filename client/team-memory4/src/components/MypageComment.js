@@ -20,8 +20,8 @@ const MypageComment = () => {
         ]
     };
     const authContext = useContext(AuthContext);
-    const [myComments, setMyComments] = useState(dumpdata.myComment);  // API TEST
-    // const [myComments, setMyComments] = useState([]);
+    // const [myComments, setMyComments] = useState(dumpdata.myComment);  // API TEST
+    const [myComments, setMyComments] = useState([]);
 
     useEffect(() => {
         const getMypageComment = async() => {
@@ -45,19 +45,23 @@ const MypageComment = () => {
 
     return (
         <div>
-            MypageComment
-            {myComments.map(comment => (
-                comment.isDeleted ? (
-                    <></>
-                ) : (
-                    <Comment
-                    key={comment._id}
-                    comment={comment}
-                    page={'mypage'}
-                    />
-                )
-                
-            ))}
+            {myComments.length === 0 ? (
+                <p>작성한 댓글이 없습니다.</p>
+            ) : (
+                myComments.map(comment => (
+                    comment.isDeleted ? (
+                        <></>
+                    ) : (
+                        <Comment
+                        key={comment._id}
+                        comment={comment}
+                        page={'mypage'}
+                        />
+                    )
+                ))
+            )}
+
+            
         </div>
     )
 }
