@@ -2,6 +2,7 @@ const BoardModel = require("../../model/post")
 const CommentModel = require("../../model/comment")
 const UserModel = require("../../model/user");
 const userInfo = require("../../controller/userinfo");
+const postInfo = require("../../controller/postInfo");
 
 const getMyPost = async (req, res) => {
     const userId = res.locals.user.userId;
@@ -50,9 +51,14 @@ const scrapping = async (req, res) => {
 
 const getMyScrap = async (req, res) => {
     var user = await userInfo.findUser(res.locals.user.userId);
+    var exData = [];
 
+    for (let element of user.scrap) {
+        var post = await postInfo.findPost(element);
+        await exData.push(post);
+    }
     res.status(200).json({
-        scraps: user.scrap
+        scraps: exData
     })
 }
 
