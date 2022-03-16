@@ -30,12 +30,12 @@ const MyPage = () => {
             <div className='mypage-list-section'>
             {
                 option === 'scrap' ? (
-                    <MypagePost />
+                    <MypageScrap />
                 ) : (
                     option === 'comment' ? (
                         <MypageComment />
                     ) : (
-                        <MypageScrap />
+                        <MypagePost />
                     )
                 )
             }

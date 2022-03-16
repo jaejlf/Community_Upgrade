@@ -95,6 +95,7 @@ const AllComments = ({ props }) => {
             {allComment.map(comment => (
                 <Comment
                     comment={comment}
+                    page={'post'}
                 />
             ))}
         </div>

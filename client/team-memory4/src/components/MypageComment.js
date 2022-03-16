@@ -20,8 +20,8 @@ const MypageComment = () => {
         ]
     };
     const authContext = useContext(AuthContext);
-    // const [myComments, setMyComments] = useState(dumpdata.myComment);
-    const [myComments, setMyComments] = useState([]);
+    const [myComments, setMyComments] = useState(dumpdata.myComment);  // API TEST
+    // const [myComments, setMyComments] = useState([]);
 
     useEffect(() => {
         const getMypageComment = async() => {
@@ -41,16 +41,22 @@ const MypageComment = () => {
             });
         }
         getMypageComment();
-        console.log('잘 받아왔나..?', myComments);
     }, []);
 
     return (
         <div>
             MypageComment
             {myComments.map(comment => (
-                <Comment
+                comment.isDeleted ? (
+                    <></>
+                ) : (
+                    <Comment
+                    key={comment._id}
                     comment={comment}
-                />
+                    page={'mypage'}
+                    />
+                )
+                
             ))}
         </div>
     )
