@@ -9,6 +9,7 @@ import '../styles/Board.css';
 const Post = (post) => {
     const authContext = useContext(AuthContext);
     const navigate = useNavigate();
+    const info = post.post;
     console.log(post.post);
 
     const contentsClickHandler = (postNumber) => {  // 클릭 시 글 상세 페이지로 이동
@@ -18,13 +19,13 @@ const Post = (post) => {
     return (
         <div className="content-section">
         <div className='content-section-contents'
-            onClick={() => contentsClickHandler(post.post.postNumber)}
+            onClick={() => contentsClickHandler(info.postNumber)}
             >
-            <div className="content-section-title">{post.post.title}</div>
-            <div className="content-section-date">{post.post.date}</div>
+            <div className="content-section-title">{info.title}</div>
+            <div className="content-section-date">{info.date}</div>
             <div className='content-section-cnt'>
-                <div className="content-section-goodcnt">{post.post.goodCnt}</div>
-                <div className="content-section-viewcnt">{post.post.viewCnt}</div>
+                <div className="content-section-goodcnt">{info.goodCnt}</div>
+                <div className="content-section-viewcnt">{info.viewCnt}</div>
             </div>
         </div>
         </div>

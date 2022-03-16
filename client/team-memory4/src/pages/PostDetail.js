@@ -68,7 +68,6 @@ const PostDetail = () => {
     const getPosting = async () => {
       // API Test Code //
       // setPostData(postDumpData);
-      // console.log(postData);
       // setMine(postData.auth);
       /////////////////////
       await getApi({}, `/board/${postId}`, authContext.state.token)
@@ -124,7 +123,7 @@ const PostDetail = () => {
         <h3 className="detail-title">{postData.title}</h3>
         <p className="detail-writer">{postData.writer}</p>
         <p className="detail-role">
-          {postData.role === 1 ? <>개인회원</> : <>기업회원</>}
+          {postData.role === 2 ? <>기업회원</> : <>개인회원</>}
         </p>
         <p className="detail-date">{postData.date}</p>
       </div>

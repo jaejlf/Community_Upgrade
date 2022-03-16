@@ -8,13 +8,33 @@ import { Post } from '../components';
 const MypageScrap = () => {
     let dumpdata = {
         "scraps": [
-            1,    //postNumber를 리턴함.
-            5
+            {
+                "_id": "622acb33195047e5559a2780",
+                "postNumber": 3,
+                "title": "제목3",
+                "content": "내용3",
+                "userId": 3,
+                "writer": "tester",
+                "viewCnt": 0,
+                "date": "2022-03-11 13:08:19"
+            },
+            {
+                "_id": "622ae9b4eccbe4193f2ed234",
+                "postNumber": 5,
+                "title": "제목5",
+                "content": "내용5",
+                "userId": 3,
+                "writer": "tester",
+                "viewCnt": 0,
+                "comment": [],
+                "date": "2022-03-11 15:18:28"
+            }
         ]
     };
 
     const authContext = useContext(AuthContext);
     const [myScrapList, setMyScrapList] = useState([]);
+    // const [myScrapList, setMyScrapList] = useState(dumpdata.scraps); // API TEST
 
     useEffect(() => {
         const getMyScrap = async() => {
