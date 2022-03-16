@@ -74,7 +74,7 @@ const Board = () => {
                 authContext.state.token
             )
                 .then(({ status, data }) => {
-                    console.log('search 결과', status, data);
+                    // console.log('search 결과', status, data);
                     if (data) {
                         setList(data);
                     } else {
@@ -86,6 +86,25 @@ const Board = () => {
                 });
         }
     }
+
+    const clickSearchInput = async (e) => {
+        await getApi({},
+            `/search/${option}/${e.target.value}`,
+            authContext.state.token
+        )
+            .then(({ status, data }) => {
+                // console.log('search 결과', status, data);
+                if (data) {
+                    setList(data);
+                } else {
+                    setList([]);
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }
+
 
 
     useEffect(() => {
@@ -111,7 +130,7 @@ const Board = () => {
     return (
         <div className='board-page'>
             <div className="searchbar">
-                <img src={Search} className="search-img" />
+                <img src={Search} className="search-img" onClick={clickSearchInput}/>
                 <input
                     className="search-input"
                     onKeyPress={enterSearchInput}
