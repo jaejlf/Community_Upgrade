@@ -14,6 +14,12 @@ const CommentSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    parentId:
+      // {
+      //   type: mongoose.Schema.Types.ObjectId,
+      //   ref: "comment",
+      // },
+      { type: String, required: false },
     depth: {
       //대댓글 구현 위한 depth 설정
       type: Number,
@@ -21,8 +27,23 @@ const CommentSchema = new mongoose.Schema(
     },
     date: { type: String, required: false },
   },
-  { versionKey: false }
+  { versionKey: false },
+  { toObject: { virtuals: true }, toJSON: { virtuals: true } }
 )
+
+CommentSchema.virtual("comments", {
+  ref: "comment",
+  localField: "_id",
+  foreignField: "parentComment",
+})
+
+CommentSchema.virtual("childComments")
+  .get(function () {
+    return this._childComments
+  })
+  .set(function (v) {
+    this._childComments = v
+  })
 
 CommentSchema.pre("save", function () {
   this.date = moment.dateNow()

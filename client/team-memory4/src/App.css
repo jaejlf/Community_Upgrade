@@ -77,3 +77,7 @@ a {
   height: 1px;
   background-color: #0053FD;
 }
+
+button {
+  cursor: pointer;
+}

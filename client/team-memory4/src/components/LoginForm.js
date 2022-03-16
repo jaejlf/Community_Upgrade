@@ -35,27 +35,25 @@ const LoginForm = (roleid) => {
             setLoginErrorMsg("이메일 형식에 맞게 입력해주세요.");
         } else {
             ////////////// 임시 data로 로그인 /////////////
-            // authContext.dispatch({
-            //     type: "login",
-            //     // token: data.token,
-            //     token: "1243232",
-            //     email: details.email,
-            //     name: details.name,
-            //     role: 0,
-            //     userId: 1,
-            // });
-            // localStorage.setItem(
-            //     "loggedInfo",
-            //     JSON.stringify({
-            //         email: details.email,
-            //         role: 0,
-            //         name: details.name,
-            //         // token: data.token
-            //         token: "1243232",
-            //         userId: 1,
-            //     })
-            // );
-            // navigate("/board");
+            authContext.dispatch({
+                type: "login",
+                // token: data.token,
+                token: "1243232",
+                email: details.email,
+                role: 1,
+                userId: 1,
+            });
+            localStorage.setItem(
+                "loggedInfo",
+                JSON.stringify({
+                    email: details.email,
+                    role: 1,
+                    // token: data.token
+                    token: "1243232",
+                    userId: 1,
+                })
+            );
+            navigate("/");
             //////////////////////////////////////////
             await postApi(details, "/user/login")
                 .then(({ status, data }) => {
@@ -65,7 +63,6 @@ const LoginForm = (roleid) => {
                             type: "login",
                             token: data.token,
                             email: details.email,
-                            name: details.name,
                             role: data.role,
                             userId: data.userId,
                         });
@@ -74,7 +71,6 @@ const LoginForm = (roleid) => {
                             JSON.stringify({
                                 email: details.email,
                                 role: data.role,
-                                name: details.name,
                                 token: data.token,
                                 userId: data.userId,
                             })
