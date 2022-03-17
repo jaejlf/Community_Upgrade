@@ -15,3 +15,32 @@
 .mypage-options p {
     cursor: pointer;
 }
+
+.mypage-list-section {
+    margin: 0 50px;
+}
+
+.mypage-info-name-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.mypage-info-name {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.mypage-info-name-text {
+    font-size: 22px;
+}
+
+.mypage-info-email {
+    font-size: 20px;
+}
+
+.mypage-info-role {
+    font-size: 20px;
+    color: #8B8B8B;
+}

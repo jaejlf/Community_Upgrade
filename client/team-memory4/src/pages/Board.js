@@ -1,56 +1,123 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../App';
 import { getApi } from '../api';
-import { useNavigate } from "react-router-dom";
-import parse from "html-react-parser"
 import Search from '../assets/images/search.png';
+import { Post } from '../components';
+import Pagination from "react-js-pagination";
 import '../styles/Board.css';
 
 
 const Board = () => {
     const authContext = useContext(AuthContext);
-    const navigate = useNavigate();
 
     const [option, setOption] = useState("title");  // title, content, user
 
-
     const initialList =
-        [
+    {
+        "allPost": [
             {
-                "_id": "6226ecb59ae535d10e6e484c",
-                "viewCnt": 3,
-                "title": "제목1",
-                "content": "내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ\
-                dlㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ이렇게 내용이 길면은ㅇ잘려요ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ\
-                sdfㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇsdlflk",
+                "_id": "622f84557d6b184e6c1df712",
                 "postNumber": 1,
-                "date": "2022-03-08 14:42:13",
-                "viewCnt": 3,
-                "goodCnt": 5,
+                "title": "제목1 취업 고민 스펙 좀 봐주세요!",
+                "content": "수정한 내용",
+                "userId": 1,
+                "writer": "홍길동",
+                "viewCnt": 463,
+                "date": "2022-03-17 01:00:16",
+                "good": []
             },
             {
-                "_id": "6226ecba9ae535d10e6e4851",
-                "viewCnt": 3,
-                "title": "제목2",
-                "content": "<p>내용2</p>",
-                "postNumber": 2,
-                "date": "2022-03-08 14:42:18",
-                "viewCnt": 3,
-                "goodCnt": 5,
-            },
-            {
-                "_id": "6226ecbd9ae535d10e6e4856",
-                "viewCnt": 3,
-                "title": "제목3",
-                "content": "<h3>내용3</h3>",
+                "_id": "622f84827d6b184e6c1df71f",
                 "postNumber": 3,
-                "date": "2022-03-08 14:42:21",
-                "viewCnt": 3,
-                "goodCnt": 5,
-            }
-        ];
+                "title": "취업 고민 스펙이요 빨리요!!!! 급해요!!!!!!!!!",
+                "content": "초록",
+                "userId": 1,
+                "writer": "재재",
+                "viewCnt": 53,
+                "date": "2022-03-17 02:53:17",
+                "good": []
+            },
+            {
+                "_id": "622f84a37d6b184e6c1df727",
+                "postNumber": 4,
+                "title": "안녕하세요 가입 인사~~",
+                "content": "yellow",
+                "userId": 2,
+                "writer": "룰루",
+                "viewCnt": 73,
+                "date": "2022-03-17 01:00:12",
+                "good": []
+            },
+            {
+                "_id": "622f84557d6b184e6c1df712",
+                "postNumber": 1,
+                "title": "제목1 취업 고민 스펙 좀 봐주세요!",
+                "content": "수정한 내용",
+                "userId": 1,
+                "writer": "홍길동",
+                "viewCnt": 463,
+                "date": "2022-03-17 01:00:16",
+                "good": []
+            },
+            {
+                "_id": "622f84827d6b184e6c1df71f",
+                "postNumber": 3,
+                "title": "취업 고민 스펙이요 빨리요!!!! 급해요!!!!!!!!!",
+                "content": "초록",
+                "userId": 1,
+                "writer": "재재",
+                "viewCnt": 53,
+                "date": "2022-03-17 02:53:17",
+                "good": []
+            },
+            {
+                "_id": "622f84a37d6b184e6c1df727",
+                "postNumber": 4,
+                "title": "안녕하세요 가입 인사~~",
+                "content": "yellow",
+                "userId": 2,
+                "writer": "룰루",
+                "viewCnt": 73,
+                "date": "2022-03-17 01:00:12",
+                "good": []
+            },
+            {
+                "_id": "622f84557d6b184e6c1df712",
+                "postNumber": 1,
+                "title": "제목1 취업 고민 스펙 좀 봐주세요!",
+                "content": "수정한 내용",
+                "userId": 1,
+                "writer": "홍길동",
+                "viewCnt": 463,
+                "date": "2022-03-17 01:00:16",
+                "good": []
+            },
+            {
+                "_id": "622f84827d6b184e6c1df71f",
+                "postNumber": 3,
+                "title": "취업 고민 스펙이요 빨리요!!!! 급해요!!!!!!!!!",
+                "content": "초록",
+                "userId": 1,
+                "writer": "재재",
+                "viewCnt": 53,
+                "date": "2022-03-17 02:53:17",
+                "good": []
+            },
+            {
+                "_id": "622f84a37d6b184e6c1df727",
+                "postNumber": 4,
+                "title": "안녕하세요 가입 인사~~",
+                "content": "yellow",
+                "userId": 2,
+                "writer": "룰루",
+                "viewCnt": 73,
+                "date": "2022-03-17 01:00:12",
+                "good": []
+            },
+        ]
+    }
 
-    const searchDumpData = 
+    const searchDumpData =
         [
             {
                 "viewCnt": 0,
@@ -61,15 +128,17 @@ const Board = () => {
                 "date": "2022-03-09 03:11:10",
                 "viewCnt": 3,
                 "goodCnt": 5,
+                "good": [],
             }
         ];
 
     const [list, setList] = useState([]);
-    // const [list, setList] = useState(initialList);
+    // const [list, setList] = useState(initialList.allPost);  // API TEST
+    const [hotList, setHotList] = useState([]);
 
-    const contentsClickHandler = (postNumber) => {  // 클릭 시 글 상세 페이지로 이동
-        navigate(`/post/${postNumber}`);
-    }
+
+    // const [listNum, setListNum] = useState(initialList.allPost.length);  // API TEST
+    const [listNum, setListNum] = useState();
 
     const enterSearchInput = async (e) => {
         if (e.key === 'Enter') {
@@ -78,7 +147,7 @@ const Board = () => {
                 authContext.state.token
             )
                 .then(({ status, data }) => {
-                    console.log('search 결과', status, data);
+                    // console.log('search 결과', status, data);
                     if (data) {
                         setList(data);
                     } else {
@@ -91,15 +160,47 @@ const Board = () => {
         }
     }
 
+    const clickSearchInput = async (e) => {
+        await getApi({},
+            `/search/${option}/${e.target.value}`,
+            authContext.state.token
+        )
+            .then(({ status, data }) => {
+                // console.log('search 결과', status, data);
+                if (data) {
+                    setList(data);
+                } else {
+                    setList([]);
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }
+
 
     useEffect(() => {
-        const getList = async () => {
+        const getListNum = async () => {
             await getApi({},
-                `/board/posts`,
+                `/board/counter`,
                 authContext.state.token
             )
                 .then(({ status, data }) => {
-                    console.log(status, data);
+                    // console.log(status, data);
+                    setListNum(data);
+
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+        };
+        const getList = async () => {
+            await getApi({},
+                `board/?page=1`,
+                authContext.state.token
+            )
+                .then(({ status, data }) => {
+                    // console.log(status, data);
                     if (data.allPost) {
                         setList(data.allPost);
                     }
@@ -108,14 +209,53 @@ const Board = () => {
                     console.log(e);
                 });
         };
+        const getHotList = async () => {
+            await getApi({},
+                `board/hotposts`, // api test 추후 변경
+                authContext.state.token
+            )
+                .then(({ status, data }) => {
+                    // console.log('hotlist:', status, data);
+                    setHotList(data.hotPost);
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+        }
+        getListNum();
         getList();
+        // getHotList();
+    }, []);
 
-    }, [authContext.state.token]);
+    const [page, setPage] = useState(1);
+
+    const handlePageChange = async (page) => {
+        setPage(page);
+        await getApi(
+            {},
+            `/board/?page=${page}`,
+            authContext.state.token
+        )
+            .then(({ status, data }) => {
+                console.log('paging API:', status);
+                if (status === 200) {
+                    if (data.allPost) {
+                        setList(data.allPost);
+                    } else {
+
+                    }
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    };
+
 
     return (
         <div className='board-page'>
             <div className="searchbar">
-                <img src={Search} className="search-img" />
+                <img src={Search} className="search-img" onClick={clickSearchInput} />
                 <input
                     className="search-input"
                     onKeyPress={enterSearchInput}
@@ -150,27 +290,28 @@ const Board = () => {
                 {
                     list.length ?
                         list.map((e, idx) => (
-                            <div
-                                className="content-section"
+                            <Post
                                 key={idx}
-                                onClick={() => contentsClickHandler(e.postNumber)}
-                            >
-                                <div className='content-section-contents'>
-                                    <div className="content-section-title">{e.title}</div>
-                                    <div className="content-section-content">{parse("" + e.content)}</div>
-                                    <div className="content-section-date">{e.date}</div>
-                                    <div className='content-section-cnt'>
-                                        <div className="content-section-goodcnt">{e.goodCnt}</div>
-                                        <div className="content-section-viewcnt">{e.viewCnt}</div>
-                                    </div>
-                                </div>
-                            </div>
+                                post={e}
+                            />
+
                         )) :
                         <div className="empty-title">
                             글 없음
                         </div>
                 }
             </div>
+
+            <Pagination
+                activePage={page}
+                itemsCountPerPage={10}
+                totalItemsCount={listNum}
+                // pageRangeDisplayed={5} 
+                prevPageText={"‹"}
+                nextPageText={"›"}
+                onChange={handlePageChange}
+            />
+
         </div>
     );
 };

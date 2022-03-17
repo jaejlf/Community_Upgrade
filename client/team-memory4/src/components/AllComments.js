@@ -1,15 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
-import '../styles/Comments.css';
-import { getApi, deleteApi } from '../api';
+import { getApi } from '../api';
 import { AuthContext } from "../App";
-import { RecommentContext } from "../pages/PostDetail";
 import { Comment } from '../components';
+import '../styles/Comments.css';
 
 
 const AllComments = ({ props }) => {
     const CommentsDumpData = [
         {
-            "_id": "622aefb3e7f1228834012443",
+            "_id": "6230aaff15a4503f3abbb926",
             "userId": 3,
             "writer": "tester1",
             "postNumber": 1,
@@ -58,8 +57,34 @@ const AllComments = ({ props }) => {
         }
     ];
 
+    const childDumpdata = [
+        {
+            "_id": "6230b35bb0561a15d2816474",
+            "userId": 6,
+            "writer": "fff",
+            "postNumber": 2,
+            "content": "fff 댓글의 대댓글",
+            "isDeleted": false,
+            "parentId": "6230aaff15a4503f3abbb926",
+            "depth": 2,
+            "date": "2022-03-16 00:40:11"
+        },
+        {
+            "_id": "6230b982fc6693bb8fefd9da",
+            "userId": 6,
+            "writer": "fff",
+            "postNumber": 2,
+            "content": "fff 댓글의 대댓글2",
+            "isDeleted": false,
+            "parentId": "6230aaff15a4503f3abbb926",
+            "depth": 2,
+            "date": "2022-03-16 01:06:26"
+        }
+    ];
+
     const authContext = useContext(AuthContext);
     const [allComment, setAllComment] = useState(CommentsDumpData);
+    const [childComment, setChildComment] = useState(childDumpdata);
 
     let postId = props * 1;
 
@@ -67,7 +92,6 @@ const AllComments = ({ props }) => {
         const getAllComments = async () => {
             // API Test Code //
             // setAllComment(CommentsDumpData);
-
             /////////////////////
             await getApi(
                 {},
@@ -85,16 +109,17 @@ const AllComments = ({ props }) => {
                 });
         }
         getAllComments();
-        console.log(allComment);
+        // console.log(allComment);
     }, []);
 
-
+    // all comment를 받아온 다음, 그거 depth=1인 _id들 돌면서 /comment/:parentId/child api 호출. 
 
     return (
         <div className='all-comments-section'>
             {allComment.map(comment => (
                 <Comment
                     comment={comment}
+                    page={'post'}
                 />
             ))}
         </div>
