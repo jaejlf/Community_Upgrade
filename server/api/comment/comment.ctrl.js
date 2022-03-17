@@ -41,22 +41,20 @@ const getAllComment = async (req, res) => {
     authCk = auth.check(res.locals.user.userId, element.userId)
     var user = await userInfo.findUser(element.userId)
 
-    const data = {
-      _id: element._id,
-      userId: element.userId,
-      userRole: user.role,
-      writer: element.writer,
-      postNumber: element.postNumber,
-      content: element.content,
-      isDeleted: element.isDeleted,
-      depth: element.depth,
-      date: element.date,
-      auth: authCk,
-    }
+    var data = Object.assign({}, element)._doc;
+    data.userRole = user.role;
+    data.auth = authCk;
+
     await exData.push(data)
   }
 
   res.status(200).json(exData)
+}
+
+const getReplyComment = async (req, res) => {
+  const parentId = req.params.parentId
+  const childComment = await CommentModel.find({ parentId: parentId, depth: 2 })
+  res.status(200).json(childComment)
 }
 
 const editComment = (req, res) => {
@@ -135,6 +133,7 @@ const replyComment = async (req, res) => {
 module.exports = {
   createComment,
   getAllComment,
+  getReplyComment,
   editComment,
   deleteComment,
   replyComment,

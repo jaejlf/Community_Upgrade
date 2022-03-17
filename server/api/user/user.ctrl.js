@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { db } = require("../../model/user");
 
-
 //회원가입
 // - 성공 : 201 응답 (Created), 생성된 User객체 반환
 // - 실패 :필수 입력값이 누락 시 400 리턴 (Bad Request)
@@ -101,9 +100,9 @@ const checkAuth = (req, res, next) => {
   //쿠키에서 토큰 가져오기
   const token = req.cookies.token;
 
-  console.log("checkAuth - token test : " + req.cookies.token);
+  console.log("checkAuth - token test : " + token);
 
-  if (!token || token == "") {
+  if (!token) {
     //정상적으로 토큰이 없는 경우
     if (
       req.url === "/" ||
@@ -113,7 +112,10 @@ const checkAuth = (req, res, next) => {
     )
       return next();
     // 비정상적으로 토큰이 없는 경우
-    else return res.send("쿠키에 토큰 없음");
+    // else return res.json({
+    //   error : error
+    // });
+    else return next();
   }
 
   //토큰이 있는 경우

@@ -132,13 +132,13 @@ const Board = () => {
             }
         ];
 
-    // const [list, setList] = useState([]);
-    const [list, setList] = useState(initialList.allPost);  // API TEST
+    const [list, setList] = useState([]);
+    // const [list, setList] = useState(initialList.allPost);  // API TEST
     const [hotList, setHotList] = useState([]);
 
 
-    const [listNum, setListNum] = useState(initialList.allPost.length);  // API TEST
-    // const [listNum, setListNum] = useState();
+    // const [listNum, setListNum] = useState(initialList.allPost.length);  // API TEST
+    const [listNum, setListNum] = useState();
 
     const enterSearchInput = async (e) => {
         if (e.key === 'Enter') {

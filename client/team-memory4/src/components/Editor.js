@@ -1,6 +1,6 @@
 import React, { useState, useRef, useMemo, useContext, useEffect } from "react"
 import axios from "axios"
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom"
 import { postApi, putApi, getApi } from "../api"
 import ReactQuill, { Quill } from "react-quill"
 // import { Quill } from "quill"

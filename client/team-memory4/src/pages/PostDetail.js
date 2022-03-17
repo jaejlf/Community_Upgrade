@@ -81,8 +81,8 @@ const PostDetail = () => {
   useEffect(() => {
     const getPosting = async () => {
       // API Test Code //
-      setPostData(postDumpData);
-      setMine(postData.auth);
+      // setPostData(postDumpData);
+      // setMine(postData.auth);
       /////////////////////
       await getApi({}, `/board/${postId}`, authContext.state.token)
         .then(({ status, data }) => {

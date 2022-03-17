@@ -1,5 +1,7 @@
+const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const moment = require("../controller/moment");
+const user = require("./user");
 
 const PostSchema = new mongoose.Schema(
   {
@@ -13,6 +15,15 @@ const PostSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    good: [
+      {
+        user: {
+          type: Number,
+          ref: "user",
+          required: true,
+        },
+      },
+    ],
   },
   { versionKey: false }
 );
