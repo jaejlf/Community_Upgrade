@@ -13,43 +13,43 @@ const Board = () => {
 
 
     const initialList =
-        [
+    {
+        "allPost": [
             {
-                "_id": "6226ecb59ae535d10e6e484c",
-                "viewCnt": 3,
-                "title": "제목1",
-                "content": "내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ\
-                dlㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ이렇게 내용이 길면은ㅇ잘려요ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ\
-                sdfㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇsdlflk",
+                "_id": "622f84557d6b184e6c1df712",
                 "postNumber": 1,
-                "date": "2022-03-08 14:42:13",
-                "viewCnt": 3,
-                "goodCnt": 5,
-                "good": [],
+                "title": "제목1 취업 고민 스펙 좀 봐주세요!",
+                "content": "수정한 내용",
+                "userId": 1,
+                "writer": "홍길동",
+                "viewCnt": 463,
+                "date": "2022-03-17 01:00:16",
+                "good": []
             },
             {
-                "_id": "6226ecba9ae535d10e6e4851",
-                "viewCnt": 3,
-                "title": "제목2",
-                "content": "<p>내용2</p>",
-                "postNumber": 2,
-                "date": "2022-03-08 14:42:18",
-                "viewCnt": 3,
-                "goodCnt": 5,
-                "good": [],
-            },
-            {
-                "_id": "6226ecbd9ae535d10e6e4856",
-                "viewCnt": 3,
-                "title": "제목3",
-                "content": "<h3>내용3</h3>",
+                "_id": "622f84827d6b184e6c1df71f",
                 "postNumber": 3,
-                "date": "2022-03-08 14:42:21",
-                "viewCnt": 3,
-                "goodCnt": 5,
-                "good": [],
+                "title": "취업 고민 스펙이요 빨리요!!!! 급해요!!!!!!!!!",
+                "content": "초록",
+                "userId": 1,
+                "writer": "재재",
+                "viewCnt": 53,
+                "date": "2022-03-17 02:53:17",
+                "good": []
+            },
+            {
+                "_id": "622f84a37d6b184e6c1df727",
+                "postNumber": 4,
+                "title": "안녕하세요 가입 인사~~",
+                "content": "yellow",
+                "userId": 2,
+                "writer": "룰루",
+                "viewCnt": 73,
+                "date": "2022-03-17 01:00:12",
+                "good": []
             }
-        ];
+        ]
+    }
 
     const searchDumpData = 
         [
@@ -67,7 +67,7 @@ const Board = () => {
         ];
 
     // const [list, setList] = useState([]);
-    const [list, setList] = useState(initialList);  // API TEST
+    const [list, setList] = useState(initialList.allPost);  // API TEST
 
     const enterSearchInput = async (e) => {
         if (e.key === 'Enter') {

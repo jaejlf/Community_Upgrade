@@ -39,6 +39,7 @@ const PostDetail = () => {
     userId: 1,
     role: 1,
     writer: "jaej",
+    userRole: 1,
     title: "제목4",
     content: "내용4 어쩌구 이거는 테스트용",
     postNumber: 4,
@@ -46,6 +47,8 @@ const PostDetail = () => {
     good: [],
     date: "2022-03-14 22:20:42",
     auth: true, //true이면 작성자, false이면 작성자 아님
+    userScrapStauts: true,
+    userGoodStatus: false,
   }
   const authContext = useContext(AuthContext)
   const [state, dispatch] = useReducer(reducer, {
@@ -57,10 +60,16 @@ const PostDetail = () => {
   const [mine, setMine] = useState(false)
   const [postData, setPostData] = useState({
     writer: "",
+    userRole: 1,
     title: "",
     content: "",
     date: "",
     viewCnt: 0,
+    good: [],
+    auth: false,
+    userScrapStauts: false,
+    userGoodStatus: false,
+
   })
 
   const [like, setLike] = useState();
@@ -88,7 +97,8 @@ const PostDetail = () => {
               viewCnt: data.viewCnt,
             });
             setMine(data.auth); // 내 글인지 여부 -> 수정, 삭제
-            
+            setLike(data.userGoodStauts);
+            setScrap(data.userScrapStauts);
           }
         })
         .catch((e) => {
@@ -172,7 +182,7 @@ const PostDetail = () => {
   return (
     <div className="post-detail">
       <div className="detail-header">
-      <p className="detail-postnum">[{postData.postNumber}]</p>
+        <p className="detail-postnum">[{postData.postNumber}]</p>
         <h3 className="detail-title">{postData.title}</h3>
         <p className="detail-writer">{postData.writer}</p>
         <p className="detail-role">
