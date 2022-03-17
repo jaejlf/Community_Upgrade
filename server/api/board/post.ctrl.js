@@ -203,6 +203,7 @@ const pushGood = (req, res) => {
     }
   );
 };
+
 module.exports = {
   createPost,
   getAllPost,
