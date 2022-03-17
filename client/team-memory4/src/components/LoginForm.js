@@ -30,11 +30,11 @@ const LoginForm = (roleid) => {
   }, [details.email])
 
   const submitHandler = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (!details.email) {
-      setLoginErrorMsg("이메일을 입력해주세요.");
+      setLoginErrorMsg("이메일을 입력해주세요.")
     } else if (!emailValid) {
-      setLoginErrorMsg("이메일 형식에 맞게 입력해주세요.");
+      setLoginErrorMsg("이메일 형식에 맞게 입력해주세요.")
     } else {
       ////////////// 임시 data로 로그인 /////////////
       // authContext.dispatch({
@@ -60,7 +60,7 @@ const LoginForm = (roleid) => {
       await postApi(details, "/user/login")
         .then(({ status, data }) => {
           if (status === 200) {
-            setLoginErrorMsg("");
+            setLoginErrorMsg("")
             authContext.dispatch({
               type: "login",
               token: data.token,
@@ -68,40 +68,40 @@ const LoginForm = (roleid) => {
               role: data.role,
               name: data.name,
               userId: data.userId,
-            });
-            localStorage.setItem(
-              "loggedInfo",
-              JSON.stringify({
-                email: details.email,
-                role: data.role,
-                token: data.token,
-                name: data.name,
-                userId: data.userId,
-              })
-            );
-            if (data.token) {
-              setCookie('myToken', data.token, {
-                path: "/",
-                secure: true,
-                sameSite: "none",
-              })
-            };
-            navigate("/");
+            })
+            // localStorage.setItem(
+            //   "loggedInfo",
+            //   JSON.stringify({
+            //     email: details.email,
+            //     role: data.role,
+            //     token: data.token,
+            //     name: data.name,
+            //     userId: data.userId,
+            //   })
+            // );
+            // if (data.token) {
+
+            setCookie("myToken", data.token, {
+              path: "/",
+              // secure: true,
+              // sameSite: "none",
+            })
+            // }
+            navigate("/")
           } else if (status === 400) {
-            setLoginErrorMsg("필수 입력값을 모두 입력해주세요.");
+            setLoginErrorMsg("필수 입력값을 모두 입력해주세요.")
           } else if (status === 404) {
-            setLoginErrorMsg("존재하지 않는 이메일입니다.");
+            setLoginErrorMsg("존재하지 않는 이메일입니다.")
           } else {
-            setLoginErrorMsg("로그인 실패");
+            setLoginErrorMsg("로그인 실패")
           }
         })
         .catch((e) => {
-          setLoginErrorMsg("로그인 실패");
-          console.log(e.response);
-        });
+          setLoginErrorMsg("로그인 실패")
+          console.log(e.response)
+        })
       //////////////////////////////////////////////////
     }
-
   }
   return (
     <form className="Login-outer-form" onSubmit={submitHandler}>
