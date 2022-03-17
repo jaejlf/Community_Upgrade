@@ -17,7 +17,7 @@ const getMyPost = async (req, res) => {
 
 const getMyComment = async (req, res) => {
     const userId = res.locals.user.userId;
-    await CommentModel.find({ userId: userId }, function (err, data) {
+    await CommentModel.find({ userId: userId, isDeleted: false }, function (err, data) {
         if (err) return res.status(500).json({ error: error.message });
 
         res.status(200).json({
