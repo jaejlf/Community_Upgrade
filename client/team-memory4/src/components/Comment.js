@@ -12,8 +12,6 @@ const Comment = ({ comment, page }) => {
     const recommentContext = useContext(RecommentContext);
     const navigate = useNavigate();
 
-    console.log(comment, page);
-
     const recommentHandler = () => {
         if (recommentContext.state.recommentId === comment._id) { // 답글 누른거 또 누름 = 취소
             recommentContext.dispatch({

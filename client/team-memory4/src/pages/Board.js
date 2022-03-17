@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../App';
 import { getApi } from '../api';
-import { useNavigate } from "react-router-dom";
 import Search from '../assets/images/search.png';
 import { Post } from '../components';
 import '../styles/Board.css';
@@ -9,7 +8,6 @@ import '../styles/Board.css';
 
 const Board = () => {
     const authContext = useContext(AuthContext);
-    const navigate = useNavigate();
 
     const [option, setOption] = useState("title");  // title, content, user
 
@@ -27,6 +25,7 @@ const Board = () => {
                 "date": "2022-03-08 14:42:13",
                 "viewCnt": 3,
                 "goodCnt": 5,
+                "good": [],
             },
             {
                 "_id": "6226ecba9ae535d10e6e4851",
@@ -37,6 +36,7 @@ const Board = () => {
                 "date": "2022-03-08 14:42:18",
                 "viewCnt": 3,
                 "goodCnt": 5,
+                "good": [],
             },
             {
                 "_id": "6226ecbd9ae535d10e6e4856",
@@ -47,6 +47,7 @@ const Board = () => {
                 "date": "2022-03-08 14:42:21",
                 "viewCnt": 3,
                 "goodCnt": 5,
+                "good": [],
             }
         ];
 
@@ -61,6 +62,7 @@ const Board = () => {
                 "date": "2022-03-09 03:11:10",
                 "viewCnt": 3,
                 "goodCnt": 5,
+                "good": [],
             }
         ];
 

@@ -21,11 +21,16 @@ const Post = (post) => {
         <div className='content-section-contents'
             onClick={() => contentsClickHandler(info.postNumber)}
             >
+            <p>{info.postNumber}</p>
             <div className="content-section-title">{info.title}</div>
             <div className="content-section-date">{info.date}</div>
             <div className='content-section-cnt'>
-                <div className="content-section-goodcnt">{info.goodCnt}</div>
-                <div className="content-section-viewcnt">{info.viewCnt}</div>
+                <div className="content-section-goodcnt">
+                    goodcnt: {info.good.length}
+                </div>
+                <div className="content-section-viewcnt">
+                    viewcnt: {info.viewCnt}
+                </div>
             </div>
         </div>
         </div>

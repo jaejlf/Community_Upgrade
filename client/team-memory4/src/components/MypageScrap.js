@@ -9,25 +9,26 @@ const MypageScrap = () => {
     let dumpdata = {
         "scraps": [
             {
-                "_id": "622acb33195047e5559a2780",
-                "postNumber": 3,
-                "title": "제목3",
-                "content": "내용3",
-                "userId": 3,
-                "writer": "tester",
-                "viewCnt": 0,
-                "date": "2022-03-11 13:08:19"
+                "_id": "622f84557d6b184e6c1df712",
+                "postNumber": 1,
+                "title": "수정한 제목",
+                "content": "수정한 내용",
+                "userId": 1,
+                "writer": "aaa",
+                "viewCnt": 463,
+                "date": "2022-03-17 01:00:16",
+                "good": []
             },
             {
-                "_id": "622ae9b4eccbe4193f2ed234",
-                "postNumber": 5,
-                "title": "제목5",
-                "content": "내용5",
-                "userId": 3,
-                "writer": "tester",
-                "viewCnt": 0,
-                "comment": [],
-                "date": "2022-03-11 15:18:28"
+                "_id": "622f84827d6b184e6c1df71f",
+                "postNumber": 3,
+                "title": "초록",
+                "content": "초록",
+                "userId": 1,
+                "writer": "aaa",
+                "viewCnt": 53,
+                "date": "2022-03-17 02:53:17",
+                "good": []
             }
         ]
     };

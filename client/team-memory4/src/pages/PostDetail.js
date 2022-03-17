@@ -6,12 +6,13 @@ import React, {
   createContext,
 } from "react"
 import { useParams } from "react-router-dom"
-import { deleteApi, getApi } from "../api"
+import { deleteApi, getApi, postApi, putApi } from "../api"
 import { AuthContext } from "../App"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { AllComments, MyComment } from "../components"
 import parse from "html-react-parser"
+import { FaRegBookmark, FaBookmark, FaThumbsUp, FaRegThumbsUp } from 'react-icons/fa'
 import "../styles/PostDetail.css"
 
 export const RecommentContext = createContext()
@@ -39,9 +40,10 @@ const PostDetail = () => {
     role: 1,
     writer: "jaej",
     title: "제목4",
-    content: "내용4",
+    content: "내용4 어쩌구 이거는 테스트용",
     postNumber: 4,
     viewCnt: 9,
+    good: [],
     date: "2022-03-14 22:20:42",
     auth: true, //true이면 작성자, false이면 작성자 아님
   }
@@ -61,19 +63,22 @@ const PostDetail = () => {
     viewCnt: 0,
   })
 
+  const [like, setLike] = useState();
+  const [scrap, setScrap] = useState();
+
   const params = useParams()
   let postId = params.id
 
   useEffect(() => {
     const getPosting = async () => {
       // API Test Code //
-      // setPostData(postDumpData);
-      // setMine(postData.auth);
+      setPostData(postDumpData);
+      setMine(postData.auth);
       /////////////////////
       await getApi({}, `/board/${postId}`, authContext.state.token)
         .then(({ status, data }) => {
           if (status === 200) {
-            console.log(data)
+            // console.log(data);
             setPostData({
               writer: data.writer,
               role: data.role,
@@ -81,8 +86,9 @@ const PostDetail = () => {
               content: data.content,
               date: data.date,
               viewCnt: data.viewCnt,
-            })
-            setMine(data.auth) // 내 글인지 여부 -> 수정, 삭제
+            });
+            setMine(data.auth); // 내 글인지 여부 -> 수정, 삭제
+            
           }
         })
         .catch((e) => {
@@ -117,6 +123,52 @@ const PostDetail = () => {
     }
   }
 
+  const likeHandler = async () => {
+    setLike(!like);
+    await putApi(
+        {},
+        `/board/${postData.postNumber}/good`,
+        authContext.state.token
+      )
+      .then(({ status, data }) => {
+        if (status === 200 || status === 201) {
+            console.log(data);
+            if (data === '좋아요 누름') {
+              setLike(true);
+            } else {  // '좋아요 삭제'
+              setLike(false);
+            }
+
+        } else if (status === 500) {
+            alert("로그인을 해야 게시글을 스크랩할 수 있습니다.");
+            navigate('/login');
+        }
+    })
+    .catch((e) => {
+        console.log(e);
+    });
+  }
+
+  const scrapHandler = async () => {
+    setScrap(!scrap);
+    await postApi(
+      {},
+      `/mypage/scrap/${postData.postNumber}`,
+      authContext.state.token
+    )
+      .then(({ status, data }) => {
+          if (status === 200 || status === 201) {
+              console.log('스크랩 완료');
+          } else if (status === 501) {
+              alert("로그인을 해야 게시글을 스크랩할 수 있습니다.");
+              navigate('/login');
+          }
+      })
+      .catch((e) => {
+          console.log(e);
+      });
+  }
+
   return (
     <div className="post-detail">
       <div className="detail-header">
@@ -146,8 +198,40 @@ const PostDetail = () => {
         </div>
         <div className="detail-content">{parse("" + postData.content)}</div>
       </div>
+      
       <div className="detail-hr"></div>
 
+      <div className="detail-lower-section">
+        <div className="detail-cnts">
+          <FaThumbsUp />{postData.viewCnt}
+          <FaBookmark />{postData.good.length}
+        </div>
+
+        <div className="detail-click-cnt">
+          {
+            like === true ? (
+              <div className="cnt-click">
+                <FaThumbsUp onClick={likeHandler}/><p>추천하기</p>
+              </div>
+            ) : (
+              <div className="cnt-click">
+                <FaRegThumbsUp onClick={likeHandler} /><p>추천하기</p>
+              </div>
+            )
+          }
+          {
+            scrap === true ? (
+              <div className="cnt-click">
+                <FaBookmark onClick={scrapHandler} /><p>스크랩하기</p>
+              </div>
+            ) : (
+              <div className="cnt-click">
+                <FaRegBookmark onClick={scrapHandler} /><p>스크랩하기</p>
+              </div>
+            )
+          }
+        </div>
+      </div>
       <RecommentContext.Provider value={{ state, dispatch }}>
         <AllComments props={postId} />
         <MyComment props={postId} />
