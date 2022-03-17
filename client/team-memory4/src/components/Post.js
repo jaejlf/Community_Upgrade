@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
-import { AuthContext } from "../App";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegBookmark, FaRegThumbsUp, FaRegEye } from 'react-icons/fa';
 
@@ -8,10 +7,8 @@ import '../styles/Board.css';
 
 
 const Post = (post) => {
-    const authContext = useContext(AuthContext);
     const navigate = useNavigate();
     const info = post.post;
-    console.log(post.post);
 
     const contentsClickHandler = (postNumber) => {  // 클릭 시 글 상세 페이지로 이동
         navigate(`/post/${postNumber}`);
