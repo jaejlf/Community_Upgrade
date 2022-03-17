@@ -4,6 +4,8 @@ const moment = require("../../controller/moment");
 const auth = require("../../controller/auth");
 const userInfo = require("../../controller/userinfo");
 
+const UserModel = require("../../model/user");
+
 const createPost = (req, res) => {
   const name = res.locals.user.name;
   console.log("creator : " + name); //지금 로그인된 유저(작성자)의 정보 받아오기
@@ -64,7 +66,7 @@ const getPost = async (req, res) => {
     var authCk = await auth.check(res.locals.user.userId, result.userId);
     var user = await userInfo.findUser(result.userId);
     var scrapStatus = await userInfo.scrapStatus(postNumber, res.locals.user.userId);
-    var goodStatus = await userInfo.scrapStatus(postNumber, res.locals.user.userId);
+    var goodStatus = await userInfo.goodStatus(result.good, res.locals.user.userId);
 
     var exData = Object.assign({}, result)._doc;
     exData.userRole = user.role;

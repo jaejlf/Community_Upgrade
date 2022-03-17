@@ -1,21 +1,35 @@
 const { db } = require("../model/user");
+const postInfo = require("./postInfo");
 
 const findUser = async function (userId) {
 
     return await db.collection("users").findOne({ userId: userId });
 }
 
-const scrapStatus = async function(postNumber, userId){
+const scrapStatus = async function (postNumber, userId) {
     var data = await db.collection("users").findOne({ userId: userId });
 
-    for(let element of data.scrap){
-        console.log(element);
+    var result = false;
+    for (let element of data.scrap) {
+        if (element == postNumber){
+            result = true;
+            break;
+        }
     }
-    return true;
+
+    return result;
 }
 
-const goodStatus = async function(postNumber, userId){
-    return true;
+const goodStatus = async function (good, userId) {
+    var result = false;
+    for (let element of good) {
+        if (element.userId == userId) {
+            result = true;
+            break;
+        }
+    }
+
+    return result;
 }
 
 module.exports = {
