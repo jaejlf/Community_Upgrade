@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { AllComments, MyComment } from "../components"
 import parse from "html-react-parser"
-import { FaRegBookmark, FaBookmark, FaThumbsUp, FaRegThumbsUp } from 'react-icons/fa'
+import { FaRegBookmark, FaBookmark, FaThumbsUp, FaRegThumbsUp, FaRegEye } from 'react-icons/fa'
 import "../styles/PostDetail.css"
 
 export const RecommentContext = createContext()
@@ -172,11 +172,13 @@ const PostDetail = () => {
   return (
     <div className="post-detail">
       <div className="detail-header">
+      <p className="detail-postnum">[{postData.postNumber}]</p>
         <h3 className="detail-title">{postData.title}</h3>
         <p className="detail-writer">{postData.writer}</p>
         <p className="detail-role">
           {postData.role === 2 ? <>기업회원</> : <>개인회원</>}
         </p>
+        
         <p className="detail-date">{postData.date}</p>
       </div>
       <div className="detail-hr"></div>
@@ -203,30 +205,31 @@ const PostDetail = () => {
 
       <div className="detail-lower-section">
         <div className="detail-cnts">
-          <FaThumbsUp />{postData.viewCnt}
-          <FaBookmark />{postData.good.length}
+          <div className="detail-cnt"><FaRegThumbsUp /><p>{postData.good.length}</p></div>
+          <div className="detail-cnt"><FaRegBookmark /><p></p></div>
+          <div className="detail-cnt"><FaRegEye /><p>{postData.viewCnt}</p></div>
         </div>
 
         <div className="detail-click-cnt">
           {
             like === true ? (
-              <div className="cnt-click">
-                <FaThumbsUp onClick={likeHandler}/><p>추천하기</p>
+              <div className="detail-cnt">
+                <div className="click-cnt" onClick={likeHandler}><FaThumbsUp /><p>추천하기</p></div>
               </div>
             ) : (
-              <div className="cnt-click">
-                <FaRegThumbsUp onClick={likeHandler} /><p>추천하기</p>
+              <div className="detail-cnt">
+                <div className="click-cnt" onClick={likeHandler}><FaRegThumbsUp /><p>추천하기</p></div>
               </div>
             )
           }
           {
             scrap === true ? (
-              <div className="cnt-click">
-                <FaBookmark onClick={scrapHandler} /><p>스크랩하기</p>
+              <div className="detail-cnt">
+                <div className="click-cnt" onClick={scrapHandler}><FaBookmark /><p>스크랩하기</p></div>
               </div>
             ) : (
-              <div className="cnt-click">
-                <FaRegBookmark onClick={scrapHandler} /><p>스크랩하기</p>
+              <div className="detail-cnt">
+                <div className="click-cnt" onClick={scrapHandler}><FaRegBookmark onClick={scrapHandler} /><p>스크랩하기</p></div>
               </div>
             )
           }
