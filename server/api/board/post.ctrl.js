@@ -61,21 +61,16 @@ const getPost = async (req, res) => {
     result.viewCnt++;
     result.save();
 
-    var authCk = auth.check(res.locals.user.userId, result.userId);
+    var authCk = await auth.check(res.locals.user.userId, result.userId);
     var user = await userInfo.findUser(result.userId);
+    var scrapStatus = await userInfo.scrapStatus(postNumber, res.locals.user.userId);
+    var goodStatus = await userInfo.scrapStatus(postNumber, res.locals.user.userId);
 
-    const exData = {
-      _id: result._id,
-      userId: result.userId,
-      userRole: user.role,
-      writer: result.writer,
-      title: result.title,
-      content: result.content,
-      postNumber: result.postNumber,
-      viewCnt: result.viewCnt,
-      date: result.date,
-      auth: authCk,
-    };
+    var exData = Object.assign({}, result)._doc;
+    exData.userRole = user.role;
+    exData.auth = authCk;
+    exData.userScrapStauts = scrapStatus;
+    exData.userGoodStatus = goodStatus;
 
     res.status(200).json(exData);
   });
