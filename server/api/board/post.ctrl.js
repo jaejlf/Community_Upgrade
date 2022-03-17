@@ -117,6 +117,7 @@ const deletePost = (req, res) => {
       if (err) return res.status(500).json({ error: error.message });
       //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 삭제할 수 있습니다." });
 
+      //게시글 삭제
       db.collection("posts").deleteOne(
         { postNumber: postNumber },
         function (err, data) {
@@ -126,12 +127,20 @@ const deletePost = (req, res) => {
             { name: "postCnt" },
             { $inc: { postCnt: -1 } }
           );
+        }
+      );
 
-          res.status(200).send({ message: "삭제 완료" });
+      //해당 게시글에 달린 댓글 삭제 (완전 삭제)
+      db.collection("comments").deleteMany(
+        { postNumber: postNumber },
+        function (err, data) {
+          if (err) return res.status(500).json({ error: error.message });
         }
       );
     }
   );
+  
+  res.status(200).send({ message: "삭제 완료" });
 };
 
 const pushGood = (req, res) => {
