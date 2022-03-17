@@ -1,5 +1,5 @@
-import './App.css';
-import { Routes, Route, Link } from "react-router-dom";
+import "./App.css"
+import { Routes, Route, Link } from "react-router-dom"
 import {
   MyPage,
   Signup,
@@ -10,48 +10,59 @@ import {
   PostWrite,
   PostModify,
   NotFound,
-} from "./pages";
+} from "./pages"
 import {
   useReducer,
   createContext,
   useContext,
   useEffect,
-} from "react";
-import { ReactComponent as Logo } from './assets/images/Logo.svg';
-import { ReactComponent as HeaderLine } from './assets/images/header-line.svg';
-
+  useState,
+} from "react"
+import { ReactComponent as Logo } from "./assets/images/Logo.svg"
+import { ReactComponent as HeaderLine } from "./assets/images/header-line.svg"
+import { getCookie } from "./api/cookie"
 
 const Header = () => {
-  const authContext = useContext(AuthContext);
+  const authContext = useContext(AuthContext)
   // if (window.location.pathname === "/login" ||
   //   window.location.pathname === "/signup") {
   //   return null;
   // }
+  const [mycookie, setMycookie] = useState()
+  useEffect(() => {
+    setMycookie(getCookie("myToken"))
+  }, [mycookie])
 
   return (
     <header className="App-header">
       <div className="header-links">
-        {!authContext.state.token ? (
+        {!mycookie ? (
           <>
-              <Link to="/"><Logo width={100} height={60} /></Link>
-              <Link to="/login">
-                <button className="header-btn">로그인</button>
-              </Link>
+            <Link to="/">
+              <Logo width={100} height={60} />
+            </Link>
+            <Link to="/login">
+              <button className="header-btn">로그인</button>
+            </Link>
           </>
         ) : (
           <>
-            <Link to="/"><Logo width={100} height={60} /></Link>
-            <div className='header-right'>
+            <Link to="/">
+              <Logo width={100} height={60} />
+            </Link>
+            <div className="header-right">
               <Link to="/write">
                 <button className="header-btn">글쓰기</button>
               </Link>
               <Link to="/mypage">
-                <button className="header-btn" id="header-black-btn">마이페이지</button>
+                <button className="header-btn" id="header-black-btn">
+                  마이페이지
+                </button>
               </Link>
               <Link to="/logout">
                 <button className="header-btn">로그아웃</button>
               </Link>
-              </div>
+            </div>
           </>
         )}
       </div>
@@ -61,8 +72,7 @@ const Header = () => {
   )
 }
 
-
-export const AuthContext = createContext();
+export const AuthContext = createContext()
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -73,7 +83,7 @@ const reducer = (state, action) => {
         role: action.role,
         name: action.name,
         userId: action.userId,
-      };
+      }
     case "logout":
       return {
         token: null,
@@ -81,12 +91,11 @@ const reducer = (state, action) => {
         role: null,
         name: null,
         userId: null,
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
-
+}
 
 function App() {
   const [state, dispatch] = useReducer(reducer, {
@@ -95,36 +104,36 @@ function App() {
     role: null,
     name: null,
     userId: null,
-  });
+  })
 
-  useEffect(() => {
-    console.log(JSON.parse(localStorage.getItem("loggedInfo")));
+  // useEffect(() => {
+  //   // console.log(JSON.parse(localStorage.getItem("loggedInfo")));
 
-    const initUserInfo = async () => {
-      const loggedInfo = await JSON.parse(
-        localStorage.getItem("loggedInfo")
-      );
-      console.log("-------------새로 고침------------");
-      console.log(loggedInfo);
+  //   const initUserInfo = async () => {
+  //     // const loggedInfo = await JSON.parse(
+  //     //   localStorage.getItem("loggedInfo")
+  //     // );
+  //     console.log("-------------새로 고침------------");
+  //     // console.log(loggedInfo);
 
-      if (loggedInfo) {
-        const { token, email, role, name, userId } = loggedInfo;
-        await dispatch({
-          type: "login",
-          token: token,
-          email: email,
-          role: role,
-          name: name,
-          userId: userId,
-        });
-      } else {
-        await dispatch({
-          type: "logout",
-        });
-      }
-    };
-    initUserInfo();
-  }, [state.token]);
+  //     if (loggedInfo) {
+  //       const { token, email, role, name, userId } = loggedInfo;
+  //       await dispatch({
+  //         type: "login",
+  //         token: token,
+  //         email: email,
+  //         role: role,
+  //         name: name,
+  //         userId: userId,
+  //       });
+  //     } else {
+  //       await dispatch({
+  //         type: "logout",
+  //       });
+  //     }
+  //   };
+  //   initUserInfo();
+  // }, [state.token]);
 
   return (
     <div className="App">
@@ -132,18 +141,18 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" exact={true} element={<Board />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/logout' element={<Logout />} />
-          <Route path='/signup/:roleid' element={<Signup />} />
-          <Route path='/post/:id' element={<PostDetail />} />
-          <Route path='/modify/:id' element={<PostModify />} />
-          <Route path='/write' element={<PostWrite />} />
-          <Route path='/mypage' element={<MyPage />} />
-          <Route path='*' element={<NotFound />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/signup/:roleid" element={<Signup />} />
+          <Route path="/post/:id" element={<PostDetail />} />
+          <Route path="/modify/:id" element={<PostModify />} />
+          <Route path="/write" element={<PostWrite />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthContext.Provider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
