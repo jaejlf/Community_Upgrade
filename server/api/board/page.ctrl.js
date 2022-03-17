@@ -1,5 +1,4 @@
 const { db } = require("../../model/post");
-const postInfo = require("../../controller/postInfo");
 
 const paging = async (req, res) => {
     const { page } = req.query;
@@ -8,13 +7,13 @@ const paging = async (req, res) => {
     var postCounter = await db.collection("counter").findOne({ name: "postCnt" });
     var totalPost = postCounter.postCnt;
 
-    const maxPost = 5;
+    const maxPost = 10;
     const totalPage = Math.ceil(totalPost / maxPost);
 
     if (curPage > totalPage) {
         return res.status(500).json({ message: "페이지 오류" })
     }
-    
+
     var startNum = maxPost * (curPage - 1); //0부터 시작(배열 index)
     var lastNum = startNum + (maxPost - 1);
 
@@ -25,16 +24,26 @@ const paging = async (req, res) => {
         if (allPosts[i]) {
             await exData.push(allPosts[i]);
         }
-        else{
+        else {
             break;
         }
     }
     console.log(exData);
     res.status(200).json({
-        allPost: exData,
+        allPost: exData
+    });
+}
+
+const counter = async (req, res) => {
+    var postCounter = await db.collection("counter").findOne({ name: "postCnt" });
+    var totalPost = postCounter.postCnt;
+
+    res.status(200).json({
+        totalPost: totalPost
     });
 }
 
 module.exports = {
-    paging
+    paging,
+    counter
 };
