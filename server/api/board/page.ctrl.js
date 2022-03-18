@@ -24,13 +24,14 @@ const paging = async (req, res) => {
     .toArray();
 
   var exData = [];
-  for (let i = lastNum; i >= startNum; i--) {
+  for (let i = startNum; i <= lastNum; i++) {
     if (allPosts[i]) {
       await exData.push(allPosts[i]);
     } else {
       break;
     }
   }
+  
 
   console.log(exData);
   res.status(200).json({
