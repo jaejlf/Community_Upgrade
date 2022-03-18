@@ -56,7 +56,16 @@ const getReplyComment = async (req, res) => {
     parentId: parentId,
     depth: 2,
   });
-  res.status(200).json(childComment);
+  var exData = [];
+  for (let element of childComment) {
+    var authCk = await auth.check(res.locals.user.userId, element.userId);
+
+    var data = Object.assign({}, element)._doc;
+    data.auth = authCk;
+
+    await exData.push(data);
+  }
+  res.status(200).json(exData);
 };
 
 const editComment = (req, res) => {
