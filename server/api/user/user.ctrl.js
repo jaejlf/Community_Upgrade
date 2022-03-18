@@ -109,7 +109,7 @@ const checkAuth = (req, res, next) => {
       req.url === "/user/signup" ||
       req.url === "/user/login" ||
       req.url === "/board/posts" ||
-      req.url === "/board/?page=1" ||
+      req.url.indexOf("/board/?page") == 0 ||
       req.url === "/board/counter"
     )
       return next();

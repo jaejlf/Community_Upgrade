@@ -1,14 +1,14 @@
-import React, { useState, useContext, useEffect } from "react"
-import "../styles/Comments.css"
-import { getApi, deleteApi } from "../api"
-import { AuthContext } from "../App"
-import { RecommentContext } from "../pages/PostDetail"
-import { useNavigate } from "react-router-dom"
+import React, { useState, useContext, useEffect } from "react";
+import "../styles/Comments.css";
+import { getApi, deleteApi } from "../api";
+import { AuthContext } from "../App";
+import { RecommentContext } from "../pages/PostDetail";
+import { useNavigate } from "react-router-dom";
 
 const Comment = ({ comment, page }) => {
-  const authContext = useContext(AuthContext)
-  const recommentContext = useContext(RecommentContext)
-  const navigate = useNavigate()
+  const authContext = useContext(AuthContext);
+  const recommentContext = useContext(RecommentContext);
+  const navigate = useNavigate();
 
   const recommentHandler = () => {
     if (recommentContext.state.recommentId === comment._id) {
@@ -17,36 +17,36 @@ const Comment = ({ comment, page }) => {
         type: "recommentNonClick",
         recommentId: null,
         recomment2Whom: null,
-      })
+      });
     } else {
       recommentContext.dispatch({
         type: "recommentClick",
         recommentId: comment._id,
         recomment2Whom: comment.writer,
-      })
+      });
     }
-  }
+  };
 
   const commentDeleteHandler = async () => {
     await deleteApi({}, `/comment/${comment._id}`, authContext.state.token)
       .then(({ status, data }) => {
         if (status === 200) {
-          console.log("댓글삭제", status, data)
-          alert("삭제되었습니다.")
-          window.location.reload() // 새로고침하여 댓글 다시 불러오기
+          console.log("댓글삭제", status, data);
+          alert("삭제되었습니다.");
+          window.location.reload(); // 새로고침하여 댓글 다시 불러오기
         } else if (status === 501) {
-          alert("작성자만 댓글을 삭제할 수 있습니다.")
+          alert("작성자만 댓글을 삭제할 수 있습니다.");
         }
       })
       .catch((e) => {
-        console.log(e)
-      })
-  }
+        console.log(e);
+      });
+  };
 
   const commentClickHandler = () => {
-    console.log(comment.postNumber)
-    navigate(`/post/${comment.postNumber}`)
-  }
+    console.log(comment.postNumber);
+    navigate(`/post/${comment.postNumber}`);
+  };
 
   return (
     <div className="all-comment-section">
@@ -86,7 +86,7 @@ const Comment = ({ comment, page }) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Comment
+export default Comment;

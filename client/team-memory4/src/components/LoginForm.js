@@ -4,6 +4,7 @@ import { AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 import { setCookie } from "../api/cookie";
+import { useCookies } from "react-cookie";
 
 //로그인
 // - 성공 : email, password가 일치하면 성공(200)
@@ -11,6 +12,8 @@ import { setCookie } from "../api/cookie";
 //         없는 email인 경우 404 (Not Found)
 //         password가 틀린경우 500 ( Server Error )
 const LoginForm = (roleid) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["myToken"]);
+
   const [details, setDetails] = useState({
     email: "",
     password: "",
@@ -71,9 +74,10 @@ const LoginForm = (roleid) => {
               name: data.name,
               userId: data.userId,
             });
-            setCookie('myToken', data.token, {
-              path: "/",
-            });
+            setCookie("myToken", data.token, { path: "/" });
+            // setCookie('myToken', data.token, {
+            //   path: "/",
+            // });
             navigate("/");
           } else if (status === 400) {
             setLoginErrorMsg("필수 입력값을 모두 입력해주세요.");
