@@ -47,7 +47,7 @@ const ParentComment = ({ comment, page, who }) => {
         authContext.state.token
       )
         .then(({ status, data }) => {
-          console.log('GET child comment: ', status, data);
+          // console.log('GET child comment: ', status, data);
           if (status === 200) {
             setChildComment(data);
           }

@@ -92,7 +92,7 @@ const AllComments = ({ props }) => {
     useEffect(() => {
         const allCommentFiltered = allComment.filter(allComment => allComment.depth !== 2);
         setParentComment(allCommentFiltered);
-        console.log(parentComment);
+        // console.log(parentComment);
     }, [allComment]);
 
     // all comment를 받아온 다음, 그거 depth=1인 _id들 돌면서 /comment/:parentId/child api 호출. 
