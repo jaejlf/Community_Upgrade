@@ -8,17 +8,17 @@ import { postApi } from "../api"
 // - 실패 :필수 입력값이 누락 시 400 리턴 (Bad Request)
 //        email이 중복된 경우 409 리턴 (Conflict)
 const SignupForm = (params) => {
-    console.log(params.props);
+  console.log(params.props)
 
-    const [details, setDetails] = useState({
-        email: "",
-        password: "",
-        name: "",
-        role: params.props,
-    });
-    
-    const [emailValid, setEmailValid] = useState();  // email 형식 확인
-    const [checkMsg, setCheckMsg] = useState("");
+  const [details, setDetails] = useState({
+    email: "",
+    password: "",
+    name: "",
+    role: params.props,
+  })
+
+  const [emailValid, setEmailValid] = useState() // email 형식 확인
+  const [checkMsg, setCheckMsg] = useState("")
 
   const navigate = useNavigate()
 
@@ -30,44 +30,46 @@ const SignupForm = (params) => {
     // console.log(emailValid);
   }, [details.email])
 
-    const submitHandler = async (e) => {
-        console.log(details);
-        e.preventDefault();
-        const config = {
-            headers: {
-                "Content-type": "application/json",
-                Accept: "application/json",
-            },
-        };
-        if (!emailValid) {
-            setCheckMsg("이메일 형식에 맞게 입력해주세요.");
-        } else {
-            setCheckMsg("");
-            
-            await axios.post(
-                `${process.env.REACT_APP_BACK_BASE_URL}/user/signup`,
-                {
-                    email: details.email,
-                    password: details.password,
-                    name: details.name,
-                    role: details.role,
-                },
-                config
-            ).then(({ status, data }) => {
-                if (status === 201 || status === 200) {
-                    setCheckMsg("");
-                } else if (status === 409) {
-                    setCheckMsg("중복된 이메일입니다.");
-                } else if (status === 400) {
-                    setCheckMsg("모든 입력값을 입력해주세요.");
-                }
-                navigate("/login"); // 회원가입 성공 시 로그인창으로 이동
-            })
-            .catch((e) => {
-                console.log(e);
-            })
-        }
+  const submitHandler = async (e) => {
+    console.log(details)
+    e.preventDefault()
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Accept: "application/json",
+      },
     }
+    if (!emailValid) {
+      setCheckMsg("이메일 형식에 맞게 입력해주세요.")
+    } else {
+      setCheckMsg("")
+
+      await axios
+        .post(
+          `${process.env.REACT_APP_BACK_BASE_URL}/user/signup`,
+          {
+            email: details.email,
+            password: details.password,
+            name: details.name,
+            role: details.role,
+          },
+          config
+        )
+        .then(({ status, data }) => {
+          if (status === 201 || status === 200) {
+            setCheckMsg("")
+          } else if (status === 409) {
+            setCheckMsg("중복된 이메일입니다.")
+          } else if (status === 400) {
+            setCheckMsg("모든 입력값을 입력해주세요.")
+          }
+          navigate("/login") // 회원가입 성공 시 로그인창으로 이동
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    }
+  }
 
   return (
     <form className="Signup-outer-form" onSubmit={submitHandler}>

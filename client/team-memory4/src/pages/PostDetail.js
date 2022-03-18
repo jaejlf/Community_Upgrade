@@ -1,8 +1,4 @@
-import React, {
-  useEffect,
-  useContext,
-  useState,
-} from "react"
+import React, { useEffect, useContext, useState } from "react"
 import { useParams } from "react-router-dom"
 import { deleteApi, getApi, postApi, putApi } from "../api"
 import { AuthContext, RecommentContext } from "../App"
@@ -16,9 +12,8 @@ import {
   FaThumbsUp,
   FaRegThumbsUp,
   FaRegEye,
-} from "react-icons/fa";
-import "../styles/PostDetail.css";
-
+} from "react-icons/fa"
+import "../styles/PostDetail.css"
 
 const PostDetail = () => {
   const postDumpData = {
@@ -41,7 +36,7 @@ const PostDetail = () => {
   const authContext = useContext(AuthContext)
   const navigate = useNavigate()
 
-  const [mine, setMine] = useState(false);
+  const [mine, setMine] = useState(false)
   const [postData, setPostData] = useState({
     writer: "",
     userRole: 1,
@@ -54,16 +49,16 @@ const PostDetail = () => {
     auth: false,
     userScrapStauts: false,
     userGoodStatus: false,
-  });
+  })
 
-  const [like, setLike] = useState();
-  const [scrap, setScrap] = useState();
+  const [like, setLike] = useState()
+  const [scrap, setScrap] = useState()
 
   // const [goodCnt, setGoodCnt] = useState(0);
 
-  const params = useParams();
-  let postId = params.id;
-  console.log(postId);
+  const params = useParams()
+  let postId = params.id
+  console.log(postId)
 
   useEffect(() => {
     const getPosting = async () => {
@@ -74,7 +69,7 @@ const PostDetail = () => {
       await getApi({}, `/board/${postId}`, authContext.state.token)
         .then(({ status, data }) => {
           if (status === 200) {
-            console.log(`GET /board/${postId}`, data);
+            console.log(`GET /board/${postId}`, data)
             setPostData({
               writer: data.writer,
               role: data.role,
@@ -89,99 +84,100 @@ const PostDetail = () => {
           }
         })
         .catch((e) => {
-          console.log(e);
-        });
-    };
+          console.log(e)
+        })
+    }
 
     const getGoodCnt = async () => {
       await getApi({}, `/board/${postId}/good`, authContext.state.token)
         .then(({ status, data }) => {
           if (status === 200) {
-            console.log(`GET goodCnt`, data.goodCntNum);
-            setPostData({...postData, goodCnt: data.goodCntNum});
+            console.log(`GET goodCnt`, data.goodCntNum)
+            setPostData({ ...postData, goodCnt: data.goodCntNum })
           }
         })
         .catch((e) => {
-          console.log(e);
-        });
+          console.log(e)
+        })
     }
     if (authContext.state.token) {
-      getPosting();
-    } else {
-      alert("로그인해야 이용할 수 있습니다.");
-      navigate("/login");
+      getPosting()
     }
-  }, []);
+    // else {
+    //   alert("로그인해야 이용할 수 있습니다.");
+    //   navigate("/login");
+    // }
+  }, [])
 
   const modifyHandler = () => {
-    navigate(`/modify/${postId}`);
-  };
+    navigate(`/modify/${postId}`)
+  }
 
   const deleteHandler = async () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       await deleteApi({}, `/board/${postId}`, authContext.state.token)
         .then(({ status, data }) => {
-          console.log(`DEL /board/${postId}`, status, data);
+          console.log(`DEL /board/${postId}`, status, data)
           if (status === 200) {
-            alert("삭제되었습니다.");
-            navigate("/");
+            alert("삭제되었습니다.")
+            navigate("/")
           } else if (status === 501) {
-            alert("작성자만 게시글을 삭제할 수 있습니다.");
+            alert("작성자만 게시글을 삭제할 수 있습니다.")
           } else {
-            alert("삭제에 실패했습니다.");
+            alert("삭제에 실패했습니다.")
           }
         })
         .catch((e) => {
-          console.log(e.response);
-        });
+          console.log(e.response)
+        })
     } else {
-      alert("취소합니다.");
+      alert("취소합니다.")
     }
-  };
+  }
 
   const likeHandler = async () => {
-    setLike(!like);
+    setLike(!like)
     await putApi({}, `/board/${postId}/good`, authContext.state.token)
       .then(({ status, data }) => {
-        console.log(`PUT /board/${postId}/good`, data);
+        console.log(`PUT /board/${postId}/good`, data)
         if (status === 200 || status === 201) {
           console.log(data)
           if (data.message === "좋아요 누름") {
             setLike(true)
           } else {
-            setLike(false);
+            setLike(false)
           }
         } else if (status === 500) {
-          alert("로그인을 해야 게시글을 추천할 수 있습니다.");
-          navigate("/login");
+          alert("로그인을 해야 게시글을 추천할 수 있습니다.")
+          navigate("/login")
         }
       })
       .catch((e) => {
-        console.log(e);
-      });
-  };
+        console.log(e)
+      })
+  }
 
   const scrapHandler = async () => {
-    setScrap(!scrap);
+    setScrap(!scrap)
 
     await putApi({}, `/mypage/scrap/${postId}`, authContext.state.token)
       .then(({ status, data }) => {
-        console.log(`PUT /mypage/scrap/${postId}`, data);
+        console.log(`PUT /mypage/scrap/${postId}`, data)
         if (status === 200 || status === 201) {
-          console.log(data);
-          if (data.message === "스크랩 완료") setScrap(true);
-          else setScrap(false);
+          console.log(data)
+          if (data.message === "스크랩 완료") setScrap(true)
+          else setScrap(false)
         } else if (status === 501) {
-          alert("로그인을 해야 게시글을 스크랩할 수 있습니다.");
-          navigate("/login");
+          alert("로그인을 해야 게시글을 스크랩할 수 있습니다.")
+          navigate("/login")
         }
       })
       .catch((e) => {
-        console.log(e);
-      });
-  };
+        console.log(e)
+      })
+  }
 
-  const recommentContext = useContext(RecommentContext);
+  const recommentContext = useContext(RecommentContext)
 
   return (
     <div className="post-detail">
@@ -266,20 +262,16 @@ const PostDetail = () => {
           )}
         </div>
       </div>
-        <AllComments props={postId} />
-        {!recommentContext.stateR.recommentId ? (
-          <MyComment />
-        ):(
-          <></>
-        )}
-        
+      <AllComments props={postId} />
+      {!recommentContext.stateR.recommentId ? <MyComment /> : <></>}
+
       <div className="goboard-btn">
         <Link to="/">
           <button className="detail-goboard-btn">목록보기</button>
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PostDetail;
+export default PostDetail
