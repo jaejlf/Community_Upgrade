@@ -87,6 +87,21 @@ const OneComment = ({ comment, page, who }) => {
                 ) : (
                     <div className="comment-lower">
                         {comment.depth === 1 ? (
+                            <p className="recomment-btn" onClick={recommentHandler}>
+                                답글쓰기
+                            </p>
+                        ) : (
+                            <></>
+                        )}
+                        {comment.writer === authContext.state.name ? (
+                            <p className="comment-del-btn" onClick={commentDeleteHandler}>
+                                삭제하기
+                            </p>
+                        ) : (
+                            <></>
+                        )}
+
+                        {/* {comment.depth === 1 ? (
                             <>
                                 {comment.auth === true ? (
                                     <>
@@ -113,12 +128,7 @@ const OneComment = ({ comment, page, who }) => {
                                     <></>
                                 )}
                             </>
-                        )}
-                        {comment.auth === true ? (
-                            <p className="comment-del-btn" onClick={commentDeleteHandler}>
-                                삭제하기
-                            </p>
-                        ):(<></>)}
+                        )} */}
                     </div>
                 )}
             </div>
