@@ -10,14 +10,16 @@ import { useCookies } from "react-cookie";
 // - 실패 : 필수 입력값이 없는 경우 400 (Bad Request)
 //         없는 email인 경우 404 (Not Found)
 //         password가 틀린경우 500 ( Server Error )
-const LoginForm = (roleid) => {
+const LoginForm = ({ props }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["myToken"]);
-  const [role, setRole] = useState(roleid.roleid);
   const [details, setDetails] = useState({
     email: "",
     password: "",
-    role: role,
+    role: props,
   });
+  useEffect(()=> {
+    setDetails({...details, role: props});
+  }, [props])
 
   const [emailValid, setEmailValid] = useState(); // email 형식 확인
   const [loginErrorMsg, setLoginErrorMsg] = useState("");
@@ -33,6 +35,7 @@ const LoginForm = (roleid) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log(details);
     if (!details.email) {
       setLoginErrorMsg("이메일을 입력해주세요.");
     } else if (!emailValid) {
