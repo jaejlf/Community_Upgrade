@@ -35,7 +35,7 @@ const LoginForm = ({ props }) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(details);
+    // console.log(details);
     if (!details.email) {
       setLoginErrorMsg("이메일을 입력해주세요.");
     } else if (!emailValid) {
@@ -44,8 +44,8 @@ const LoginForm = ({ props }) => {
       await postApi(details, "/user/login")
         .then(({ status, data }) => {
           if (status === 200) {
-            console.log(data);
-            console.log(data.token);
+            // console.log(data);
+            // console.log(data.token);
             setLoginErrorMsg("");
             authContext.dispatch({
               type: "login",

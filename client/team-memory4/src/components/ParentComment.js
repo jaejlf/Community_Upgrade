@@ -5,10 +5,10 @@ import { AuthContext } from "../App"
 import { OneComment } from "."
 
 const ParentComment = ({ comment, page, who }) => {
-  console.log(comment.content);
-  console.log(comment._id);
-  console.log(page);
-  console.log(who);
+  // console.log(comment.content);
+  // console.log(comment._id);
+  // console.log(page);
+  // console.log(who);
 
   const childDumpdata = [
     {
@@ -47,7 +47,7 @@ const ParentComment = ({ comment, page, who }) => {
         authContext.state.token
       )
         .then(({ status, data }) => {
-          console.log('GET child comment: ', status, data);
+          // console.log('GET child comment: ', status, data);
           if (status === 200) {
             setChildComment(data);
           }

@@ -21,7 +21,7 @@ const MyComment = () => {
   }, [recommentContext.stateR.recommentId]);
 
   const commentWriteHandler = async () => {
-    console.log(myComment);
+    // console.log(myComment);
     if (recommentContext.stateR.recommentId === null) {
       // 댓글 작성 (대댓글 X)
       await postApi(
@@ -33,7 +33,7 @@ const MyComment = () => {
       )
         .then(({ status, data }) => {
           if (status === 200 || status === 201) {
-            console.log("댓글 작성 post api", status);
+            // console.log("댓글 작성 post api", status);
             window.location.reload(); // 새로고침하여 댓글 다시 불러오기
           } else if (status === 500) {
             alert("댓글 등록 시 오류가 발생했습니다.");
@@ -57,7 +57,7 @@ const MyComment = () => {
       )
         .then(({ status, data }) => {
           if (status === 200 || status === 201) {
-            console.log("대댓글 post api", status);
+            // console.log("대댓글 post api", status);
             // window.location.reload(); // 새로고침하여 댓글 다시 불러오기
             window.location.replace(`/post/${postId}`); // 새로고침하여 댓글 다시 불러오기
           } else if (status === 500) {

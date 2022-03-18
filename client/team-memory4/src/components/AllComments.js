@@ -65,7 +65,6 @@ const AllComments = ({ props }) => {
         const getAllComments = async () => {
             // API Test Code //
             // setAllComment(CommentsDumpData);
-            /////////////////////
             await getApi(
                 {},
                 `/comment/${postId}`,
@@ -73,7 +72,7 @@ const AllComments = ({ props }) => {
             )
                 .then(({ status, data }) => {
                     if (status === 200) {
-                        console.log(`GET /comment/${postId}`, data);
+                        // console.log(`GET /comment/${postId}`, data);
                         setAllComment(data);
                     }
                 })

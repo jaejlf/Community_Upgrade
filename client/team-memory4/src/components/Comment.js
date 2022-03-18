@@ -31,7 +31,7 @@ const Comment = ({ comment, page }) => {
     await deleteApi({}, `/comment/${comment._id}`, authContext.state.token)
       .then(({ status, data }) => {
         if (status === 200) {
-          console.log("댓글삭제", status, data);
+          // console.log("댓글삭제", status, data);
           alert("삭제되었습니다.");
           window.location.reload(); // 새로고침하여 댓글 다시 불러오기
         } else if (status === 501) {
@@ -44,7 +44,7 @@ const Comment = ({ comment, page }) => {
   };
 
   const commentClickHandler = () => {
-    console.log(comment.postNumber);
+    // console.log(comment.postNumber);
     navigate(`/post/${comment.postNumber}`);
   };
 

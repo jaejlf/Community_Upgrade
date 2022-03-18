@@ -165,7 +165,7 @@ const Board = () => {
         authContext.state.token
       )
         .then(({ status, data }) => {
-          console.log("search 결과", status, data);
+          // console.log("search 결과", status, data);
           if (data) {
             setList(data);
           } else {
@@ -185,7 +185,7 @@ const Board = () => {
       authContext.state.token
     )
       .then(({ status, data }) => {
-        console.log("search 결과", status, data);
+        // console.log("search 결과", status, data);
         if (data) {
           setList(data);
         } else {
@@ -203,7 +203,7 @@ const Board = () => {
     const getListNum = async () => {
       await getApi({}, `/board/counter`, authContext.state.token)
         .then(({ status, data }) => {
-          console.log("GET /board/counter", status, data);
+          // console.log("GET /board/counter", status, data);
           setListNum(data.totalPost);
         })
         .catch((e) => {
@@ -213,7 +213,7 @@ const Board = () => {
     const getList = async () => {
       await getApi({}, `/board/?page=1`, authContext.state.token)
         .then(({ status, data }) => {
-          console.log("get page=1 API:", status, data);
+          // console.log("get page=1 API:", status, data);
           setList(data.allPost);
         })
         .catch((e) => {
@@ -243,7 +243,7 @@ const Board = () => {
     setPage(page);
     await getApi({}, `/board/?page=${page}`, authContext.state.token)
       .then(({ status, data }) => {
-        console.log("paging API:", status, data.allPost);
+        // console.log("paging API:", status, data.allPost);
         if (status === 200) {
           setList(data.allPost);
         }

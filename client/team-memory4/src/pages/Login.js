@@ -9,7 +9,7 @@ const Login = () => {
     const [roleid, setRoleid] = useState(1);  // 1: 일반회원, 2: 기업회원
 
     const roleClickHandler = async (id) => {
-        console.log(id);
+        // console.log(id);
         setRoleid(id);
         if (id === 1) {
             setUserRole("일반회원");

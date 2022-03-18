@@ -9,7 +9,7 @@ const Signup = () => {
     let urlArray = url.split("/");
     let params = urlArray[urlArray.length - 1];
     params *= 1;
-    console.log(params);
+    // console.log(params);
 
     const [userRole, setUserRole] = useState();
 

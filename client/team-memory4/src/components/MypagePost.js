@@ -44,7 +44,7 @@ const MypagePost = () => {
             )
             .then(({ status, data }) => {
                 if (status === 200) {
-                    console.log(data);
+                    // console.log(data);
                     setMyPostList(data.myPost);
                 }
             })

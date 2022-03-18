@@ -39,7 +39,7 @@ const Editor = (desc) => {
                 )
                     .then(({ status, data }) => {
                         if (status === 200) {
-                            console.log(data);
+                            // console.log(data);
                             setTitle(data.title);
                             setValue(data.content);
                         } else {
@@ -68,7 +68,7 @@ const Editor = (desc) => {
             )
                 .then(({ status, data }) => {
                     if (status === 200 || status === 201) {
-                        console.log(data);
+                        // console.log(data);
                         navigate("/");
                     } else if (status === 500) {
                         alert("게시글 등록 시 오류가 발생했습니다.");
@@ -90,7 +90,7 @@ const Editor = (desc) => {
             )
                 .then(({ status, data }) => {
                     if (status === 200 || status === 201) {
-                        console.log(data);
+                        // console.log(data);
                         navigate("/");
                     } else if (status === 500) {
                         alert("게시글 등록 시 오류가 발생했습니다.");
@@ -111,7 +111,7 @@ const Editor = (desc) => {
         input.click();
 
         input.addEventListener("change", async () => {
-            console.log("온체인지");
+            // console.log("온체인지");
             const file = input.files[0];
             const formData = new FormData();
             formData.append("img", file);
@@ -120,7 +120,7 @@ const Editor = (desc) => {
                     `${process.env.REACT_APP_BACK_BASE_URL}/img`,
                     formData
                 )
-                console.log("성공 시, 백엔드가 보내주는 데이터", result.data.url);
+                // console.log("성공 시, 백엔드가 보내주는 데이터", result.data.url);
                 const IMG_URL = result.data.url;
 
                 const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기

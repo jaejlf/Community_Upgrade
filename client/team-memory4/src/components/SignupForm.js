@@ -8,7 +8,7 @@ import { postApi } from "../api"
 // - 실패 :필수 입력값이 누락 시 400 리턴 (Bad Request)
 //        email이 중복된 경우 409 리턴 (Conflict)
 const SignupForm = (params) => {
-    console.log(params.props);
+    // console.log(params.props);
 
     const [details, setDetails] = useState({
         email: "",
@@ -31,7 +31,7 @@ const SignupForm = (params) => {
   }, [details.email])
 
     const submitHandler = async (e) => {
-        console.log(details);
+        // console.log(details);
         e.preventDefault();
         const config = {
             headers: {

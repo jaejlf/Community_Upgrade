@@ -7,13 +7,13 @@ import { MyComment } from "../components";
 import { useParams } from "react-router-dom";
 
 const OneComment = ({ comment, page, who }) => {
-    console.log(comment.content);
-    console.log(comment._id);
-    console.log(who);
+    // console.log(comment.content);
+    // console.log(comment._id);
+    // console.log(who);
 
     const params = useParams();
     let postId = params.id;
-    console.log(postId);
+    // console.log(postId);
 
     const authContext = useContext(AuthContext);
     const recommentContext = useContext(RecommentContext);
@@ -34,17 +34,17 @@ const OneComment = ({ comment, page, who }) => {
                 recomment2Whom: comment.writer,
             });
         }
-        console.log(
-            "recommentContext.stateR.type:",
-            recommentContext.stateR.recomment2Whom
-        );
+        // console.log(
+        //     "recommentContext.stateR.type:",
+        //     recommentContext.stateR.recomment2Whom
+        // );
     };
 
     const commentDeleteHandler = async () => {
         await deleteApi({}, `/comment/${comment._id}`, authContext.state.token)
             .then(({ status, data }) => {
                 if (status === 200) {
-                    console.log("댓글삭제", status, data);
+                    // console.log("댓글삭제", status, data);
                     alert("삭제되었습니다.");
                     window.location.replace(`/post/${postId}`); // 새로고침하여 댓글 다시 불러오기
                 } else if (status === 501) {
@@ -57,8 +57,8 @@ const OneComment = ({ comment, page, who }) => {
     };
 
     const commentClickHandler = () => {
-        console.log(comment);
-        console.log(comment.postNumber);
+        // console.log(comment);
+        // console.log(comment.postNumber);
         navigate(`/post/${comment.postNumber}`);
     };
 

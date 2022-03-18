@@ -14,7 +14,7 @@ const Logout = () => {
     const getLogout = async () => {
       await getApi({}, "/user/logout")
         .then(({ status, data }) => {
-          console.log("status:", status);
+          // console.log("status:", status);
           if (status === 200 || status === 201 || status === 204) {
             navigate("/");
             authContext.dispatch({

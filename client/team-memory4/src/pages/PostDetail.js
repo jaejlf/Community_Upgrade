@@ -61,14 +61,14 @@ const PostDetail = () => {
 
   const params = useParams();
   let postId = params.id;
-  console.log(postId);
+  // console.log(postId);
 
   useEffect(() => {
     const getPosting = async () => {
       await getApi({}, `/board/${postId}`, authContext.state.token)
         .then(({ status, data }) => {
           if (status === 200) {
-            console.log(`GET /board/${postId}`, status, data);
+            // console.log(`GET /board/${postId}`, status, data);
             setPostData({
               writer: data.writer,
               role: data.role,
@@ -90,7 +90,8 @@ const PostDetail = () => {
     if (cookies.myToken) {
       getPosting();
     } else {
-      alert('로그인하세요');
+      alert('로그인해야 이용하실 수 있습니다.');
+      navigate('/login');
     }
     
   }, [])
@@ -103,7 +104,7 @@ const PostDetail = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       await deleteApi({}, `/board/${postId}`, authContext.state.token)
         .then(({ status, data }) => {
-          console.log(`DEL /board/${postId}`, status, data);
+          // console.log(`DEL /board/${postId}`, status, data);
           if (status === 200) {
             alert("삭제되었습니다.");
             navigate("/");
@@ -125,13 +126,15 @@ const PostDetail = () => {
     setLike(!like);
     await putApi({}, `/board/${postId}/good`, authContext.state.token)
       .then(({ status, data }) => {
-        console.log(`PUT /board/${postId}/good`, data);
+        // console.log(`PUT /board/${postId}/good`, data);
         if (status === 200 || status === 201) {
-          console.log(data);
+          // console.log(data);
           if (data.message === "좋아요 누름") {
             setLike(true);
+            window.location.replace(`/post/${postId}`);
           } else {
             setLike(false);
+            window.location.replace(`/post/${postId}`);
           }
         } else if (status === 500) {
           alert("로그인을 해야 게시글을 추천할 수 있습니다.");
@@ -148,11 +151,14 @@ const PostDetail = () => {
 
     await putApi({}, `/mypage/scrap/${postId}`, authContext.state.token)
       .then(({ status, data }) => {
-        console.log(`PUT /mypage/scrap/${postId}`, data);
+        // console.log(`PUT /mypage/scrap/${postId}`, data);
         if (status === 200 || status === 201) {
-          console.log(data);
-          if (data.message === "스크랩 완료") setScrap(true);
-          else setScrap(false);
+          // console.log(data);
+          if (data.message === "스크랩 완료") {
+            setScrap(true);
+          } else {
+            setScrap(false);
+          }
         } else if (status === 501) {
           alert("로그인을 해야 게시글을 스크랩할 수 있습니다.");
           navigate("/login");
