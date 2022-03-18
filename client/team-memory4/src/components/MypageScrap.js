@@ -47,7 +47,7 @@ const MypageScrap = () => {
             .then(({ status, data }) => {
                 if (status === 200) {
                     console.log(data);
-                    setMyScrapList(data.myPost);
+                    setMyScrapList(data.scraps);
                 }
             })
             .catch((e) => {
