@@ -11,10 +11,7 @@ import {
   PostModify,
   NotFound,
 } from "./pages";
-import {
-  useReducer,
-  createContext,
-} from "react";
+import { useReducer, createContext } from "react";
 import { Header } from "./components";
 
 export const AuthContext = createContext();
@@ -26,16 +23,16 @@ const recommentReducer = (stateR, action) => {
       return {
         recommentId: action.recommentId,
         recomment2Whom: action.recomment2Whom,
-      }
+      };
     case "recommentNonClick":
       return {
         recommentId: null,
         recomment2Whom: null,
-      }
+      };
     default:
       return stateR;
   }
-}
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -77,19 +74,19 @@ function App() {
   return (
     <div className="App">
       <AuthContext.Provider value={{ state, dispatch }}>
-      <RecommentContext.Provider value={{ stateR, dispatchR }}>
-        <Header />
-        <Routes>
-          <Route path="/" exact={true} element={<Board />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/signup/:roleid" element={<Signup />} />
-          <Route path="/post/:id" element={<PostDetail />} />
-          <Route path="/modify/:id" element={<PostModify />} />
-          <Route path="/write" element={<PostWrite />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <RecommentContext.Provider value={{ stateR, dispatchR }}>
+          <Header />
+          <Routes>
+            <Route path="/" exact={true} element={<Board />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/signup/:roleid" element={<Signup />} />
+            <Route path="/post/:id" element={<PostDetail />} />
+            <Route path="/modify/:id" element={<PostModify />} />
+            <Route path="/write" element={<PostWrite />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </RecommentContext.Provider>
       </AuthContext.Provider>
     </div>

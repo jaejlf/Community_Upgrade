@@ -55,40 +55,44 @@ const signup = (req, res) => {
 
 const login = (req, res) => {
   const { role, email, password } = req.body;
-
+  console.log(role);
   if (!email || !password || !role)
     return res.status(400).send("필수값이 입력되지 않았습니다.");
   UserModel.findOne({ email }, (err, user) => {
     if (err) return res.status(500).send("사용자 조회 시 오류가 발생했습니다.");
     if (!user) return res.status(404).send("가입되지 않은 계정입니다.");
-
-    //password 정합성 체크 (암호화 된거끼리 비교)
-    bcrypt.compare(password, user.password, (err, isMatch) => {
-      if (err)
-        return res.status(500).send("암호화 처리 시 오류가 발생했습니다");
-      if (!isMatch) return res.status(404).send("비밀번호가 올바르지 않습니다");
-
-      /*
-      user.token = token;
-      user.save((err, result) => {
+    console.log(user.role);
+    if (role === user.role) {
+      //password 정합성 체크 (암호화 된거끼리 비교)
+      bcrypt.compare(password, user.password, (err, isMatch) => {
         if (err)
-          return res
-            .status(500)
-            .send("사용자 정보 수정 시 오류가 발생했습니다.");
-            */
+          return res.status(500).send("암호화 처리 시 오류가 발생했습니다");
+        if (!isMatch)
+          return res.status(404).send("비밀번호가 올바르지 않습니다");
 
-      //비밀번호가 맞다면 signed token생성 (json webtoken)
-      const token = jwt.sign(user._id.toHexString(), "secretToken");
+        /*
+        user.token = token;
+        user.save((err, result) => {
+          if (err)
+            return res
+              .status(500)
+              .send("사용자 정보 수정 시 오류가 발생했습니다.");
+              */
 
-      UserModel.findByIdAndUpdate(user._id, { token }, (err, result) => {
-        if (err) return res.status(500).send("로그인 시 에러가 발생했습니다.");
+        //비밀번호가 맞다면 signed token생성 (json webtoken)
+        const token = jwt.sign(user._id.toHexString(), "secretToken");
 
-        //토큰 저장 : cookie, local storage..
-        console.log("로그인 성공 : " + token);
-        res.cookie("token", token, { httpOnly: true });
-        res.json(result);
+        UserModel.findByIdAndUpdate(user._id, { token }, (err, result) => {
+          if (err)
+            return res.status(500).send("로그인 시 에러가 발생했습니다.");
+
+          //토큰 저장 : cookie, local storage..
+          console.log("로그인 성공 : " + token);
+          res.cookie("token", token, { httpOnly: true });
+          res.json(result);
+        });
       });
-    });
+    } else return res.status(500).send("회원 종류를 다시 확인해 주세요.");
   });
 };
 

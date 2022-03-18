@@ -45,6 +45,7 @@ const createPost = (req, res) => {
 const getAllPost = (req, res) => {
   db.collection("posts")
     .find()
+    .sort({ _id: -1 })
     .toArray(function (err, data) {
       if (err) return res.status(500).json({ error: error.message });
 
@@ -216,6 +217,18 @@ const pushGood = (req, res) => {
   });
 };
 
+const goodCnt = (req, res) => {
+  const postNumber = parseInt(req.params.postNumber);
+  console.log(postNumber);
+
+  db.collection("posts").findOne({ postNumber: postNumber }, (err, data) => {
+    const good = data.good;
+    console.log(good.length);
+    const goodCntNum = good.length;
+    res.send({ goodCntNum });
+  });
+};
+
 module.exports = {
   createPost,
   getAllPost,
@@ -223,4 +236,5 @@ module.exports = {
   editPost,
   deletePost,
   pushGood,
+  goodCnt,
 };

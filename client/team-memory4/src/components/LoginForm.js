@@ -17,9 +17,9 @@ const LoginForm = ({ props }) => {
     password: "",
     role: props,
   });
-  useEffect(()=> {
-    setDetails({...details, role: props});
-  }, [props])
+  useEffect(() => {
+    setDetails({ ...details, role: props });
+  }, [props]);
 
   const [emailValid, setEmailValid] = useState(); // email 형식 확인
   const [loginErrorMsg, setLoginErrorMsg] = useState("");
