@@ -110,8 +110,7 @@ const replyComment = async (req, res) => {
   console.log("대댓글 작성");
   const parentId = req.params.parentId;
   const parentComment = await CommentModel.findOne({ _id: parentId });
-  //console.log(parentComment.postNumber);
-  const postNumber = parentComment.postNumber
+  // const postNumber = parentComment.postNumber
   const content = req.body.content;
   // const depth = parentComment.depth + 1;
 
@@ -119,7 +118,7 @@ const replyComment = async (req, res) => {
     new CommentModel({
       _id: ObjectId().toString(),
       parentId: parentId,
-      postNumber: postNumber,
+      // postNumber: postNumber,
       content: content,
       depth: 2,
       userId: res.locals.user.userId,
