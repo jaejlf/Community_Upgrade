@@ -17,7 +17,11 @@ const paging = async (req, res) => {
   var startNum = maxPost * (curPage - 1); //0부터 시작(배열 index)
   var lastNum = startNum + (maxPost - 1);
 
-  var allPosts = await db.collection("posts").find().toArray();
+  var allPosts = await db
+    .collection("posts")
+    .find()
+    .sort({ _id: -1 })
+    .toArray();
 
   var exData = [];
   for (let i = lastNum; i >= startNum; i--) {
@@ -27,6 +31,7 @@ const paging = async (req, res) => {
       break;
     }
   }
+
   console.log(exData);
   res.status(200).json({
     allPost: exData,
