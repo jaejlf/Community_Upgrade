@@ -7,13 +7,14 @@ import { postApi } from "../api";
 // - 성공 : 201 응답 (Created), 생성된 User객체 반환
 // - 실패 :필수 입력값이 누락 시 400 리턴 (Bad Request)
 //        email이 중복된 경우 409 리턴 (Conflict)
-const SignupForm = (roleid) => {
+const SignupForm = (params) => {
+    console.log(params.props);
 
     const [details, setDetails] = useState({
         email: "",
         password: "",
         name: "",
-        role: roleid,
+        role: params.props,
     });
     
     const [emailValid, setEmailValid] = useState();  // email 형식 확인
@@ -28,7 +29,14 @@ const SignupForm = (roleid) => {
     }, [details.email]);
 
     const submitHandler = async (e) => {
+        console.log(details);
         e.preventDefault();
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Accept: "application/json",
+            },
+        };
         if (!emailValid) {
             setCheckMsg("이메일 형식에 맞게 입력해주세요.");
         } else {
@@ -36,7 +44,13 @@ const SignupForm = (roleid) => {
             
             await axios.post(
                 `${process.env.REACT_APP_BACK_BASE_URL}/user/signup`,
-                details,
+                {
+                    email: details.email,
+                    password: details.password,
+                    name: details.name,
+                    role: details.role,
+                },
+                config
             ).then(({ status, data }) => {
                 if (status === 201 || status === 200) {
                     setCheckMsg("");

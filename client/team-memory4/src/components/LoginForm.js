@@ -69,23 +69,19 @@ const LoginForm = (roleid) => {
               name: data.name,
               userId: data.userId,
             });
-            localStorage.setItem(
-              "loggedInfo",
-              JSON.stringify({
-                email: details.email,
-                role: data.role,
-                token: data.token,
-                name: data.name,
-                userId: data.userId,
-              })
-            );
-            if (data.token) {
-              setCookie('myToken', data.token, {
-                path: "/",
-                secure: true,
-                sameSite: "none",
-              })
-            };
+            // localStorage.setItem(
+            //   "loggedInfo",
+            //   JSON.stringify({
+            //     email: details.email,
+            //     role: data.role,
+            //     token: data.token,
+            //     name: data.name,
+            //     userId: data.userId,
+            //   })
+            // );
+            setCookie('myToken', data.token, {
+              path: "/",
+            });
             navigate("/");
           } else if (status === 400) {
             setLoginErrorMsg("필수 입력값을 모두 입력해주세요.");

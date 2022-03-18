@@ -77,6 +77,7 @@ const PostDetail = () => {
 
   const params = useParams()
   let postId = params.id
+  console.log(postId);
 
   useEffect(() => {
     const getPosting = async () => {
@@ -87,7 +88,7 @@ const PostDetail = () => {
       await getApi({}, `/board/${postId}`, authContext.state.token)
         .then(({ status, data }) => {
           if (status === 200) {
-            // console.log(data);
+            console.log(`GET /board/${postId}`, data);
             setPostData({
               writer: data.writer,
               role: data.role,
@@ -116,6 +117,7 @@ const PostDetail = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       await deleteApi({}, `/board/${postId}`, authContext.state.token)
         .then(({ status, data }) => {
+          console.log(`DEL /board/${postId}`, status, data);
           if (status === 200) {
             alert("삭제되었습니다.");
             navigate("/");
@@ -137,18 +139,17 @@ const PostDetail = () => {
     setLike(!like);
     await putApi(
         {},
-        `/board/${postData.postNumber}/good`,
+        `/board/${postId}/good`,
         authContext.state.token
       )
       .then(({ status, data }) => {
+        console.log(`PUT /board/${postId}/good`, data);
         if (status === 200 || status === 201) {
-            console.log(data);
             if (data === '좋아요 누름') {
               setLike(true);
             } else {  // '좋아요 삭제'
               setLike(false);
             }
-
         } else if (status === 500) {
             alert("로그인을 해야 게시글을 스크랩할 수 있습니다.");
             navigate('/login');
@@ -160,29 +161,52 @@ const PostDetail = () => {
   }
 
   const scrapHandler = async () => {
-    setScrap(!scrap);
-    await postApi(
-      {},
-      `/mypage/scrap/${postData.postNumber}`,
-      authContext.state.token
-    )
-      .then(({ status, data }) => {
-          if (status === 200 || status === 201) {
-              console.log('스크랩 완료');
-          } else if (status === 501) {
-              alert("로그인을 해야 게시글을 스크랩할 수 있습니다.");
-              navigate('/login');
-          }
-      })
-      .catch((e) => {
-          console.log(e);
-      });
+    // setScrap(!scrap);
+    if (scrap === false) {
+      await postApi(
+        {},
+        `/mypage/scrap/${postId}`,
+        authContext.state.token
+      )
+        .then(({ status, data }) => {
+          console.log(`POST /mypage/scrap/${postId}`, data);
+            if (status === 200 || status === 201) {
+                console.log('스크랩 완료');
+                setScrap(true);
+            } else if (status === 501) {
+                alert("로그인을 해야 게시글을 스크랩할 수 있습니다.");
+                navigate('/login');
+            }
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+      } else {
+        await putApi(
+          {},
+          `/mypage/scrap/${postId}`,
+          authContext.state.token
+        )
+        .then(({ status, data }) => {
+          console.log(`PUT /mypage/scrap/${postId}`, data);
+            if (status === 200 || status === 201) {
+                console.log('스크랩 취소 완료');
+                setScrap(false);
+            } else if (status === 501) {
+                alert("로그인을 해야 게시글을 스크랩할 수 있습니다.");
+                navigate('/login');
+            }
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+      }
   }
 
   return (
     <div className="post-detail">
       <div className="detail-header">
-        <p className="detail-postnum">[{postData.postNumber}]</p>
+        <p className="detail-postnum">[{postId}]</p>
         <h3 className="detail-title">{postData.title}</h3>
         <p className="detail-writer">{postData.writer}</p>
         <p className="detail-role">

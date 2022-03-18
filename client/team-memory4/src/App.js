@@ -16,22 +16,24 @@ import {
   createContext,
   useContext,
   useEffect,
+  useState,
 } from "react";
 import { ReactComponent as Logo } from './assets/images/Logo.svg';
 import { ReactComponent as HeaderLine } from './assets/images/header-line.svg';
+import { getCookie } from "./api/cookie";
 
 
 const Header = () => {
+  const [mycookie, setMycookie] = useState();
+  useEffect(() => {
+    setMycookie(getCookie('myToken'));
+  }, []);
   const authContext = useContext(AuthContext);
-  // if (window.location.pathname === "/login" ||
-  //   window.location.pathname === "/signup") {
-  //   return null;
-  // }
 
   return (
     <header className="App-header">
       <div className="header-links">
-        {!authContext.state.token ? (
+        {!mycookie ? (
           <>
               <Link to="/"><Logo width={100} height={60} /></Link>
               <Link to="/login">
@@ -97,34 +99,34 @@ function App() {
     userId: null,
   });
 
-  useEffect(() => {
-    console.log(JSON.parse(localStorage.getItem("loggedInfo")));
+  // useEffect(() => {
+  //   console.log(JSON.parse(localStorage.getItem("loggedInfo")));
 
-    const initUserInfo = async () => {
-      const loggedInfo = await JSON.parse(
-        localStorage.getItem("loggedInfo")
-      );
-      console.log("-------------새로 고침------------");
-      console.log(loggedInfo);
+  //   const initUserInfo = async () => {
+  //     const loggedInfo = await JSON.parse(
+  //       localStorage.getItem("loggedInfo")
+  //     );
+  //     console.log("-------------새로 고침------------");
+  //     console.log(loggedInfo);
 
-      if (loggedInfo) {
-        const { token, email, role, name, userId } = loggedInfo;
-        await dispatch({
-          type: "login",
-          token: token,
-          email: email,
-          role: role,
-          name: name,
-          userId: userId,
-        });
-      } else {
-        await dispatch({
-          type: "logout",
-        });
-      }
-    };
-    initUserInfo();
-  }, [state.token]);
+  //     if (loggedInfo) {
+  //       const { token, email, role, name, userId } = loggedInfo;
+  //       await dispatch({
+  //         type: "login",
+  //         token: token,
+  //         email: email,
+  //         role: role,
+  //         name: name,
+  //         userId: userId,
+  //       });
+  //     } else {
+  //       await dispatch({
+  //         type: "logout",
+  //       });
+  //     }
+  //   };
+  //   initUserInfo();
+  // }, [state.token]);
 
   return (
     <div className="App">

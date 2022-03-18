@@ -8,9 +8,6 @@
     border-radius: 20px;
     margin: 10px;
     border: 1px solid #c4c4c4;
-}
-
-.form-item input::placeholder {
     padding-left: 10px;
 }
 

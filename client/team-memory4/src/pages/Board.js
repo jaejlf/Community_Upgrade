@@ -114,6 +114,28 @@ const Board = () => {
                 "date": "2022-03-17 01:00:12",
                 "good": []
             },
+            {
+                "_id": "622f84827d6b184e6c1df71f",
+                "postNumber": 3,
+                "title": "취업 고민 스펙이요 빨리요!!!! 급해요!!!!!!!!!",
+                "content": "초록",
+                "userId": 1,
+                "writer": "재재",
+                "viewCnt": 53,
+                "date": "2022-03-17 02:53:17",
+                "good": []
+            },
+            {
+                "_id": "622f84a37d6b184e6c1df727",
+                "postNumber": 4,
+                "title": "안녕하세요 가입 인사~~",
+                "content": "yellow",
+                "userId": 2,
+                "writer": "룰루",
+                "viewCnt": 73,
+                "date": "2022-03-17 01:00:12",
+                "good": []
+            },
         ]
     }
 
@@ -132,13 +154,13 @@ const Board = () => {
             }
         ];
 
-    const [list, setList] = useState([]);
-    // const [list, setList] = useState(initialList.allPost);  // API TEST
+    // const [list, setList] = useState([]);
+    const [list, setList] = useState(initialList.allPost);  // API TEST
     const [hotList, setHotList] = useState([]);
 
 
-    // const [listNum, setListNum] = useState(initialList.allPost.length);  // API TEST
-    const [listNum, setListNum] = useState();
+    const [listNum, setListNum] = useState(initialList.allPost.length);  // API TEST
+    // const [listNum, setListNum] = useState();
 
     const enterSearchInput = async (e) => {
         if (e.key === 'Enter') {
@@ -147,7 +169,7 @@ const Board = () => {
                 authContext.state.token
             )
                 .then(({ status, data }) => {
-                    // console.log('search 결과', status, data);
+                    console.log('search 결과', status, data);
                     if (data) {
                         setList(data);
                     } else {
@@ -166,7 +188,7 @@ const Board = () => {
             authContext.state.token
         )
             .then(({ status, data }) => {
-                // console.log('search 결과', status, data);
+                console.log('search 결과', status, data);
                 if (data) {
                     setList(data);
                 } else {
@@ -186,9 +208,8 @@ const Board = () => {
                 authContext.state.token
             )
                 .then(({ status, data }) => {
-                    // console.log(status, data);
+                    console.log('GET /board/counter', status, data);
                     setListNum(data);
-
                 })
                 .catch((e) => {
                     console.log(e);
@@ -196,14 +217,12 @@ const Board = () => {
         };
         const getList = async () => {
             await getApi({},
-                `board/?page=1`,
+                `/board/?page=1`,
                 authContext.state.token
             )
                 .then(({ status, data }) => {
-                    // console.log(status, data);
-                    if (data.allPost) {
-                        setList(data.allPost);
-                    }
+                    console.log('get page=1 API:', status, data);
+                    setList(data.allPost);
                 })
                 .catch((e) => {
                     console.log(e);
@@ -211,7 +230,7 @@ const Board = () => {
         };
         const getHotList = async () => {
             await getApi({},
-                `board/hotposts`, // api test 추후 변경
+                `/board/hotposts`, // api test 추후 변경
                 authContext.state.token
             )
                 .then(({ status, data }) => {
@@ -237,13 +256,9 @@ const Board = () => {
             authContext.state.token
         )
             .then(({ status, data }) => {
-                console.log('paging API:', status);
+                console.log('paging API:', status, data.allPost);
                 if (status === 200) {
-                    if (data.allPost) {
-                        setList(data.allPost);
-                    } else {
-
-                    }
+                    setList(data.allPost);
                 }
             })
             .catch((e) => {
@@ -305,13 +320,12 @@ const Board = () => {
             <Pagination
                 activePage={page}
                 itemsCountPerPage={10}
-                totalItemsCount={listNum}
-                // pageRangeDisplayed={5} 
+                totalItemsCount={listNum*1}
+                pageRangeDisplayed={10} 
                 prevPageText={"‹"}
                 nextPageText={"›"}
                 onChange={handlePageChange}
             />
-
         </div>
     );
 };
