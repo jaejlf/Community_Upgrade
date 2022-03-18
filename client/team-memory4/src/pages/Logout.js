@@ -22,8 +22,7 @@ const Logout = () => {
               name: null,
               role: null,
             });
-            alert("로그아웃 되었습니다.");
-            // localStorage.clear();
+            alert('로그아웃 되었습니다.');
             clearCookie("myToken");
             window.location.reload();
           } else {
