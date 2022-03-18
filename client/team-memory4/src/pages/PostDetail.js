@@ -82,16 +82,18 @@ const PostDetail = () => {
             setMine(data.auth) // 내 글인지 여부 -> 수정, 삭제
             setLike(data.userGoodStauts)
             setScrap(data.userScrapStauts)
-          } else {
-            alert("로그인해야 이용할 수 있습니다.");
-            navigate("/login");
           }
         })
         .catch((e) => {
           console.log(e);
         });
     };
-    getPosting();
+    if (authContext.state.token) {
+      getPosting();
+    } else {
+      alert("로그인해야 이용할 수 있습니다.");
+      navigate("/login");
+    }
   }, []);
 
   const modifyHandler = () => {
