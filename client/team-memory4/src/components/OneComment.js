@@ -93,7 +93,7 @@ const OneComment = ({ comment, page, who }) => {
                         ) : (
                             <></>
                         )}
-                        {comment.writer === authContext.state.name ? (
+                        {comment.auth === true ? (
                             <p className="comment-del-btn" onClick={commentDeleteHandler}>
                                 삭제하기
                             </p>
