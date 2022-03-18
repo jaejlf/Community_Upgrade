@@ -22,8 +22,9 @@ const scrapStatus = async function (postNumber, userId) {
 
 const goodStatus = async function (good, userId) {
     var result = false;
-    for (let element of good) {
-        if (element.userId == userId) {
+
+    for (let i = 0; i < good.length; i++){
+        if(good[i][0].gooodUserId == userId){
             result = true;
             break;
         }
