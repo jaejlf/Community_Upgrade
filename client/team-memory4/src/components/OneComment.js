@@ -71,7 +71,7 @@ const OneComment = ({ comment, page, who }) => {
         <div className="comment-upper">
           <p className="comment-upper-writer">{comment.writer}</p>
           <p className="comment-upper-role">
-            {comment.role === 1 ? "일반회원" : "기업회원"}
+            {comment.userRole === 2 ? "기업회원" : "일반회원"}
           </p>
           <p className="comment-upper-date">{comment.date}</p>
         </div>
