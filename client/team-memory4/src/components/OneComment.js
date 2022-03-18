@@ -106,16 +106,19 @@ const OneComment = ({ comment, page, who }) => {
                         ) : (
                             <>
                                 {comment.auth === true ? (
-                                    <>
-                                        <p className="comment-del-btn" onClick={commentDeleteHandler}>
-                                            삭제하기
-                                        </p>
-                                    </>
+                                    <p className="comment-del-btn" onClick={commentDeleteHandler}>
+                                        삭제하기
+                                    </p>
                                 ) : (
                                     <></>
                                 )}
                             </>
                         )}
+                        {comment.auth === true ? (
+                            <p className="comment-del-btn" onClick={commentDeleteHandler}>
+                                삭제하기
+                            </p>
+                        ):(<></>)}
                     </div>
                 )}
             </div>
