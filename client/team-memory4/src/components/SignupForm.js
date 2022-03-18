@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { postApi } from "../api";
+import React, { useState, useContext, useEffect } from "react"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { postApi } from "../api"
 
 //회원가입
 // - 성공 : 201 응답 (Created), 생성된 User객체 반환
@@ -20,13 +20,15 @@ const SignupForm = (params) => {
     const [emailValid, setEmailValid] = useState();  // email 형식 확인
     const [checkMsg, setCheckMsg] = useState("");
 
-    const navigate = useNavigate();
+  const navigate = useNavigate()
 
-    useEffect(() => {  // Email 형식 체크
-        var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-        setEmailValid(regExp.test(details.email));
-        // console.log(emailValid);
-    }, [details.email]);
+  useEffect(() => {
+    // Email 형식 체크
+    var regExp =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+    setEmailValid(regExp.test(details.email))
+    // console.log(emailValid);
+  }, [details.email])
 
     const submitHandler = async (e) => {
         console.log(details);
@@ -67,56 +69,53 @@ const SignupForm = (params) => {
         }
     }
 
-    return (
-        <form className="Signup-outer-form" onSubmit={submitHandler}>
-            <div className="form-group">
-                <div className="form-group">
-                    <div className="form-item">
-                        <input
-                            type="text"
-                            name="email"
-                            placeholder="EMAIL"
-                            onChange={(e) =>
-                                setDetails({ ...details, email: e.target.value })
-                            }
-                        />
-                    </div>
-                </div>
-            </div>
+  return (
+    <form className="Signup-outer-form" onSubmit={submitHandler}>
+      <div className="form-group">
+        <div className="form-group">
+          <div className="form-item">
+            <input
+              type="text"
+              name="email"
+              placeholder="EMAIL"
+              onChange={(e) =>
+                setDetails({ ...details, email: e.target.value })
+              }
+            />
+          </div>
+        </div>
+      </div>
 
-            <div className="form-group">
-                <div className="form-item">
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="NAME"
-                        onChange={(e) =>
-                            setDetails({ ...details, name: e.target.value })
-                        }
-                    />
-                </div>
-            </div>
+      <div className="form-group">
+        <div className="form-item">
+          <input
+            type="text"
+            name="name"
+            placeholder="NAME"
+            onChange={(e) => setDetails({ ...details, name: e.target.value })}
+          />
+        </div>
+      </div>
 
-            <div className="form-group">
-                <div className="form-item">
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="PASSWORD"
-                        onChange={(e) =>
-                            setDetails({ ...details, password: e.target.value })
-                        }
-                    />
-                </div>
-            </div>
-            <p>{checkMsg}</p>
-            <br />
-            <button 
-                className="Login-button"
-                type="submit"
-            >회원가입</button>
-        </form>
-    );
-};
+      <div className="form-group">
+        <div className="form-item">
+          <input
+            type="password"
+            name="password"
+            placeholder="PASSWORD"
+            onChange={(e) =>
+              setDetails({ ...details, password: e.target.value })
+            }
+          />
+        </div>
+      </div>
+      <p>{checkMsg}</p>
+      <br />
+      <button className="Login-button" type="submit">
+        회원가입
+      </button>
+    </form>
+  )
+}
 
-export default SignupForm;
+export default SignupForm

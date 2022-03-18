@@ -36,9 +36,8 @@ const getAllComment = async (req, res) => {
   // res.status(200).json({ allComment: data })
 
   var exData = []
-  var authCk = false
   for (let element of result) {
-    authCk = auth.check(res.locals.user.userId, element.userId)
+    var authCk = await auth.check(res.locals.user.userId, element.userId)
     var user = await userInfo.findUser(element.userId)
 
     var data = Object.assign({}, element)._doc;

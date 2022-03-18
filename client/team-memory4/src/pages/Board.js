@@ -1,16 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../App';
-import { getApi } from '../api';
-import Search from '../assets/images/search.png';
-import { Post } from '../components';
-import Pagination from "react-js-pagination";
-import '../styles/Board.css';
-
+import React, { useState, useEffect, useContext } from "react"
+import { AuthContext } from "../App"
+import { getApi } from "../api"
+import Search from "../assets/images/search.png"
+import { Post } from "../components"
+import Pagination from "react-js-pagination"
+import "../styles/Board.css"
 
 const Board = () => {
-    const authContext = useContext(AuthContext);
+    const authContext = useContext(AuthContext)
 
-    const [option, setOption] = useState("title");  // title, content, user
+    const [option, setOption] = useState("title") // title, content, user
 
     const initialList =
     {
@@ -139,28 +138,26 @@ const Board = () => {
         ]
     }
 
-    const searchDumpData =
-        [
-            {
-                "viewCnt": 0,
-                "_id": "62279c3e0852694605079440",
-                "title": "test-gaeun",
-                "content": "test-gaeunt",
-                "postNumber": 8,
-                "date": "2022-03-09 03:11:10",
-                "viewCnt": 3,
-                "goodCnt": 5,
-                "good": [],
-            }
-        ];
+    const searchDumpData = [
+        {
+            viewCnt: 0,
+            _id: "62279c3e0852694605079440",
+            title: "test-gaeun",
+            content: "test-gaeunt",
+            postNumber: 8,
+            date: "2022-03-09 03:11:10",
+            viewCnt: 3,
+            goodCnt: 5,
+            good: [],
+        },
+    ]
 
-    // const [list, setList] = useState([]);
-    const [list, setList] = useState(initialList.allPost);  // API TEST
-    const [hotList, setHotList] = useState([]);
+    const [list, setList] = useState([])
+    // const [list, setList] = useState(initialList.allPost);  // API TEST
+    const [hotList, setHotList] = useState([])
 
-
-    const [listNum, setListNum] = useState(initialList.allPost.length);  // API TEST
-    // const [listNum, setListNum] = useState();
+    // const [listNum, setListNum] = useState(initialList.allPost.length);  // API TEST
+    const [listNum, setListNum] = useState()
 
     const enterSearchInput = async (e) => {
         if (e.key === 'Enter') {
@@ -201,6 +198,8 @@ const Board = () => {
     }
 
 
+    const [page, setPage] = useState(1)
+
     useEffect(() => {
         const getListNum = async () => {
             await getApi({},
@@ -240,13 +239,12 @@ const Board = () => {
                 .catch((e) => {
                     console.log(e);
                 });
-        }
+
+        };
         getListNum();
         getList();
         // getHotList();
     }, []);
-
-    const [page, setPage] = useState(1);
 
     const handlePageChange = async (page) => {
         setPage(page);
@@ -320,8 +318,8 @@ const Board = () => {
             <Pagination
                 activePage={page}
                 itemsCountPerPage={10}
-                totalItemsCount={listNum*1}
-                pageRangeDisplayed={10} 
+                totalItemsCount={listNum * 1}
+                pageRangeDisplayed={10}
                 prevPageText={"‹"}
                 nextPageText={"›"}
                 onChange={handlePageChange}
@@ -330,4 +328,4 @@ const Board = () => {
     );
 };
 
-export default Board;
+export default Board

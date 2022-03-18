@@ -25,9 +25,11 @@ import { getCookie } from "./api/cookie";
 
 const Header = () => {
   const [mycookie, setMycookie] = useState();
+
   useEffect(() => {
     setMycookie(getCookie('myToken'));
   }, []);
+
   const authContext = useContext(AuthContext);
 
   return (
