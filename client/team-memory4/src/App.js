@@ -19,6 +19,24 @@ import { Header } from "./components";
 
 
 export const AuthContext = createContext();
+export const RecommentContext = createContext();
+
+const recommentReducer = (stateR, action) => {
+  switch (action.type) {
+    case "recommentClick":
+      return {
+        recommentId: action.recommentId,
+        recomment2Whom: action.recomment2Whom,
+      }
+    case "recommentNonClick":
+      return {
+        recommentId: null,
+        recomment2Whom: null,
+      }
+    default:
+      return stateR;
+  }
+}
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -52,9 +70,15 @@ function App() {
     userId: null,
   });
 
+  const [stateR, dispatchR] = useReducer(recommentReducer, {
+    recommentId: null,
+    recomment2Who: null,
+  })
+
   return (
     <div className="App">
       <AuthContext.Provider value={{ state, dispatch }}>
+      <RecommentContext.Provider value={{ stateR, dispatchR }}>
         <Header />
         <Routes>
           <Route path="/" exact={true} element={<Board />} />
@@ -67,6 +91,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </RecommentContext.Provider>
       </AuthContext.Provider>
     </div>
   );
