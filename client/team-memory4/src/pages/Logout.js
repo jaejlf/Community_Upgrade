@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 
 const Logout = () => {
   const authContext = useContext(AuthContext);
-  const [cookies, setCookie, removeCookie] = useCookies(["myToken"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
   const navigate = useNavigate();
 

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { AllComments, MyComment } from "../components";
 import parse from "html-react-parser";
+import { useCookies } from "react-cookie";
 import {
   FaRegBookmark,
   FaBookmark,
@@ -35,6 +36,8 @@ const PostDetail = () => {
   };
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+
 
   const [mine, setMine] = useState(false);
   const [postData, setPostData] = useState({
@@ -84,7 +87,12 @@ const PostDetail = () => {
           console.log(e);
         });
     }
-    getPosting();
+    if (cookies.token) {
+      getPosting();
+    } else {
+      alert('로그인하세요');
+    }
+    
   }, [])
 
   const modifyHandler = () => {

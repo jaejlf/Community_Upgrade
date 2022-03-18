@@ -5,12 +5,12 @@ import { ReactComponent as HeaderLine } from "../assets/images/header-line.svg";
 import { useCookies } from "react-cookie";
 
 const Header = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(["myToken"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
   return (
     <header className="App-header">
       <div className="header-links">
-        {!cookies.myToken ? (
+        {!cookies.token ? (
           <>
             <Link to="/">
               <Logo width={100} height={60} />

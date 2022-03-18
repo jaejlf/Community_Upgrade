@@ -10,7 +10,7 @@ const putApi = async (data, end_url, token) => {
     };
     if (token) {
         // config.headers["Authorization"] = `Bearer ${token}`;
-        config.headers["Authorization"] = `Bearer ${getCookie('myToken')}`;
+        config.headers["Authorization"] = `Bearer ${getCookie('token')}`;
     }
     return await axios.put(process.env.REACT_APP_BACK_BASE_URL + end_url, data, config);
 };
