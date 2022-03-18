@@ -58,6 +58,7 @@ const AllComments = ({ props }) => {
 
     const authContext = useContext(AuthContext);
     const [allComment, setAllComment] = useState([]);
+    const [parentComment, setParentComment] = useState([]);
 
     let postId = props * 1;
 
@@ -84,14 +85,21 @@ const AllComments = ({ props }) => {
         // console.log(allComment);
 
         // depth=2 제거
-        setAllComment(allComment.filter(allComment => allComment.depth !== 2));
+        // setAllComment(allComment.filter(allComment => allComment.depth !== 2));
+        
     }, []);
+
+    useEffect(() => {
+        const allCommentFiltered = allComment.filter(allComment => allComment.depth !== 2);
+        setParentComment(allCommentFiltered);
+        console.log(parentComment);
+    }, [allComment]);
 
     // all comment를 받아온 다음, 그거 depth=1인 _id들 돌면서 /comment/:parentId/child api 호출. 
 
     return (
         <div className='all-comments-section'>
-            {allComment.map(comment => (
+            {parentComment.map(comment => (
                 <ParentComment
                     key={comment._id}
                     comment={comment}

@@ -47,7 +47,7 @@ const ParentComment = ({ comment, page, who }) => {
         authContext.state.token
       )
         .then(({ status, data }) => {
-          // console.log('GET child comment: ', status, data);
+          console.log('GET child comment: ', status, data);
           if (status === 200) {
             setChildComment(data);
           }
@@ -66,12 +66,16 @@ const ParentComment = ({ comment, page, who }) => {
     <div className="all-comment-section">
       {
         childComment === [] ? ( // child 없다면
-          <OneComment
+          comment.depth === 1 ? (
+            <OneComment
             key={comment._id}
             comment={comment}
             page={'post'}
             who={'parent'}
           />
+          ) : (
+            <></>
+          )
         ) : ( // child 있다면
           <>
             <OneComment
