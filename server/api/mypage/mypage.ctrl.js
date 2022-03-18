@@ -23,74 +23,41 @@ const getMyComment = async (req, res) => {
 };
 
 const scrapping = async (req, res) => {
-  const postNumber = parseInt(req.params.postNumber);
+  const postNumber = parseInt(req.params.postNumber)
   if (res.locals.user.userId == null)
-    return res.status(501).send("로그인을 해야 게시글을 스크랩할 수 있습니다.");
+    return res.status(501).send("로그인을 해야 게시글을 스크랩할 수 있습니다.")
 
-  var user = await userInfo.findUser(res.locals.user.userId);
-  var post = await postInfo.findPost(postNumber);
+  var user = await userInfo.findUser(res.locals.user.userId)
+  var post = await postInfo.findPost(postNumber)
   var scrapStatus = await userInfo.scrapStatus(
     postNumber,
     res.locals.user.userId
-  );
-
-  console.log("postNumber : " + postNumber);
-
-  const pushScrap = (err, result) => {
-    console.log("pushScrap");
-    UserModel.updateOne(
-      { userId: res.locals.user.userId },
-      {
-        $push: {
-          scrap: postNumber,
-        },
-      },
-      (err, data) => {
-        if (err)
-          return res.status(500).send({
-            message: err.message,
-            error: err,
-          });
-
-        res.status(200).send({ message: "스크랩 완료" });
-      }
-    );
-  };
-
-  const deleteScrap = (err, result) => {
-    UserModel.updateOne(
-      { userId: res.locals.user.userId },
-      {
-        $pull: {
-          scrap: postNumber,
-        },
-      },
-      (err, data) => {
-        if (err)
-          return res.status(500).send({
-            message: err.message,
-            error: err,
-          });
-
-        res.status(200).send({ message: "스크랩 삭제" });
-      }
-    );
-  };
+  )
 
   //백 테스트 - 예외
-  console.log("scrapStatus test : ");
-  console.log(scrapStatus);
-  if (scrapStatus) {
-    console.log("이미 스크랩한 게시물");
-    deleteScrap();
-  } else if (!scrapStatus) {
-    pushScrap();
+  if(scrapStatus){
+    return res.send("이미 스크랩한 게시물");
   }
-
-  if (!post) {
+  if(!post){
     return res.send("삭제된 게시물");
   }
-};
+
+  var scraps = user.scrap
+  scraps.push(postNumber)
+
+  UserModel.updateOne(
+    { userId: res.locals.user.userId },
+    {
+      $set: {
+        scrap: scraps,
+      },
+    },
+    function (err, data) {
+      if (err) return res.status(500).send(err)
+      res.status(200).send({ message: "스크랩 완료" })
+    }
+  )
+}
 
 const getMyScrap = async (req, res) => {
   var user = await userInfo.findUser(res.locals.user.userId);
