@@ -30,12 +30,25 @@ const getMyComment = async (req, res) => {
 }
 
 const scrapping = async (req, res) => {
-  console.log("되나")
   const postNumber = parseInt(req.params.postNumber)
   if (res.locals.user.userId == null)
     return res.status(501).send("로그인을 해야 게시글을 스크랩할 수 있습니다.")
 
   var user = await userInfo.findUser(res.locals.user.userId)
+  var post = await postInfo.findPost(postNumber)
+  var scrapStatus = await userInfo.scrapStatus(
+    postNumber,
+    res.locals.user.userId
+  )
+
+  //백 테스트 - 예외
+  if(scrapStatus){
+    return res.send("이미 스크랩한 게시물");
+  }
+  if(!post){
+    return res.send("삭제된 게시물");
+  }
+
   var scraps = user.scrap
   scraps.push(postNumber)
 
