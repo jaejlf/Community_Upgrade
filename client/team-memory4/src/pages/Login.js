@@ -9,6 +9,7 @@ const Login = () => {
     const [roleid, setRoleid] = useState(1);  // 1: 일반회원, 2: 기업회원
 
     const roleClickHandler = async (id) => {
+        console.log(id);
         setRoleid(id);
         if (id === 1) {
             setUserRole("일반회원");
@@ -51,7 +52,7 @@ const Login = () => {
                     />기업회원
                 </button>
             </div>
-            <LoginForm roleid={roleid}/>
+            <LoginForm props={roleid}/>
             <p className='login-goto-signup'>레디미 커뮤니티가 처음이신가요?&nbsp;
                 <Link to={`/signup/${roleid}`}>
                     회원가입

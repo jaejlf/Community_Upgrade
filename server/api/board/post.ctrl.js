@@ -216,6 +216,18 @@ const pushGood = (req, res) => {
   });
 };
 
+const goodCnt = (req, res) => {
+  const postNumber = parseInt(req.params.postNumber);
+  console.log(postNumber);
+
+  db.collection("posts").findOne({ postNumber: postNumber }, (err, data) => {
+    const good = data.good;
+    console.log(good.length);
+    const goodCntNum = good.length;
+    res.send({ goodCntNum });
+  });
+};
+
 module.exports = {
   createPost,
   getAllPost,
@@ -223,4 +235,5 @@ module.exports = {
   editPost,
   deletePost,
   pushGood,
+  goodCnt,
 };

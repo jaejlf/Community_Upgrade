@@ -32,8 +32,14 @@ const goodStatus = async function (good, userId) {
   return result;
 };
 
+const goodCnt = async function (good) {
+  console.log("=================" + good.length);
+  return good.length;
+};
+
 module.exports = {
   findUser,
   scrapStatus,
   goodStatus,
+  goodCnt,
 };

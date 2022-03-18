@@ -8,7 +8,6 @@ import "../styles/Board.css"
 
 const Board = () => {
     const authContext = useContext(AuthContext)
-
     const [option, setOption] = useState("title") // title, content, user
 
     const initialList =
