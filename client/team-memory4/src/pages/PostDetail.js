@@ -36,7 +36,7 @@ const PostDetail = () => {
   };
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["myToken"]);
 
 
   const [mine, setMine] = useState(false);
@@ -87,7 +87,7 @@ const PostDetail = () => {
           console.log(e);
         });
     }
-    if (cookies.token) {
+    if (cookies.myToken) {
       getPosting();
     } else {
       alert('로그인하세요');
