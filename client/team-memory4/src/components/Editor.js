@@ -206,7 +206,7 @@ const Editor = (desc) => {
                 value={title}
             />
             <ReactQuill
-                style={{ height: "300px" }}
+                style={{ height: "400px" }}
                 ref={quillRef}
                 theme="snow"
                 placeholder="글을 입력하세요"

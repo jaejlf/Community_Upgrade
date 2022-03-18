@@ -3,7 +3,7 @@ import { Editor } from '../components';
 import "../styles/Write.css"
 
 const PostModify = () => {
-    const [desc, setDesc] = useState('수정.. 잘 되나?');  // 들어갈 내용
+    const [desc, setDesc] = useState('');  // 들어갈 내용
     let wm = 'modify';
     function onEditorChange(value) {
         setDesc(value)

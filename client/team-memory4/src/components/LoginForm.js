@@ -12,11 +12,11 @@ import { useCookies } from "react-cookie";
 //         password가 틀린경우 500 ( Server Error )
 const LoginForm = (roleid) => {
   const [cookies, setCookie, removeCookie] = useCookies(["myToken"]);
-
+  console.log(roleid.roleid);
   const [details, setDetails] = useState({
     email: "",
     password: "",
-    role: roleid,
+    role: roleid.roleid,
   });
 
   const [emailValid, setEmailValid] = useState(); // email 형식 확인

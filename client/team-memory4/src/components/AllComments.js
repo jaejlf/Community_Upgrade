@@ -94,6 +94,7 @@ const AllComments = ({ props }) => {
         <div className='all-comments-section'>
             {allComment.map(comment => (
                 <ParentComment
+                    key={comment._id}
                     comment={comment}
                     page={'post'}
                     who={'parent'}

@@ -92,7 +92,7 @@ const PostDetail = () => {
         });
     };
     getPosting();
-  }, [mine]);
+  }, []);
 
   const modifyHandler = () => {
     navigate(`/modify/${postId}`);
