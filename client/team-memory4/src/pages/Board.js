@@ -239,7 +239,6 @@ const Board = () => {
                 .catch((e) => {
                     console.log(e);
                 });
-
         };
         getListNum();
         getList();

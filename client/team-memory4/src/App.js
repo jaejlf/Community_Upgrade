@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import { Routes, Route, Link } from "react-router-dom";
 import {
   MyPage,
@@ -18,8 +18,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ReactComponent as Logo } from './assets/images/Logo.svg';
-import { ReactComponent as HeaderLine } from './assets/images/header-line.svg';
+import { ReactComponent as Logo } from "./assets/images/Logo.svg";
+import { ReactComponent as HeaderLine } from "./assets/images/header-line.svg";
 import { getCookie } from "./api/cookie";
 import { Header } from "./components";
 
@@ -49,7 +49,6 @@ const reducer = (state, action) => {
   }
 };
 
-
 function App() {
   const [state, dispatch] = useReducer(reducer, {
     token: null,
@@ -65,14 +64,14 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" exact={true} element={<Board />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/logout' element={<Logout />} />
-          <Route path='/signup/:roleid' element={<Signup />} />
-          <Route path='/post/:id' element={<PostDetail />} />
-          <Route path='/modify/:id' element={<PostModify />} />
-          <Route path='/write' element={<PostWrite />} />
-          <Route path='/mypage' element={<MyPage />} />
-          <Route path='*' element={<NotFound />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/signup/:roleid" element={<Signup />} />
+          <Route path="/post/:id" element={<PostDetail />} />
+          <Route path="/modify/:id" element={<PostModify />} />
+          <Route path="/write" element={<PostWrite />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthContext.Provider>
     </div>

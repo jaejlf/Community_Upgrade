@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from "react"
-import { postApi } from "../api"
-import { AuthContext } from "../App"
-import { useNavigate } from "react-router-dom"
-import "../styles/Login.css"
-import { setCookie } from "../api/cookie"
+import React, { useState, useContext, useEffect } from "react";
+import { postApi } from "../api";
+import { AuthContext } from "../App";
+import { useNavigate } from "react-router-dom";
+import "../styles/Login.css";
+import { setCookie } from "../api/cookie";
 
 //로그인
 // - 성공 : email, password가 일치하면 성공(200)
@@ -15,26 +15,26 @@ const LoginForm = (roleid) => {
     email: "",
     password: "",
     role: roleid,
-  })
+  });
 
-  const [emailValid, setEmailValid] = useState() // email 형식 확인
-  const [loginErrorMsg, setLoginErrorMsg] = useState("")
-  const authContext = useContext(AuthContext)
-  const navigate = useNavigate()
+  const [emailValid, setEmailValid] = useState(); // email 형식 확인
+  const [loginErrorMsg, setLoginErrorMsg] = useState("");
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Email 형식 체크
     var regExp =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-    setEmailValid(regExp.test(details.email))
-  }, [details.email])
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    setEmailValid(regExp.test(details.email));
+  }, [details.email]);
 
   const submitHandler = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!details.email) {
-      setLoginErrorMsg("이메일을 입력해주세요.")
+      setLoginErrorMsg("이메일을 입력해주세요.");
     } else if (!emailValid) {
-      setLoginErrorMsg("이메일 형식에 맞게 입력해주세요.")
+      setLoginErrorMsg("이메일 형식에 맞게 입력해주세요.");
     } else {
       ////////////// 임시 data로 로그인 /////////////
       // authContext.dispatch({
@@ -60,7 +60,9 @@ const LoginForm = (roleid) => {
       await postApi(details, "/user/login")
         .then(({ status, data }) => {
           if (status === 200) {
-            setLoginErrorMsg("")
+            console.log(data);
+            console.log(data.token);
+            setLoginErrorMsg("");
             authContext.dispatch({
               type: "login",
               token: data.token,
@@ -74,20 +76,20 @@ const LoginForm = (roleid) => {
             });
             navigate("/");
           } else if (status === 400) {
-            setLoginErrorMsg("필수 입력값을 모두 입력해주세요.")
+            setLoginErrorMsg("필수 입력값을 모두 입력해주세요.");
           } else if (status === 404) {
-            setLoginErrorMsg("존재하지 않는 이메일입니다.")
+            setLoginErrorMsg("존재하지 않는 이메일입니다.");
           } else {
-            setLoginErrorMsg("로그인 실패")
+            setLoginErrorMsg("로그인 실패");
           }
         })
         .catch((e) => {
-          setLoginErrorMsg("로그인 실패")
-          console.log(e.response)
-        })
+          setLoginErrorMsg("로그인 실패");
+          console.log(e.response);
+        });
       //////////////////////////////////////////////////
     }
-  }
+  };
   return (
     <form className="Login-outer-form" onSubmit={submitHandler}>
       <div className="form-group">
@@ -121,7 +123,7 @@ const LoginForm = (roleid) => {
       </button>
       <br />
     </form>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;
