@@ -1,5 +1,5 @@
 .write-outer {
-    margin: 0 20px;
+    margin: 0 40px;
 }
 
 .write-header {
@@ -28,9 +28,5 @@
     height: 40px;
     margin-bottom: 10px;
     border: 1px solid #cccccc;
-    padding-left: 10px;
-}
-
-.write-title-input::placeholder {
     padding-left: 10px;
 }

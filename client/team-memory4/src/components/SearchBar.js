@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import Search from '../assets/images/search.png';
 import '../styles/Board.css';
 

@@ -57,7 +57,7 @@ const AllComments = ({ props }) => {
     ];
 
     const authContext = useContext(AuthContext);
-    const [allComment, setAllComment] = useState(CommentsDumpData);
+    const [allComment, setAllComment] = useState([]);
 
     let postId = props * 1;
 
