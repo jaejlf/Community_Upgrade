@@ -80,7 +80,7 @@ const PostDetail = () => {
               viewCnt: data.viewCnt,
             })
             setMine(data.auth) // 내 글인지 여부 -> 수정, 삭제
-            setLike(data.userGoodStauts)
+            setLike(data.userGoodStatus)
             setScrap(data.userScrapStauts)
           }
         })
