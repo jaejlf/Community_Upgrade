@@ -83,7 +83,7 @@ const scrapping = async (req, res) => {
   if (scrapStatus) {
     console.log("이미 스크랩한 게시물");
     deleteScrap();
-  } else if (!scrapStatus) {
+  } else {
     pushScrap();
   }
 
