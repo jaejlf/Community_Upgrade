@@ -12,22 +12,23 @@ const Logout = () => {
     const getLogout = async () => {
       await getApi({}, "/user/logout")
         .then(({ status, data }) => {
-          console.log("status:", status)
+          console.log('status:', status);
           if (status === 200 || status === 201 || status === 204) {
-            navigate("/")
+            navigate('/');
             authContext.dispatch({
               type: "logout",
               token: null,
               email: null,
               name: null,
               role: null,
-            })
-            alert("로그아웃 되었습니다.")
+            });
+            alert('로그아웃 되었습니다.');
             // localStorage.clear();
-            clearCookie("myToken")
+            clearCookie("myToken");
           } else {
-            alert("로그아웃에 실패했습니다. 다시 시도해주세요.")
+            alert('로그아웃에 실패했습니다. 다시 시도해주세요.');
           }
+
         })
         .catch((e) => {
           console.log(e)
