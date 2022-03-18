@@ -80,6 +80,7 @@ const getPost = async (req, res) => {
     exData.auth = authCk;
     exData.userScrapStauts = scrapStatus;
     exData.userGoodStatus = goodStatus;
+    exData.goodCnt = result.good.length;
 
     res.status(200).json(exData);
   });
