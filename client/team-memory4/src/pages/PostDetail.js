@@ -31,6 +31,7 @@ const PostDetail = () => {
     content: "내용4 어쩌구 이거는 테스트용",
     postNumber: 4,
     viewCnt: 9,
+    goodCnt: 0,
     good: [],
     date: "2022-03-14 22:20:42",
     auth: true, //true이면 작성자, false이면 작성자 아님
@@ -48,6 +49,7 @@ const PostDetail = () => {
     content: "",
     date: "",
     viewCnt: 0,
+    goodCnt: 0,
     good: [],
     auth: false,
     userScrapStauts: false,
@@ -56,6 +58,8 @@ const PostDetail = () => {
 
   const [like, setLike] = useState();
   const [scrap, setScrap] = useState();
+
+  // const [goodCnt, setGoodCnt] = useState(0);
 
   const params = useParams();
   let postId = params.id;
@@ -88,6 +92,19 @@ const PostDetail = () => {
           console.log(e);
         });
     };
+
+    const getGoodCnt = async () => {
+      await getApi({}, `/board/${postId}/good`, authContext.state.token)
+        .then(({ status, data }) => {
+          if (status === 200) {
+            console.log(`GET goodCnt`, data.goodCntNum);
+            setPostData({...postData, goodCnt: data.goodCntNum});
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
     if (authContext.state.token) {
       getPosting();
     } else {
@@ -204,12 +221,12 @@ const PostDetail = () => {
         <div className="detail-cnts">
           <div className="detail-cnt">
             <FaRegThumbsUp />
-            {/* <p>{postData.good.length}</p> */}
+            <p>{postData.goodCnt}</p>
           </div>
-          <div className="detail-cnt">
+          {/* <div className="detail-cnt">
             <FaRegBookmark />
             <p></p>
-          </div>
+          </div> */}
           <div className="detail-cnt">
             <FaRegEye />
             <p>{postData.viewCnt}</p>

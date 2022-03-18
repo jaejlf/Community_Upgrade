@@ -36,10 +36,10 @@ const Post = (post) => {
               <FaRegThumbsUp />
               <p>{info.good.length}</p>
             </div>
-            <div className="content-section-scrapcnt">
+            {/* <div className="content-section-scrapcnt">
               <FaRegBookmark />
               <p></p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
