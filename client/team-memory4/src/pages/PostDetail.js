@@ -73,6 +73,7 @@ const PostDetail = () => {
               content: data.content,
               date: data.date,
               viewCnt: data.viewCnt,
+              goodCnt: data.goodCnt
             });
             setMine(data.auth); // 내 글인지 여부 -> 수정, 삭제
             setLike(data.userGoodStatus);

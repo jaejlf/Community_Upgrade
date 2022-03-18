@@ -7,9 +7,7 @@ const postInfo = require("../../controller/postInfo");
 const getMyPost = async (req, res) => {
   const userId = res.locals.user.userId;
   const data = await BoardModel.find({ userId: userId });
-  //   await BoardModel.find({ userId: userId },
-  // if (err) return res.status(500).json({ error: error.message })
-  //   })
+
   res.status(200).json({
     myPost: data,
   });
@@ -18,12 +16,7 @@ const getMyPost = async (req, res) => {
 const getMyComment = async (req, res) => {
   const userId = res.locals.user.userId;
   const data = await CommentModel.find({ userId: userId, isDeleted: false });
-  //   await CommentModel.find(
-  //     { userId: userId, isDeleted: false },
-  // function (err, data) {
-  //   if (err) return res.status(500).json({ error: error.message })
-  // }
-  //   )
+
   res.status(200).json({
     myComment: data,
   });
@@ -41,9 +34,7 @@ const scrapping = async (req, res) => {
     res.locals.user.userId
   );
 
-  // var scraps = user.scrap;
   console.log("postNumber : " + postNumber);
-  // scraps.push(postNumber);
 
   const pushScrap = (err, result) => {
     console.log("pushScrap");
