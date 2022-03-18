@@ -3,7 +3,6 @@ import { postApi } from "../api";
 import { AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
-import { setCookie } from "../api/cookie";
 import { useCookies } from "react-cookie";
 
 //로그인
@@ -39,27 +38,6 @@ const LoginForm = (roleid) => {
     } else if (!emailValid) {
       setLoginErrorMsg("이메일 형식에 맞게 입력해주세요.");
     } else {
-      ////////////// 임시 data로 로그인 /////////////
-      // authContext.dispatch({
-      //     type: "login",
-      //     // token: data.token,
-      //     token: "1243232",
-      //     email: details.email,
-      //     role: 1,
-      //     userId: 1,
-      // });
-      // localStorage.setItem(
-      //     "loggedInfo",
-      //     JSON.stringify({
-      //         email: details.email,
-      //         role: 1,
-      //         // token: data.token
-      //         token: "1243232",
-      //         userId: 1,
-      //     })
-      // );
-      // navigate("/");
-      //////////////////////////////////////////
       await postApi(details, "/user/login")
         .then(({ status, data }) => {
           if (status === 200) {
@@ -75,9 +53,6 @@ const LoginForm = (roleid) => {
               userId: data.userId,
             });
             setCookie("myToken", data.token, { path: "/" });
-            // setCookie('myToken', data.token, {
-            //   path: "/",
-            // });
             navigate("/");
           } else if (status === 400) {
             setLoginErrorMsg("필수 입력값을 모두 입력해주세요.");

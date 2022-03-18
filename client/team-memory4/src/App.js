@@ -14,13 +14,7 @@ import {
 import {
   useReducer,
   createContext,
-  useContext,
-  useEffect,
-  useState,
 } from "react";
-import { ReactComponent as Logo } from "./assets/images/Logo.svg";
-import { ReactComponent as HeaderLine } from "./assets/images/header-line.svg";
-import { getCookie } from "./api/cookie";
 import { Header } from "./components";
 
 
