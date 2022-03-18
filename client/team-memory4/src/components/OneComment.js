@@ -4,12 +4,17 @@ import { deleteApi } from "../api"
 import { AuthContext, RecommentContext } from "../App"
 import { useNavigate } from "react-router-dom"
 import { MyComment } from "../components"
+import { useParams } from "react-router-dom"
 
 
 const OneComment = ({ comment, page, who }) => {
     console.log(comment.content);
     console.log(comment._id);
     console.log(who);
+
+    const params = useParams();
+    let postId = params.id;
+    console.log(postId);
 
     const authContext = useContext(AuthContext)
     const recommentContext = useContext(RecommentContext)
@@ -39,7 +44,7 @@ const OneComment = ({ comment, page, who }) => {
                 if (status === 200) {
                     console.log("댓글삭제", status, data)
                     alert("삭제되었습니다.")
-                    window.location.reload() // 새로고침하여 댓글 다시 불러오기
+                    window.location.replace(`/post/${postId}`) // 새로고침하여 댓글 다시 불러오기
                 } else if (status === 501) {
                     alert("작성자만 댓글을 삭제할 수 있습니다.")
                 }

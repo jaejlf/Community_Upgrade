@@ -67,6 +67,7 @@ const ParentComment = ({ comment, page, who }) => {
       {
         childComment === [] ? ( // child 없다면
           <OneComment
+            key={comment._id}
             comment={comment}
             page={'post'}
             who={'parent'}
@@ -74,12 +75,14 @@ const ParentComment = ({ comment, page, who }) => {
         ) : ( // child 있다면
           <>
             <OneComment
+              key={comment._id}
               comment={comment}
               page={'post'}
               who={'parent'}
             />
             {childComment.map(comment => (
               <OneComment
+                key={comment._id}
                 comment={comment}
                 page={'post'}
                 who={'child'}

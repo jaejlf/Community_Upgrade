@@ -249,7 +249,7 @@ const PostDetail = () => {
       </div>
         <AllComments props={postId} />
         {!recommentContext.stateR.recommentId ? (
-          <MyComment props={postId} />
+          <MyComment />
         ):(
           <></>
         )}

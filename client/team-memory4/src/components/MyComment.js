@@ -1,14 +1,16 @@
 import React, { useState, useContext, useEffect } from "react"
+import { useParams } from "react-router-dom"
 import { postApi } from "../api"
 import { AuthContext, RecommentContext } from "../App"
 import "../styles/Comments.css"
 
-const MyComment = ({ props }) => {
+const MyComment = () => {
   const authContext = useContext(AuthContext)
   const recommentContext = useContext(RecommentContext)
   const [recomment, setRecomment] = useState("")
   const [myComment, setMyComment] = useState("")
-  let postId = props * 1
+  const params = useParams();
+  let postId = params.id
 
   useEffect(() => {
     if (recommentContext.stateR.recommentId !== null) {
