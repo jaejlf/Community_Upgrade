@@ -1,15 +1,11 @@
-import React, {
-  useEffect,
-  useContext,
-  useState,
-} from "react"
-import { useParams } from "react-router-dom"
-import { deleteApi, getApi, postApi, putApi } from "../api"
-import { AuthContext, RecommentContext } from "../App"
-import { useNavigate } from "react-router-dom"
-import { Link } from "react-router-dom"
-import { AllComments, MyComment } from "../components"
-import parse from "html-react-parser"
+import React, { useEffect, useContext, useState } from "react";
+import { useParams } from "react-router-dom";
+import { deleteApi, getApi, postApi, putApi } from "../api";
+import { AuthContext, RecommentContext } from "../App";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { AllComments, MyComment } from "../components";
+import parse from "html-react-parser";
 import {
   FaRegBookmark,
   FaBookmark,
@@ -18,7 +14,6 @@ import {
   FaRegEye,
 } from "react-icons/fa";
 import "../styles/PostDetail.css";
-
 
 const PostDetail = () => {
   const postDumpData = {
@@ -36,9 +31,9 @@ const PostDetail = () => {
     auth: true, //true이면 작성자, false이면 작성자 아님
     userScrapStauts: true,
     userGoodStatus: false,
-  }
-  const authContext = useContext(AuthContext)
-  const navigate = useNavigate()
+  };
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [mine, setMine] = useState(false);
   const [postData, setPostData] = useState({
@@ -70,7 +65,7 @@ const PostDetail = () => {
       await getApi({}, `/board/${postId}`, authContext.state.token)
         .then(({ status, data }) => {
           if (status === 200) {
-            console.log(`GET /board/${postId}`, data);
+            console.log(`GET /board/${postId}`, status, data);
             setPostData({
               writer: data.writer,
               role: data.role,
@@ -78,10 +73,10 @@ const PostDetail = () => {
               content: data.content,
               date: data.date,
               viewCnt: data.viewCnt,
-            })
-            setMine(data.auth) // 내 글인지 여부 -> 수정, 삭제
-            setLike(data.userGoodStauts)
-            setScrap(data.userScrapStauts)
+            });
+            setMine(data.auth); // 내 글인지 여부 -> 수정, 삭제
+            setLike(data.userGoodStauts);
+            setScrap(data.userScrapStauts);
           } else {
             alert("로그인해야 이용할 수 있습니다.");
             navigate("/login");
@@ -92,7 +87,7 @@ const PostDetail = () => {
         });
     };
     getPosting();
-  }, [mine]);
+  }, []);
 
   const modifyHandler = () => {
     navigate(`/modify/${postId}`);
@@ -126,9 +121,9 @@ const PostDetail = () => {
       .then(({ status, data }) => {
         console.log(`PUT /board/${postId}/good`, data);
         if (status === 200 || status === 201) {
-          console.log(data)
+          console.log(data);
           if (data.message === "좋아요 누름") {
-            setLike(true)
+            setLike(true);
           } else {
             setLike(false);
           }
@@ -247,13 +242,9 @@ const PostDetail = () => {
           )}
         </div>
       </div>
-        <AllComments props={postId} />
-        {!recommentContext.stateR.recommentId ? (
-          <MyComment props={postId} />
-        ):(
-          <></>
-        )}
-        
+      <AllComments props={postId} />
+      {!recommentContext.stateR.recommentId ? <MyComment /> : <></>}
+
       <div className="goboard-btn">
         <Link to="/">
           <button className="detail-goboard-btn">목록보기</button>
