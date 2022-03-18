@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react"
 import { postApi } from "../api"
-import { AuthContext } from "../App"
-import { RecommentContext } from "../pages/PostDetail"
+import { AuthContext, RecommentContext } from "../App"
 import "../styles/Comments.css"
 
 const MyComment = ({ props }) => {
@@ -12,16 +11,16 @@ const MyComment = ({ props }) => {
   let postId = props * 1
 
   useEffect(() => {
-    if (recommentContext.state.recommentId !== null) {
-      setRecomment(`[${recommentContext.state.recomment2Whom}에게 답글]`)
+    if (recommentContext.stateR.recommentId !== null) {
+      setRecomment(`[${recommentContext.stateR.recomment2Whom}에게 답글]`)
     } else {
       setRecomment("")
     }
-  }, [recommentContext.state.recommentId])
+  }, [recommentContext.stateR.recommentId])
 
   const commentWriteHandler = async () => {
     console.log(myComment)
-    if (recommentContext.state.recommentId === null) {
+    if (recommentContext.stateR.recommentId === null) {
       // 댓글 작성 (대댓글 X)
       await postApi(
         {
@@ -51,7 +50,7 @@ const MyComment = ({ props }) => {
         {
           content: myComment,
         },
-        `/comment/${recommentContext.state.recommentId}/parent`,
+        `/comment/${recommentContext.stateR.recommentId}/parent`,
         authContext.state.token
       )
         .then(({ status, data }) => {

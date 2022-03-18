@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getApi } from "../api";
 import { AuthContext } from "../App";
-import { Comment } from '../components';
+import { OneComment } from '../components';
 
 
 const MypageComment = () => {
@@ -52,10 +52,11 @@ const MypageComment = () => {
                     comment.isDeleted ? (
                         <></>
                     ) : (
-                        <Comment
-                        key={comment._id}
-                        comment={comment}
-                        page={'mypage'}
+                        <OneComment
+                            key={comment._id}
+                            comment={comment}
+                            page={'mypage'}
+                            parent={'parent'}
                         />
                     )
                 ))

@@ -2,12 +2,10 @@ import React, {
   useEffect,
   useContext,
   useState,
-  useReducer,
-  createContext,
 } from "react"
 import { useParams } from "react-router-dom"
 import { deleteApi, getApi, postApi, putApi } from "../api"
-import { AuthContext } from "../App"
+import { AuthContext, RecommentContext } from "../App"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { AllComments, MyComment } from "../components"
@@ -21,23 +19,7 @@ import {
 } from "react-icons/fa"
 import "../styles/PostDetail.css"
 
-export const RecommentContext = createContext()
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "recommentClick":
-      return {
-        recommentId: action.recommentId,
-        recomment2Whom: action.recomment2Whom,
-      }
-    case "recommentNonClick":
-      return {
-        recommentId: null,
-        recomment2Whom: null,
-      }
-    default:
-      return state
-  }
-}
+
 
 const PostDetail = () => {
   const postDumpData = {
@@ -57,10 +39,7 @@ const PostDetail = () => {
     userGoodStatus: false,
   }
   const authContext = useContext(AuthContext)
-  const [state, dispatch] = useReducer(reducer, {
-    recommentId: null,
-    recomment2Who: null,
-  })
+  
   const navigate = useNavigate()
 
   const [mine, setMine] = useState(false)
@@ -105,6 +84,9 @@ const PostDetail = () => {
             setMine(data.auth) // 내 글인지 여부 -> 수정, 삭제
             setLike(data.userGoodStauts)
             setScrap(data.userScrapStauts)
+          } else {
+            alert("로그인해야 이용할 수 있습니다.");
+            navigate("/login");
           }
         })
         .catch((e) => {
@@ -151,7 +133,7 @@ const PostDetail = () => {
         console.log(`PUT /board/${postId}/good`, data);
         if (status === 200 || status === 201) {
           console.log(data)
-          if (data === "좋아요 누름") {
+          if (data.message === "좋아요 누름") {
             setLike(true)
           } else {
             // '좋아요 삭제'
@@ -209,6 +191,8 @@ const PostDetail = () => {
         });
       }
   }
+
+  const recommentContext = useContext(RecommentContext);
 
   return (
     <div className="post-detail">
@@ -293,10 +277,13 @@ const PostDetail = () => {
           )}
         </div>
       </div>
-      <RecommentContext.Provider value={{ state, dispatch }}>
         <AllComments props={postId} />
-        <MyComment props={postId} />
-      </RecommentContext.Provider>
+        {!recommentContext.stateR.recommentId ? (
+          <MyComment props={postId} />
+        ):(
+          <></>
+        )}
+        
       <div className="goboard-btn">
         <Link to="/">
           <button className="detail-goboard-btn">목록보기</button>
