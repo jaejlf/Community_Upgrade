@@ -62,10 +62,6 @@ const PostDetail = () => {
 
   useEffect(() => {
     const getPosting = async () => {
-      // API Test Code //
-      // setPostData(postDumpData);
-      // setMine(postData.auth);
-      /////////////////////
       await getApi({}, `/board/${postId}`, authContext.state.token)
         .then(({ status, data }) => {
           if (status === 200) {
@@ -86,27 +82,9 @@ const PostDetail = () => {
         .catch((e) => {
           console.log(e);
         });
-    };
-
-    const getGoodCnt = async () => {
-      await getApi({}, `/board/${postId}/good`, authContext.state.token)
-        .then(({ status, data }) => {
-          if (status === 200) {
-            console.log(`GET goodCnt`, data.goodCntNum);
-            setPostData({ ...postData, goodCnt: data.goodCntNum });
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    };
-    if (authContext.state.token) {
-      getPosting();
-    } else {
-      alert("로그인해야 이용할 수 있습니다.");
-      // navigate("/login");
     }
-  }, []);
+    getPosting();
+  }, [])
 
   const modifyHandler = () => {
     navigate(`/modify/${postId}`);
