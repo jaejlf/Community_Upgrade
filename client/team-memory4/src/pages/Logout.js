@@ -23,8 +23,8 @@ const Logout = () => {
               role: null,
             });
             alert('로그아웃 되었습니다.');
-            // localStorage.clear();
             clearCookie("myToken");
+            window.location.reload();
           } else {
             alert('로그아웃에 실패했습니다. 다시 시도해주세요.');
           }

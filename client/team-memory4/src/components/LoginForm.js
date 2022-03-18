@@ -69,16 +69,6 @@ const LoginForm = (roleid) => {
               name: data.name,
               userId: data.userId,
             });
-            // localStorage.setItem(
-            //   "loggedInfo",
-            //   JSON.stringify({
-            //     email: details.email,
-            //     role: data.role,
-            //     token: data.token,
-            //     name: data.name,
-            //     userId: data.userId,
-            //   })
-            // );
             setCookie('myToken', data.token, {
               path: "/",
             });

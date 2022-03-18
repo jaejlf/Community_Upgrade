@@ -9,3 +9,4 @@ export { default as MypageComment } from "./MypageComment";
 export { default as MypageScrap } from "./MypageScrap";
 export { default as Comment } from "./Comment";
 export { default as Post } from "./Post";
+export { default as Header } from "./Header";

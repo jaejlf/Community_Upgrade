@@ -208,7 +208,7 @@ const Board = () => {
             )
                 .then(({ status, data }) => {
                     console.log('GET /board/counter', status, data);
-                    setListNum(data);
+                    setListNum(data.totalPost);
                 })
                 .catch((e) => {
                     console.log(e);
