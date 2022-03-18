@@ -17,7 +17,6 @@ import {
 } from "react";
 import { Header } from "./components";
 
-
 export const AuthContext = createContext();
 export const RecommentContext = createContext();
 
@@ -72,7 +71,7 @@ function App() {
 
   const [stateR, dispatchR] = useReducer(recommentReducer, {
     recommentId: null,
-    recomment2Who: null,
+    recomment2Whom: null,
   })
 
   return (

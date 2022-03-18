@@ -83,9 +83,14 @@ const OneComment = ({ comment, page, who }) => {
                     <></>
                 ) : (
                     <div className="comment-lower">
-                        <p className="recomment-btn" onClick={recommentHandler}>
-                            답글쓰기
-                        </p>
+                        {comment.depth === 1 ? (
+                            <p className="recomment-btn" onClick={recommentHandler}>
+                                답글쓰기
+                            </p>
+                        ): (
+                            <></>
+                        )}
+                        
                         {comment.auth === true ? (
                             <p className="comment-del-btn" onClick={commentDeleteHandler}>
                                 삭제하기
