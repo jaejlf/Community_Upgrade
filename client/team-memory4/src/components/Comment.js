@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "../styles/Comments.css";
 import { getApi, deleteApi } from "../api";
 import { AuthContext } from "../App";

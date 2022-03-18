@@ -12,6 +12,8 @@ import { useCookies } from "react-cookie";
 //         password가 틀린경우 500 ( Server Error )
 const LoginForm = (roleid) => {
   const [role, setRole] = useState(roleid.roleid);
+
+  console.log(role);
   const [cookies, setCookie, removeCookie] = useCookies(["myToken"]);
   const [details, setDetails] = useState({
     email: "",

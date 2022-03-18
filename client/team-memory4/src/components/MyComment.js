@@ -9,9 +9,8 @@ const MyComment = () => {
   const recommentContext = useContext(RecommentContext);
   const [recomment, setRecomment] = useState("");
   const [myComment, setMyComment] = useState("");
-
   const params = useParams();
-  let postId = params.id * 1;
+  let postId = params.id;
 
   useEffect(() => {
     if (recommentContext.stateR.recommentId !== null) {
@@ -59,7 +58,8 @@ const MyComment = () => {
         .then(({ status, data }) => {
           if (status === 200 || status === 201) {
             console.log("대댓글 post api", status);
-            window.location.reload(); // 새로고침하여 댓글 다시 불러오기
+            // window.location.reload(); // 새로고침하여 댓글 다시 불러오기
+            window.location.replace(`/post/${postId}`); // 새로고침하여 댓글 다시 불러오기
           } else if (status === 500) {
             alert("댓글 등록 시 오류가 발생했습니다.");
           } else if (status === 400) {
@@ -76,9 +76,8 @@ const MyComment = () => {
 
   return (
     <div className="my-comments-section">
-      {/* <p>{authContext.state.name}</p> */}
       <div className="my-comment-upper">
-        <p>작성자 : 닉네임</p>
+        <p>작성자 : {authContext.state.name}</p>
         <button onClick={commentWriteHandler}>등록</button>
       </div>
       <p className="recomment-to-whom">{recomment}</p>

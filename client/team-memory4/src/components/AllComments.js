@@ -57,7 +57,7 @@ const AllComments = ({ props }) => {
     ];
 
     const authContext = useContext(AuthContext);
-    const [allComment, setAllComment] = useState(CommentsDumpData);
+    const [allComment, setAllComment] = useState([]);
 
     let postId = props * 1;
 
@@ -94,6 +94,7 @@ const AllComments = ({ props }) => {
         <div className='all-comments-section'>
             {allComment.map(comment => (
                 <ParentComment
+                    key={comment._id}
                     comment={comment}
                     page={'post'}
                     who={'parent'}
