@@ -45,6 +45,7 @@ const createPost = (req, res) => {
 const getAllPost = (req, res) => {
   db.collection("posts")
     .find()
+    .sort({ _id: -1 })
     .toArray(function (err, data) {
       if (err) return res.status(500).json({ error: error.message });
 

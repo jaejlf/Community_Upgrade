@@ -57,6 +57,7 @@ const OneComment = ({ comment, page, who }) => {
   };
 
   const commentClickHandler = () => {
+    console.log(comment);
     console.log(comment.postNumber);
     navigate(`/post/${comment.postNumber}`);
   };
