@@ -15,15 +15,7 @@ const PostSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    good: [
-      {
-        user: {
-          type: Number,
-          ref: "user",
-          required: true,
-        },
-      },
-    ],
+    good: [{ type: Object, required: true }],
   },
   { versionKey: false }
 );

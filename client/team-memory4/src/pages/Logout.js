@@ -4,10 +4,9 @@ import { getApi } from "../api";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-
 const Logout = () => {
   const authContext = useContext(AuthContext);
-  const [cookies, setCookie, removeCookie] = useCookies(['myToken']);
+  const [cookies, setCookie, removeCookie] = useCookies(["myToken"]);
 
   const navigate = useNavigate();
 
@@ -25,8 +24,8 @@ const Logout = () => {
               name: null,
               role: null,
             });
-            alert('로그아웃 되었습니다.');
-            removeCookie('myToken');
+            alert("로그아웃 되었습니다.");
+            removeCookie("myToken");
           } else {
             alert("로그아웃에 실패했습니다. 다시 시도해주세요.");
           }

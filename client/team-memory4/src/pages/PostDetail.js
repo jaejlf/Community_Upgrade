@@ -16,9 +16,8 @@ import {
   FaThumbsUp,
   FaRegThumbsUp,
   FaRegEye,
-} from "react-icons/fa"
-import "../styles/PostDetail.css"
-
+} from "react-icons/fa";
+import "../styles/PostDetail.css";
 
 
 const PostDetail = () => {
@@ -39,10 +38,9 @@ const PostDetail = () => {
     userGoodStatus: false,
   }
   const authContext = useContext(AuthContext)
-  
   const navigate = useNavigate()
 
-  const [mine, setMine] = useState(false)
+  const [mine, setMine] = useState(false);
   const [postData, setPostData] = useState({
     writer: "",
     userRole: 1,
@@ -54,13 +52,13 @@ const PostDetail = () => {
     auth: false,
     userScrapStauts: false,
     userGoodStatus: false,
-  })
+  });
 
-  const [like, setLike] = useState()
-  const [scrap, setScrap] = useState()
+  const [like, setLike] = useState();
+  const [scrap, setScrap] = useState();
 
-  const params = useParams()
-  let postId = params.id
+  const params = useParams();
+  let postId = params.id;
   console.log(postId);
 
   useEffect(() => {
@@ -90,15 +88,15 @@ const PostDetail = () => {
           }
         })
         .catch((e) => {
-          console.log(e)
-        })
-    }
-    getPosting()
-  }, [mine])
+          console.log(e);
+        });
+    };
+    getPosting();
+  }, [mine]);
 
   const modifyHandler = () => {
-    navigate(`/modify/${postId}`)
-  }
+    navigate(`/modify/${postId}`);
+  };
 
   const deleteHandler = async () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -106,29 +104,25 @@ const PostDetail = () => {
         .then(({ status, data }) => {
           console.log(`DEL /board/${postId}`, status, data);
           if (status === 200) {
-            alert("삭제되었습니다.")
-            navigate("/")
+            alert("삭제되었습니다.");
+            navigate("/");
           } else if (status === 501) {
-            alert("작성자만 게시글을 삭제할 수 있습니다.")
+            alert("작성자만 게시글을 삭제할 수 있습니다.");
           } else {
-            alert("삭제에 실패했습니다.")
+            alert("삭제에 실패했습니다.");
           }
         })
         .catch((e) => {
-          console.log(e.response)
-        })
+          console.log(e.response);
+        });
     } else {
-      alert("취소합니다.")
+      alert("취소합니다.");
     }
-  }
+  };
 
   const likeHandler = async () => {
-    setLike(!like)
-    await putApi(
-        {},
-        `/board/${postId}/good`,
-        authContext.state.token
-      )
+    setLike(!like);
+    await putApi({}, `/board/${postId}/good`, authContext.state.token)
       .then(({ status, data }) => {
         console.log(`PUT /board/${postId}/good`, data);
         if (status === 200 || status === 201) {
@@ -136,61 +130,37 @@ const PostDetail = () => {
           if (data.message === "좋아요 누름") {
             setLike(true)
           } else {
-            // '좋아요 삭제'
-            setLike(false)
+            setLike(false);
           }
         } else if (status === 500) {
-          alert("로그인을 해야 게시글을 스크랩할 수 있습니다.")
-          navigate("/login")
+          alert("로그인을 해야 게시글을 추천할 수 있습니다.");
+          navigate("/login");
         }
       })
       .catch((e) => {
-        console.log(e)
-      })
-  }
+        console.log(e);
+      });
+  };
 
   const scrapHandler = async () => {
-    // setScrap(!scrap);
-    if (scrap === false) {
-      await postApi(
-        {},
-        `/mypage/scrap/${postId}`,
-        authContext.state.token
-      )
-        .then(({ status, data }) => {
-          console.log(`POST /mypage/scrap/${postId}`, data);
-            if (status === 200 || status === 201) {
-                console.log('스크랩 완료');
-                setScrap(true);
-            } else if (status === 501) {
-                alert("로그인을 해야 게시글을 스크랩할 수 있습니다.");
-                navigate('/login');
-            }
-        })
-        .catch((e) => {
-            console.log(e);
-        });
-      } else {
-        await putApi(
-          {},
-          `/mypage/scrap/${postId}`,
-          authContext.state.token
-        )
-        .then(({ status, data }) => {
-          console.log(`PUT /mypage/scrap/${postId}`, data);
-            if (status === 200 || status === 201) {
-                console.log('스크랩 취소 완료');
-                setScrap(false);
-            } else if (status === 501) {
-                alert("로그인을 해야 게시글을 스크랩할 수 있습니다.");
-                navigate('/login');
-            }
-        })
-        .catch((e) => {
-            console.log(e);
-        });
-      }
-  }
+    setScrap(!scrap);
+
+    await putApi({}, `/mypage/scrap/${postId}`, authContext.state.token)
+      .then(({ status, data }) => {
+        console.log(`PUT /mypage/scrap/${postId}`, data);
+        if (status === 200 || status === 201) {
+          console.log(data);
+          if (data.message === "스크랩 완료") setScrap(true);
+          else setScrap(false);
+        } else if (status === 501) {
+          alert("로그인을 해야 게시글을 스크랩할 수 있습니다.");
+          navigate("/login");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const recommentContext = useContext(RecommentContext);
 
@@ -290,7 +260,7 @@ const PostDetail = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PostDetail
+export default PostDetail;
