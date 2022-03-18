@@ -1,25 +1,17 @@
-import React, { useState, useContext, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from '../assets/images/Logo.svg';
 import { ReactComponent as HeaderLine } from '../assets/images/header-line.svg';
-import { getCookie } from "../api/cookie";
-import { AuthContext } from "../App";
-
+import { useCookies } from "react-cookie";
 
 
 const Header = () => {
-    const authContext = useContext(AuthContext);
-
-    // const [mycookie, setMycookie] = useState();
-    // useEffect(() => {
-    //   setMycookie(getCookie('myToken'));
-    //   window.location.reload();
-    // }, [mycookie]);
+    const [cookies, setCookie, removeCookie] = useCookies(['myToken']);
   
     return (
       <header className="App-header">
         <div className="header-links">
-          {!getCookie('myToken') ? (
+          {!cookies.myToken ? (
             <>
                 <Link to="/"><Logo width={100} height={60} /></Link>
                 <Link to="/login">
