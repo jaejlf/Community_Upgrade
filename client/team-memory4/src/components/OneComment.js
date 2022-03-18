@@ -46,7 +46,8 @@ const OneComment = ({ comment, page, who }) => {
                 if (status === 200) {
                     // console.log("댓글삭제", status, data);
                     alert("삭제되었습니다.");
-                    window.location.replace(`/post/${postId}`); // 새로고침하여 댓글 다시 불러오기
+                    window.location.reload();
+                    // window.location.replace(`/post/${postId}`); // 새로고침하여 댓글 다시 불러오기
                 } else if (status === 501) {
                     alert("작성자만 댓글을 삭제할 수 있습니다.");
                 }
@@ -93,7 +94,7 @@ const OneComment = ({ comment, page, who }) => {
                         ) : (
                             <></>
                         )}
-                        {comment.writer === authContext.state.name ? (
+                        {comment.auth === true && comment.isDeleted === false ? (
                             <p className="comment-del-btn" onClick={commentDeleteHandler}>
                                 삭제하기
                             </p>
@@ -101,34 +102,6 @@ const OneComment = ({ comment, page, who }) => {
                             <></>
                         )}
 
-                        {/* {comment.depth === 1 ? (
-                            <>
-                                {comment.auth === true ? (
-                                    <>
-                                        <p className="recomment-btn" onClick={recommentHandler}>
-                                            답글쓰기
-                                        </p>
-                                        <p className="comment-del-btn" onClick={commentDeleteHandler}>
-                                            삭제하기
-                                        </p>
-                                    </>
-                                ) : (
-                                    <p className="recomment-btn" onClick={recommentHandler}>
-                                        답글쓰기
-                                    </p>
-                                )}
-                            </>
-                        ) : (
-                            <>
-                                {comment.auth === true ? (
-                                    <p className="comment-del-btn" onClick={commentDeleteHandler}>
-                                        삭제하기
-                                    </p>
-                                ) : (
-                                    <></>
-                                )}
-                            </>
-                        )} */}
                     </div>
                 )}
             </div>
