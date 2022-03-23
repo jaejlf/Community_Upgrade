@@ -1,6 +1,6 @@
 # KUSITMS25_CorporateProject
 
-![img](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ebc8bb93-0e8a-4892-bfde-e457eb6d39fb/%EA%B8%B0%ED%94%84_issue.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220318%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220318T125037Z&X-Amz-Expires=86400&X-Amz-Signature=aa7512ec5dac40aab1c490c51ee352f52f9dc4b58787f23263b6659eb6686249&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EA%25B8%25B0%25ED%2594%2584%2520issue.png%22&x-id=GetObject)
+![img](https://user-images.githubusercontent.com/78673570/159775870-576637c0-f820-4d96-87a2-b3879663cfc1.png)
 
 
 ## 📑 프로젝트 소개 - 구현 기능
