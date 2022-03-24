@@ -1,4 +1,4 @@
-# KUSITMS25_CorporateProject
+# 커뮤니티 고도화
 
 ![img](https://user-images.githubusercontent.com/78673570/159775870-576637c0-f820-4d96-87a2-b3879663cfc1.png)
 
@@ -38,7 +38,7 @@
 
 FE 코드 실행
 
-```bash
+```
 $ cd client/team-memory4
 $ npm i
 $ npm start
@@ -46,13 +46,18 @@ $ npm start
 
 BE 코드 실행
 
-```bash
+```
 $ cd server
 $ npm i
 $ npm start
 ```
 
 (Front-End, Back-End 개발자들을 통해 `.env` 파일을 제공받으셔야합니다.)
+
+<br><br>
+## 📑 API 문서
+
+[Community-Upgrade, API Documentation](https://www.notion.so/APIs-cee75f461ddd45038a7218c3c7c977c6)
 
 <br><br>
 ## 👨‍👩‍👧‍👦 Team
