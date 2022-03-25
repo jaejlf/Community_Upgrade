@@ -6,7 +6,6 @@ const auth = require("../../controller/auth");
 const userInfo = require("../../controller/userinfo");
 
 const createComment = async (req, res) => {
-    //const post = req.params.postId
     console.log("댓글 작성");
     const postNumber = parseInt(req.params.postNumber);
     const content = req.body.content;
@@ -14,7 +13,6 @@ const createComment = async (req, res) => {
 
     if (res.locals.user.userId != null) {
         new CommentModel({
-            //post: post,
             _id: ObjectId().toString(),
             postNumber: postNumber,
             userId: res.locals.user.userId,
@@ -30,17 +28,15 @@ const createComment = async (req, res) => {
 };
 
 const getAllComment = async (req, res) => {
-    //const post = req.params.postId
     const postNumber = parseInt(req.params.postNumber);
     const result = await CommentModel.find({ postNumber: postNumber });
-    // res.status(200).json({ allComment: data })
 
-    var exData = [];
+    let exData = [];
     for (let element of result) {
-        var authCk = await auth.check(res.locals.user.userId, element.userId);
-        var user = await userInfo.findUser(element.userId);
+        const authCk = await auth.check(res.locals.user.userId, element.userId);
+        const user = await userInfo.findUser(element.userId);
 
-        var data = Object.assign({}, element)._doc;
+        let data = Object.assign({}, element)._doc;
         data.userRole = user.role;
         data.auth = authCk;
 
@@ -56,11 +52,12 @@ const getReplyComment = async (req, res) => {
         parentId: parentId,
         depth: 2,
     });
-    var exData = [];
-    for (let element of childComment) {
-        var authCk = await auth.check(res.locals.user.userId, element.userId);
 
-        var data = Object.assign({}, element)._doc;
+    let exData = [];
+    for (let element of childComment) {
+        const authCk = await auth.check(res.locals.user.userId, element.userId);
+
+        let data = Object.assign({}, element)._doc;
         data.auth = authCk;
 
         await exData.push(data);

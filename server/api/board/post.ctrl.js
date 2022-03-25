@@ -62,18 +62,18 @@ const getPost = async (req, res) => {
     result.viewCnt++;
     result.save();
 
-    var authCk = await auth.check(res.locals.user.userId, result.userId);
-    var user = await userInfo.findUser(result.userId);
-    var scrapStatus = await userInfo.scrapStatus(
+    const authCk = await auth.check(res.locals.user.userId, result.userId);
+    const user = await userInfo.findUser(result.userId);
+    const scrapStatus = await userInfo.scrapStatus(
       postNumber,
       res.locals.user.userId
     );
-    var goodStatus = await userInfo.goodStatus(
+    const goodStatus = await userInfo.goodStatus(
       result.good,
       res.locals.user.userId
     );
 
-    var exData = Object.assign({}, result)._doc;
+    let exData = Object.assign({}, result)._doc;
     exData.userRole = user.role;
     exData.auth = authCk;
     exData.userScrapStauts = scrapStatus;
@@ -148,7 +148,7 @@ const pushGood = (req, res) => {
   const postNumber = parseInt(req.params.postNumber);
   console.log(postNumber);
 
-  var pushGoodList = eval({ goodUser: "", gooodUserId: "", role: "" });
+  let pushGoodList = eval({ goodUser: "", gooodUserId: "", role: "" });
   pushGoodList.goodUser = res.locals.user.name;
   pushGoodList.gooodUserId = res.locals.user.userId;
   pushGoodList.role = res.locals.user.role;

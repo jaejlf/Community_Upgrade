@@ -26,9 +26,9 @@ const scrapping = async (req, res) => {
     const postNumber = parseInt(req.params.postNumber);
     if (res.locals.user.userId == null) return res.status(401).send("로그인을 해야 게시글을 스크랩할 수 있습니다.");
 
-    var user = await userInfo.findUser(res.locals.user.userId);
-    var post = await postInfo.findPost(postNumber);
-    var scrapStatus = await userInfo.scrapStatus(postNumber, res.locals.user.userId);
+    const user = await userInfo.findUser(res.locals.user.userId);
+    const post = await postInfo.findPost(postNumber);
+    const scrapStatus = await userInfo.scrapStatus(postNumber, res.locals.user.userId);
 
     //백 테스트 - 예외
     if (scrapStatus) {
@@ -38,7 +38,7 @@ const scrapping = async (req, res) => {
         return res.send("삭제된 게시물");
     }
 
-    var scraps = user.scrap;
+    let scraps = user.scrap;
     scraps.push(postNumber);
 
     UserModel.updateOne(
@@ -56,11 +56,11 @@ const scrapping = async (req, res) => {
 };
 
 const getMyScrap = async (req, res) => {
-    var user = await userInfo.findUser(res.locals.user.userId);
-    var exData = [];
+    const user = await userInfo.findUser(res.locals.user.userId);
+    let exData = [];
 
     for (let element of user.scrap) {
-        var post = await postInfo.findPost(element);
+        const post = await postInfo.findPost(element);
         await exData.push(post);
     }
     res.status(200).json({
