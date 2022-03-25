@@ -3,7 +3,7 @@ const moment = require("../../services/moment");
 const { ObjectId } = require("mongodb");
 const { db } = require("../../model/comment");
 const auth = require("../../services/auth");
-const userInfo = require("../../services/userinfo");
+const userService = require("../../services/userService");
 
 const createComment = async (req, res) => {
     console.log("댓글 작성");
@@ -34,7 +34,7 @@ const getAllComment = async (req, res) => {
     let exData = [];
     for (let element of result) {
         const authCk = await auth.check(res.locals.user.userId, element.userId);
-        const user = await userInfo.findUser(element.userId);
+        const user = await userService.findUserById(element.userId);
 
         let data = Object.assign({}, element)._doc;
         data.userRole = user.role;

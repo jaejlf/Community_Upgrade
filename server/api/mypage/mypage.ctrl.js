@@ -1,7 +1,7 @@
 const BoardModel = require("../../model/post");
 const CommentModel = require("../../model/comment");
-const UserModel = require("../../model/user");
-const userInfo = require("../../services/userinfo");
+const User = require("../../model/user");
+const userService = require("../../services/userService");
 const postInfo = require("../../services/postInfo");
 
 const getMyPost = async (req, res) => {
@@ -26,9 +26,9 @@ const scrapping = async (req, res) => {
     const postNumber = parseInt(req.params.postNumber);
     if (res.locals.user.userId == null) return res.status(401).send("로그인을 해야 게시글을 스크랩할 수 있습니다.");
 
-    const user = await userInfo.findUser(res.locals.user.userId);
+    const user = await userService.findUserById(res.locals.user.userId);
     const post = await postInfo.findPost(postNumber);
-    const scrapStatus = await userInfo.scrapStatus(postNumber, res.locals.user.userId);
+    const scrapStatus = await userService.scrapStatus(postNumber, res.locals.user.userId);
 
     //백 테스트 - 예외
     if (scrapStatus) {
@@ -41,7 +41,7 @@ const scrapping = async (req, res) => {
     let scraps = user.scrap;
     scraps.push(postNumber);
 
-    UserModel.updateOne(
+    User.updateOne(
         { userId: res.locals.user.userId },
         {
             $set: {
@@ -56,7 +56,7 @@ const scrapping = async (req, res) => {
 };
 
 const getMyScrap = async (req, res) => {
-    const user = await userInfo.findUser(res.locals.user.userId);
+    const user = await userService.findUserById(res.locals.user.userId);
     let exData = [];
 
     for (let element of user.scrap) {

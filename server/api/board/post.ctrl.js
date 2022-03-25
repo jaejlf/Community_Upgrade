@@ -2,7 +2,7 @@ const { db } = require("../../model/post");
 const PostModel = require("../../model/post");
 const moment = require("../../services/moment");
 const auth = require("../../services/auth");
-const userInfo = require("../../services/userinfo");
+const userService = require("../../services/userService");
 
 const createPost = (req, res) => {
   const name = res.locals.user.name;
@@ -63,12 +63,12 @@ const getPost = async (req, res) => {
     result.save();
 
     const authCk = await auth.check(res.locals.user.userId, result.userId);
-    const user = await userInfo.findUser(result.userId);
-    const scrapStatus = await userInfo.scrapStatus(
+    const user = await userService.findUserById(result.userId);
+    const scrapStatus = await userService.scrapStatus(
       postNumber,
       res.locals.user.userId
     );
-    const goodStatus = await userInfo.goodStatus(
+    const goodStatus = await userService.goodStatus(
       result.good,
       res.locals.user.userId
     );
