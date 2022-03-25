@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const moment = require("../controller/moment");
+const moment = require("../services/moment");
 
 const CommentSchema = new mongoose.Schema(
     {

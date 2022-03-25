@@ -1,8 +1,8 @@
 const BoardModel = require("../../model/post");
 const CommentModel = require("../../model/comment");
 const UserModel = require("../../model/user");
-const userInfo = require("../../controller/userinfo");
-const postInfo = require("../../controller/postInfo");
+const userInfo = require("../../services/userinfo");
+const postInfo = require("../../services/postInfo");
 
 const getMyPost = async (req, res) => {
     const userId = res.locals.user.userId;

@@ -1,7 +1,5 @@
-const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
-const moment = require("../controller/moment");
-const user = require("./user");
+const moment = require("../services/moment");
 
 const PostSchema = new mongoose.Schema(
     {

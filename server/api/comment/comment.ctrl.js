@@ -1,9 +1,9 @@
 const CommentModel = require("../../model/comment");
-const moment = require("../../controller/moment");
+const moment = require("../../services/moment");
 const { ObjectId } = require("mongodb");
 const { db } = require("../../model/comment");
-const auth = require("../../controller/auth");
-const userInfo = require("../../controller/userinfo");
+const auth = require("../../services/auth");
+const userInfo = require("../../services/userinfo");
 
 const createComment = async (req, res) => {
     console.log("댓글 작성");

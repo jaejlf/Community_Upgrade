@@ -1,5 +1,5 @@
 const PostModel = require("../../model/post");
-const moment = require("../../controller/moment");
+const moment = require("../../services/moment");
 
 const getTitle = (req, res) => {
     const keyword = req.params.keyword;

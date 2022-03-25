@@ -1,8 +1,8 @@
 const { db } = require("../../model/post");
 const PostModel = require("../../model/post");
-const moment = require("../../controller/moment");
-const auth = require("../../controller/auth");
-const userInfo = require("../../controller/userinfo");
+const moment = require("../../services/moment");
+const auth = require("../../services/auth");
+const userInfo = require("../../services/userinfo");
 
 const createPost = (req, res) => {
   const name = res.locals.user.name;
