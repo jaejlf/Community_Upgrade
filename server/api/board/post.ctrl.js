@@ -4,8 +4,6 @@ const moment = require("../../controller/moment");
 const auth = require("../../controller/auth");
 const userInfo = require("../../controller/userinfo");
 
-const UserModel = require("../../model/user");
-
 const createPost = (req, res) => {
   const name = res.locals.user.name;
   console.log("creator : " + name); //지금 로그인된 유저(작성자)의 정보 받아오기
@@ -37,7 +35,7 @@ const createPost = (req, res) => {
         { $inc: { postCnt: 1 } }
       );
     } else {
-      return res.status(501).send("로그인을 해야 게시글을 작성할 수 있습니다.");
+      return res.status(401).send("로그인을 해야 게시글을 작성할 수 있습니다.");
     }
   });
 };
@@ -93,7 +91,6 @@ const editPost = (req, res) => {
     { postNumber: postNumber },
     function (err, data) {
       if (err) return res.status(500).json({ error: error.message });
-      //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 수정할 수 있습니다." });
 
       db.collection("posts").updateOne(
         { postNumber: postNumber },
@@ -120,7 +117,6 @@ const deletePost = (req, res) => {
     { postNumber: postNumber },
     function (err, data) {
       if (err) return res.status(500).json({ error: error.message });
-      //if (data.userId != res.locals.user.userId) return res.status(501).json({ error: "작성자만 게시글을 삭제할 수 있습니다." });
 
       //게시글 삭제
       db.collection("posts").deleteOne(
@@ -163,22 +159,6 @@ const pushGood = (req, res) => {
     if (err) return res.status(500).json({ error: error.message });
     console.log(data.good);
     console.log(data.good.find((value) => value.gooodUserId === userId));
-
-    // db.collection("posts").findOne(
-    //   { good: { $elemMatch: { gooodUserId: userId } } },
-    //   (err, result) => {
-    //     if (err) return res.send("pushGood check error!");
-    //     console.log("좋아요 누른 user가 있을 때 : ");
-    //     // console.log(result);
-    //     if (!result) {
-    //       //좋아요 누름
-    //       pushGoodFunction();
-    //     } else {
-    //       //좋아요 삭제
-    //       deleteGoodFunction();
-    //     }
-    //   }
-    // );
 
     const pushGoodFunction = (err, result) => {
       db.collection("posts").updateOne(

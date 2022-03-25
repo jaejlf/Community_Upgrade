@@ -4,10 +4,9 @@
 const check = async function (curUser, userId) {
     if (curUser == userId) {
         return true;
-    }
-    else return false;
-}
+    } else return false;
+};
 
 module.exports = {
-    check
-}
+    check,
+};
