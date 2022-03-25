@@ -1,20 +1,20 @@
-var createError = require("http-errors");
-var express = require("express");
+const createError = require("http-errors");
+const express = require("express");
 const multer = require("multer");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var mongoose = require("mongoose");
-var session = require("express-session");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const mongoose = require("mongoose");
+const session = require("express-session");
 require("dotenv").config();
 
-var app = express();
+const app = express();
 
 app.set("trust proxy", 1);
 
 mongoose.connect(process.env.MONGO_URL, {});
 
-var db = mongoose.connection;
+const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
   console.log(process.env.MONGO_URL);
@@ -56,7 +56,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-var userCtrl = require("./api/user/user.ctrl");
+const userCtrl = require("./api/user/user.ctrl");
 app.use(userCtrl.checkAuth);
 
 //api모듈 설정

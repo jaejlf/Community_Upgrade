@@ -1,8 +1,6 @@
-const CommentModel = require("../../model/comment");
+const Comment = require("../../model/comment");
 const moment = require("../../services/moment");
 const { ObjectId } = require("mongodb");
-const { db } = require("../../model/comment");
-const auth = require("../../services/auth");
 const userService = require("../../services/userService");
 
 const createComment = async (req, res) => {
@@ -12,7 +10,7 @@ const createComment = async (req, res) => {
     if (!content) return res.status(400).send("내용을 입력해주세요.");
 
     if (res.locals.user.userId != null) {
-        new CommentModel({
+        new Comment({
             _id: ObjectId().toString(),
             postNumber: postNumber,
             userId: res.locals.user.userId,
@@ -29,16 +27,16 @@ const createComment = async (req, res) => {
 
 const getAllComment = async (req, res) => {
     const postNumber = parseInt(req.params.postNumber);
-    const result = await CommentModel.find({ postNumber: postNumber });
+    const result = await Comment.find({ postNumber: postNumber });
 
     let exData = [];
     for (let element of result) {
-        const authCk = await auth.check(res.locals.user.userId, element.userId);
+        const auth = await userService.authCheck(res.locals.user.userId, element.userId);
         const user = await userService.findUserById(element.userId);
 
         let data = Object.assign({}, element)._doc;
         data.userRole = user.role;
-        data.auth = authCk;
+        data.auth = auth;
 
         await exData.push(data);
     }
@@ -48,17 +46,17 @@ const getAllComment = async (req, res) => {
 
 const getReplyComment = async (req, res) => {
     const parentId = req.params.parentId;
-    const childComment = await CommentModel.find({
+    const childComment = await Comment.find({
         parentId: parentId,
         depth: 2,
     });
 
     let exData = [];
     for (let element of childComment) {
-        const authCk = await auth.check(res.locals.user.userId, element.userId);
+        const auth = await userService.authCheck(res.locals.user.userId, element.userId);
 
         let data = Object.assign({}, element)._doc;
-        data.auth = authCk;
+        data.auth = auth;
 
         await exData.push(data);
     }
@@ -67,11 +65,11 @@ const getReplyComment = async (req, res) => {
 
 const editComment = (req, res) => {
     const id = req.params.id;
-    db.collection("comments").findOne({ _id: id }, function (err, data) {
+    Comment.findOne({ _id: id }, function (err, data) {
         console.log(data);
         if (err) return res.status(500).json({ error: error.message });
 
-        db.collection("comments").updateOne(
+        Comment.updateOne(
             { _id: id },
             {
                 $set: {
@@ -90,11 +88,11 @@ const editComment = (req, res) => {
 
 const deleteComment = (req, res) => {
     const id = req.params.id;
-    db.collection("comments").findOne({ _id: id }, function (err, data) {
+    Comment.findOne({ _id: id }, function (err, data) {
         console.log(data);
         if (err) return res.status(500).json({ error: error.message });
 
-        db.collection("comments").updateOne(
+        Comment.updateOne(
             { _id: id },
             {
                 $set: {
@@ -113,12 +111,12 @@ const deleteComment = (req, res) => {
 const replyComment = async (req, res) => {
     console.log("대댓글 작성");
     const parentId = req.params.parentId;
-    const parentComment = await CommentModel.findOne({ _id: parentId });
+    const parentComment = await Comment.findOne({ _id: parentId });
     const postNumber = parentComment.postNumber;
     const content = req.body.content;
 
     if (res.locals.user.userId != null) {
-        new CommentModel({
+        new Comment({
             _id: ObjectId().toString(),
             parentId: parentId,
             postNumber: postNumber,

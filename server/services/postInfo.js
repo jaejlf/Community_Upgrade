@@ -1,7 +1,7 @@
-const { db } = require("../model/post");
+const Post = require("../model/post");
 
 const findPost = async function (postNumber) {
-    return await db.collection("posts").findOne({ postNumber: postNumber });
+    return await Post.findOne({ postNumber: postNumber });
 };
 
 module.exports = {

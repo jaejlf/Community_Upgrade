@@ -1,7 +1,7 @@
-const { db } = require("../../model/post");
-const PostModel = require("../../model/post");
+const db = require("mongoose").connection;
+const Post = require("../../model/post");
+const Comment = require("../../model/comment");
 const moment = require("../../services/moment");
-const auth = require("../../services/auth");
 const userService = require("../../services/userService");
 
 const createPost = (req, res) => {
@@ -14,7 +14,7 @@ const createPost = (req, res) => {
   db.collection("counter").findOne({ name: "postNumber" }, (err, data) => {
     const postNumber = data.postNumber + 1;
     if (res.locals.user.userId != null) {
-      new PostModel({
+      new Post({
         userId: res.locals.user.userId,
         writer: res.locals.user.name,
         title: title,
@@ -40,29 +40,28 @@ const createPost = (req, res) => {
   });
 };
 
-const getAllPost = (req, res) => {
-  db.collection("posts")
-    .find()
-    .sort({ _id: -1 })
-    .toArray(function (err, data) {
-      if (err) return res.status(500).json({ error: error.message });
+const getAllPost = async (req, res) => {
+    try {
+        const data = await Post.find().sort({ _id: -1 });
 
-      res.status(200).json({
-        allPost: data,
-      });
-    });
+        res.json({
+            allPost: data,
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
 };
 
 const getPost = async (req, res) => {
   const postNumber = parseInt(req.params.postNumber);
-  PostModel.findOne({ postNumber: postNumber }, async (err, result) => {
+  Post.findOne({ postNumber: postNumber }, async (err, result) => {
     if (err) return res.status(500).end();
     if (!result) return res.status(404).end();
 
     result.viewCnt++;
     result.save();
 
-    const authCk = await auth.check(res.locals.user.userId, result.userId);
+    const auth = await userService.authCheck(res.locals.user.userId, result.userId);
     const user = await userService.findUserById(result.userId);
     const scrapStatus = await userService.scrapStatus(
       postNumber,
@@ -75,7 +74,7 @@ const getPost = async (req, res) => {
 
     let exData = Object.assign({}, result)._doc;
     exData.userRole = user.role;
-    exData.auth = authCk;
+    exData.auth = auth;
     exData.userScrapStauts = scrapStatus;
     exData.userGoodStatus = goodStatus;
     exData.goodCnt = result.good.length;
@@ -87,12 +86,12 @@ const getPost = async (req, res) => {
 const editPost = (req, res) => {
   const postNumber = parseInt(req.params.postNumber);
   const { title, content } = req.body;
-  db.collection("posts").findOne(
+  Post.findOne(
     { postNumber: postNumber },
     function (err, data) {
       if (err) return res.status(500).json({ error: error.message });
 
-      db.collection("posts").updateOne(
+      Post.updateOne(
         { postNumber: postNumber },
         {
           $set: {
@@ -113,13 +112,13 @@ const editPost = (req, res) => {
 
 const deletePost = (req, res) => {
   const postNumber = parseInt(req.params.postNumber);
-  db.collection("posts").findOne(
+  Post.findOne(
     { postNumber: postNumber },
     function (err, data) {
       if (err) return res.status(500).json({ error: error.message });
 
       //게시글 삭제
-      db.collection("posts").deleteOne(
+      Post.deleteOne(
         { postNumber: postNumber },
         function (err, data) {
           if (err) return res.status(500).json({ error: error.message });
@@ -132,7 +131,7 @@ const deletePost = (req, res) => {
       );
 
       //해당 게시글에 달린 댓글 삭제 (완전 삭제)
-      db.collection("comments").deleteMany(
+      Comment.deleteMany(
         { postNumber: postNumber },
         function (err, data) {
           if (err) return res.status(500).json({ error: error.message });
@@ -155,13 +154,13 @@ const pushGood = (req, res) => {
 
   const userId = res.locals.user.userId;
 
-  db.collection("posts").findOne({ postNumber: postNumber }, (err, data) => {
+  Post.findOne({ postNumber: postNumber }, (err, data) => {
     if (err) return res.status(500).json({ error: error.message });
     console.log(data.good);
     console.log(data.good.find((value) => value.gooodUserId === userId));
 
     const pushGoodFunction = (err, result) => {
-      db.collection("posts").updateOne(
+      Post.updateOne(
         { postNumber: postNumber },
         {
           $push: {
@@ -177,7 +176,7 @@ const pushGood = (req, res) => {
     };
 
     const deleteGoodFunction = (err, result) => {
-      db.collection("posts").updateOne(
+      Post.updateOne(
         { postNumber: postNumber },
         {
           $pull: {
@@ -202,7 +201,7 @@ const goodCnt = (req, res) => {
   const postNumber = parseInt(req.params.postNumber);
   console.log(postNumber);
 
-  db.collection("posts").findOne({ postNumber: postNumber }, (err, data) => {
+  Post.findOne({ postNumber: postNumber }, (err, data) => {
     const good = data.good;
     console.log(good.length);
     const goodCntNum = good.length;

@@ -1,4 +1,5 @@
-const { db } = require("../../model/post");
+const db = require("mongoose").connection;
+const Post = require("../../model/post");
 
 const paging = async (req, res) => {
     const { page } = req.query;
@@ -17,7 +18,7 @@ const paging = async (req, res) => {
     const startNum = maxPost * (curPage - 1); //0부터 시작(배열 index)
     const lastNum = startNum + (maxPost - 1);
 
-    const allPosts = await db.collection("posts").find().sort({ _id: -1 }).toArray();
+    const allPosts = await Post.find().sort({ _id: -1 });
 
     let exData = [];
     for (let i = startNum; i <= lastNum; i++) {

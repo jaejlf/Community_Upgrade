@@ -1,12 +1,12 @@
-const BoardModel = require("../../model/post");
-const CommentModel = require("../../model/comment");
+const Post = require("../../model/post");
+const Comment = require("../../model/comment");
 const User = require("../../model/user");
 const userService = require("../../services/userService");
 const postInfo = require("../../services/postInfo");
 
 const getMyPost = async (req, res) => {
     const userId = res.locals.user.userId;
-    const data = await BoardModel.find({ userId: userId });
+    const data = await Post.find({ userId: userId });
 
     res.status(200).json({
         myPost: data,
@@ -15,7 +15,7 @@ const getMyPost = async (req, res) => {
 
 const getMyComment = async (req, res) => {
     const userId = res.locals.user.userId;
-    const data = await CommentModel.find({ userId: userId, isDeleted: false });
+    const data = await Comment.find({ userId: userId, isDeleted: false });
 
     res.status(200).json({
         myComment: data,
