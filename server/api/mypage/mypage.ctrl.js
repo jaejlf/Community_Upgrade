@@ -2,7 +2,7 @@ const Post = require("../../model/post");
 const Comment = require("../../model/comment");
 const User = require("../../model/user");
 const userService = require("../../services/userService");
-const postInfo = require("../../services/postInfo");
+const postService = require("../../services/postService");
 
 const getMyPost = async (req, res) => {
     const userId = res.locals.user.userId;
@@ -27,7 +27,7 @@ const scrapping = async (req, res) => {
     if (res.locals.user.userId == null) return res.status(401).send("로그인을 해야 게시글을 스크랩할 수 있습니다.");
 
     const user = await userService.findUserById(res.locals.user.userId);
-    const post = await postInfo.findPost(postNumber);
+    const post = await postService.findPost(postNumber);
     const scrapStatus = await userService.scrapStatus(postNumber, res.locals.user.userId);
 
     //백 테스트 - 예외
@@ -60,7 +60,7 @@ const getMyScrap = async (req, res) => {
     let exData = [];
 
     for (let element of user.scrap) {
-        const post = await postInfo.findPost(element);
+        const post = await postService.findPost(element);
         await exData.push(post);
     }
     res.status(200).json({

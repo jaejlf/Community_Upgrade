@@ -1,22 +1,23 @@
-const db = require("mongoose").connection;
 const User = require("../model/user");
+const cntService = require("./counterService");
 
 //회원가입
 const createUser = async function (name, role, email, hashedPW) {
     try {
-        const userCnt = await db.collection("counter").findOne({ name: "userCnt" });
+        const userCnt = await cntService.userCnt();
 
         const user = new User({
-            userId: userCnt.userCnt + 1,
+            userId: userCnt + 1,
             name: name,
             role: role,
             email: email,
             password: hashedPW,
         });
 
-        await db.collection("counter").updateOne({ name: "userCnt" }, { $inc: { userCnt: 1 } });
+        await cntService.userCntInc();
 
         return await user.save();
+        
     } catch (err) {
         console.log(err.message);
     }
@@ -74,7 +75,7 @@ const goodStatus = async function (good, userId) {
     let result = false;
 
     for (let i = 0; i < good.length; i++) {
-        if (good[i].gooodUserId == userId) {
+        if (good[i].goodUserId == userId) {
             result = true;
             break;
         }

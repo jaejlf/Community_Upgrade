@@ -1,12 +1,12 @@
 const db = require("mongoose").connection;
 const Post = require("../../model/post");
+const cntService = require("../../services/counterService");
 
 const paging = async (req, res) => {
     const { page } = req.query;
     const curPage = page ? parseInt(page) : 1; //쿼리스트링으로 받아온 값이 없다면 기본(1페이지)
 
-    const postCounter = await db.collection("counter").findOne({ name: "postCnt" });
-    const totalPost = postCounter.postCnt;
+    const totalPost = await cntService.postCnt();
 
     const maxPost = 10;
     const totalPage = Math.ceil(totalPost / maxPost);
@@ -29,18 +29,16 @@ const paging = async (req, res) => {
         }
     }
 
-    console.log(exData);
     res.status(200).json({
         allPost: exData,
     });
 };
 
 const counter = async (req, res) => {
-    const postCounter = await db.collection("counter").findOne({ name: "postCnt" });
-    const totalPost = postCounter.postCnt;
+    const data = await cntService.postCnt();
 
     res.status(200).json({
-        totalPost: totalPost,
+        totalPost: data,
     });
 };
 
