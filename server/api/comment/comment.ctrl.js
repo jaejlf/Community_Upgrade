@@ -1,7 +1,7 @@
 const Comment = require("../../model/comment");
-const moment = require("../../services/moment");
-const { ObjectId } = require("mongodb");
 const userService = require("../../services/userService");
+const postService = require("../../services/postService");
+const commentService = require("../../services/commentService");
 
 const createComment = async (req, res) => {
     try {
@@ -9,19 +9,14 @@ const createComment = async (req, res) => {
         const content = req.body.content;
         if (!content) return res.status(400).send("내용을 입력해주세요.");
 
+        const getPost = await postService.findPost(postNumber);
+        if (!getPost) return res.status(500).send({ err: "게시글 번호 오류" });
+
         if (res.locals.user.userId != null) {
-            new Comment({
-                _id: ObjectId().toString(),
-                postNumber: postNumber,
-                userId: res.locals.user.userId,
-                writer: res.locals.user.name,
-                content: content,
-            }).save((err, result) => {
-                if (err) return res.status(500).send(err);
-                res.status(201).json(result);
-            });
+            const createComment = await commentService.createComment(postNumber, res.locals.user, content);
+            res.status(201).send(createComment);
         } else {
-            return res.status(401).send("로그인을 해야 댓글을 작성할 수 있습니다.");
+            return res.status(401).send("로그인을 해야 게시글을 작성할 수 있습니다.");
         }
     } catch (err) {
         res.send({ err: err.message });
@@ -31,10 +26,14 @@ const createComment = async (req, res) => {
 const getAllComment = async (req, res) => {
     try {
         const postNumber = parseInt(req.params.postNumber);
-        const result = await Comment.find({ postNumber: postNumber });
+
+        const getPost = await postService.findPost(postNumber);
+        if (!getPost) return res.status(500).send({ err: "게시글 번호 오류" });
+
+        const data = await Comment.find({ postNumber: postNumber });
 
         let exData = [];
-        for (let element of result) {
+        for (let element of data) {
             const auth = await userService.authCheck(res.locals.user.userId, element.userId);
             const user = await userService.findUserById(element.userId);
 
@@ -54,6 +53,10 @@ const getAllComment = async (req, res) => {
 const getReplyComment = async (req, res) => {
     try {
         const parentId = req.params.parentId;
+
+        const getComment = await commentService.findComment(parentId);
+        if (!getComment) return res.status(500).send({ err: "댓글 아이디 오류" });
+
         const childComment = await Comment.find({
             parentId: parentId,
             depth: 2,
@@ -74,54 +77,15 @@ const getReplyComment = async (req, res) => {
     }
 };
 
-const editComment = (req, res) => {
+const deleteComment = async (req, res) => {
     try {
         const id = req.params.id;
-        Comment.findOne({ _id: id }, function (err, data) {
-            console.log(data);
-            if (err) return res.status(500).json({ error: error.message });
 
-            Comment.updateOne(
-                { _id: id },
-                {
-                    $set: {
-                        content: req.body.content,
-                        date: moment.dateNow(),
-                    },
-                },
-                function (err, data) {
-                    if (err) return res.status(500).json({ error: error.message });
+        const getComment = await commentService.findComment(id);
+        if (!getComment) return res.status(500).send({ err: "댓글 아이디 오류" });
 
-                    res.status(200).send({ message: "수정 완료" });
-                }
-            );
-        });
-    } catch (err) {
-        res.send({ err: err.message });
-    }
-};
-
-const deleteComment = (req, res) => {
-    try {
-        const id = req.params.id;
-        Comment.findOne({ _id: id }, function (err, data) {
-            console.log(data);
-            if (err) return res.status(500).json({ error: error.message });
-
-            Comment.updateOne(
-                { _id: id },
-                {
-                    $set: {
-                        isDeleted: true,
-                    },
-                },
-                function (err, data) {
-                    if (err) return res.status(500).json({ error: error.message });
-
-                    res.status(200).send({ message: "삭제 완료" });
-                }
-            );
-        });
+        await commentService.deleteComment(id);
+        res.status(200).send({ message: "삭제 완료" });
     } catch (err) {
         res.send({ err: err.message });
     }
@@ -130,25 +94,23 @@ const deleteComment = (req, res) => {
 const replyComment = async (req, res) => {
     try {
         const parentId = req.params.parentId;
-        const parentComment = await Comment.findOne({ _id: parentId });
-        const postNumber = parentComment.postNumber;
         const content = req.body.content;
 
+        const getComment = await commentService.findComment(parentId);
+        if (!getComment) return res.status(500).send({ err: "댓글 아이디 오류" });
+
+        const postNumber = getComment.postNumber;
+
         if (res.locals.user.userId != null) {
-            new Comment({
-                _id: ObjectId().toString(),
-                parentId: parentId,
-                postNumber: postNumber,
-                content: content,
-                depth: 2,
-                userId: res.locals.user.userId,
-                writer: res.locals.user.name,
-            }).save((err, result) => {
-                if (err) return res.status(500).send(err);
-                res.status(201).json(result);
-            });
+            const createReplyComment = await commentService.createReplyComment(
+                postNumber,
+                res.locals.user,
+                content,
+                parentId
+            );
+            res.status(201).send(createReplyComment);
         } else {
-            return res.status(401).send("로그인을 해야 댓글을 작성할 수 있습니다.");
+            return res.status(401).send("로그인을 해야 게시글을 작성할 수 있습니다.");
         }
     } catch (err) {
         res.send({ err: err.message });
@@ -159,7 +121,6 @@ module.exports = {
     createComment,
     getAllComment,
     getReplyComment,
-    editComment,
     deleteComment,
     replyComment,
 };
