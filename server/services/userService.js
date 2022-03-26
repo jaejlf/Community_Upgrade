@@ -3,24 +3,19 @@ const cntService = require("./counterService");
 
 //회원가입
 const createUser = async function (name, role, email, hashedPW) {
-    try {
-        const userCnt = await cntService.userCnt();
+    const userCnt = await cntService.userCnt();
 
-        const user = new User({
-            userId: userCnt + 1,
-            name: name,
-            role: role,
-            email: email,
-            password: hashedPW,
-        });
+    const user = new User({
+        userId: userCnt + 1,
+        name: name,
+        role: role,
+        email: email,
+        password: hashedPW,
+    });
 
-        await cntService.userCntInc();
+    await cntService.userCntInc();
 
-        return await user.save();
-        
-    } catch (err) {
-        console.log(err.message);
-    }
+    return await user.save();
 };
 
 //find - User, token
@@ -33,19 +28,11 @@ const findUserById = async function (userId) {
 };
 
 const findToken = async function (_id, token) {
-    try {
-        return await User.findOne({ _id, token });
-    } catch (err) {
-        console.log(err.message);
-    }
+    return await User.findOne({ _id, token });
 };
 
 const updateToken = async function (_id, token) {
-    try {
-        return await User.findByIdAndUpdate(_id, { token });
-    } catch (err) {
-        console.log(err.message);
-    }
+    return await User.findByIdAndUpdate(_id, { token });
 };
 
 //현재 유저 권한 체크
