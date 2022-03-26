@@ -33,35 +33,23 @@ const getMyComment = async (req, res) => {
 const scrapping = async (req, res) => {
     try {
         const postNumber = parseInt(req.params.postNumber);
-        if (res.locals.user.userId == null) return res.status(401).send("로그인을 해야 게시글을 스크랩할 수 있습니다.");
 
-        const user = await userService.findUserById(res.locals.user.userId);
-        const post = await postService.findPost(postNumber);
-        const scrapStatus = await userService.scrapStatus(postNumber, res.locals.user.userId);
+        const getPost = await postService.findPost(postNumber);
+        if (!getPost) return res.status(500).send({ err: "게시글 번호 오류" });
 
-        //백 테스트 - 예외
-        if (scrapStatus) {
-            return res.send("이미 스크랩한 게시물");
+        if (res.locals.user.userId != null) {
+            const user = await userService.findUserById(res.locals.user.userId);
+            const post = await postService.findPost(postNumber);
+            const scrapStatus = await userService.scrapStatus(postNumber, res.locals.user.userId);
+
+            if (scrapStatus) return res.send("이미 스크랩한 게시물");
+            if (!post) return res.send("삭제된 게시물");
+
+            await userService.scrapping(user, postNumber);
+            res.status(200).send({ message: "스크랩 완료" });
+        } else {
+            return res.status(401).send("로그인을 해야 게시글을 스크랩할 수 있습니다.");
         }
-        if (!post) {
-            return res.send("삭제된 게시물");
-        }
-
-        let scraps = user.scrap;
-        scraps.push(postNumber);
-
-        User.updateOne(
-            { userId: res.locals.user.userId },
-            {
-                $set: {
-                    scrap: scraps,
-                },
-            },
-            function (err, data) {
-                if (err) return res.status(500).send(err);
-                res.status(200).send({ message: "스크랩 완료" });
-            }
-        );
     } catch (err) {
         res.send({ err: err.message });
     }

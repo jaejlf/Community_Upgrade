@@ -3,8 +3,7 @@ const Post = require("../../model/post");
 const getTitle = (req, res) => {
     try {
         const keyword = req.params.keyword;
-        console.log("keyworld in search : " + keyword);
-        Post.find({ title: { $regex: req.params.keyword } }, (err, result) => {
+        Post.find({ title: { $regex: keyword } }, (err, result) => {
             if (err) return res.status(500).end();
             if (!result) return res.status(404).send("검색 결과가 없습니다.");
 
@@ -18,8 +17,7 @@ const getTitle = (req, res) => {
 const getContent = (req, res) => {
     try {
         const keyword = req.params.keyword;
-        console.log("keyworld in search : " + keyword);
-        Post.find({ content: { $regex: req.params.keyword } }, (err, result) => {
+        Post.find({ content: { $regex: keyword } }, (err, result) => {
             if (err) return res.status(500).end();
             if (!result) return res.status(404).send("검색 결과가 없습니다.");
 
@@ -32,9 +30,8 @@ const getContent = (req, res) => {
 
 const getUser = (req, res) => {
     try {
-        const keyworld = req.params.keyword;
-        console.log("keyworld in search : " + keyworld);
-        Post.find({ writer: { $regex: req.params.keyword } }, (err, result) => {
+        const keyword = req.params.keyword;
+        Post.find({ writer: { $regex: keyword } }, (err, result) => {
             if (err) return res.status(500).end();
             if (!result) return res.status(404).send("검색 결과가 없습니다.");
 

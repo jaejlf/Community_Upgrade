@@ -71,6 +71,20 @@ const goodStatus = async function (good, userId) {
     return result;
 };
 
+const scrapping = async function (user, postNumber) {
+    let scraps = user.scrap;
+    scraps.push(postNumber);
+
+    return await User.updateOne(
+        { userId: user.userId },
+        {
+            $set: {
+                scrap: scraps,
+            },
+        }
+    );
+};
+
 module.exports = {
     createUser,
     findUserByEmail,
@@ -80,4 +94,5 @@ module.exports = {
     authCheck,
     scrapStatus,
     goodStatus,
+    scrapping,
 };
