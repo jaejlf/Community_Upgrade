@@ -1,42 +1,43 @@
 # 커뮤니티 고도화
+![image](https://user-images.githubusercontent.com/78673570/181478866-65aa77d8-9116-4a3e-a6c1-ddf3a27b0e21.png)
 
-![img](https://user-images.githubusercontent.com/78673570/159775870-576637c0-f820-4d96-87a2-b3879663cfc1.png)
-
-
-## 📑 프로젝트 소개 - 구현 기능
-
-- `user`  회원가입, 로그인, 로그아웃
-- `board`
-    - 게시판 글 작성, 수정, 삭제, 조회
-    - 게시글 제목/내용/작성자 검색
-    - 댓글/대댓글 작성 및 삭제
-    - 게시글 추천, 스크랩
-    - 게시글 조회수
-    - 게시판 페이지네이션
-- `post`
-    - Quill 에디터를 사용한 글 작성
-    - 이미지 첨부
-- `mypage`
-    - 내가 쓴 글 및 댓글 조회
-    - 스크랩한 게시물 조회
+## 💎 프로젝트 소개
+레디미 프로덕트(redyme.kr) 내 직무 관련 인사이트를 얻고 싶어하는 사용자들을 위한 커뮤니티 고도화 프로젝트입니다.
 
 <br>
 
-📌 직무 관련 인사이트를 얻을 수 있는 “정보 교환 커뮤니티”의 개념을 강조하기 위해, 게시글 추천 및 스크랩 기능을 추가적으로 구현
-
-
-<br><br>
-## 🛠 사용 프레임워크
-- Front-End : React.js
-- Back-End  : Node.js + MongoDB
-- Design : Figma
-
-`GitHub` , `Notion` , 그리고 `Figma`를 통한 협업 진행
+핵심 기능은 다음과 같습니다.
+1. 직무 관련 고민, Q&A 게시글 작성
+2. 직무 관련 인사이트 공유
+3. 기본적인 커뮤니티 기능 (게시글/댓글/공감/스크랩 등)
 
 <br><br>
-## 📗 사용법
 
-FE 코드 실행
+## 🛠 기술 스택
+- `Node.js` 와 `Express.js`를 사용하여 웹 서비스 및 API 서버를 개발하였습니다.
+- 데이터베이스로는 `MongoDB` 를 사용하였습니다.
+- 협업 및 코드 버전 관리를 위해 `Github`, API 문서 관리를 위해 `Notion`을 사용하였습니다.
+
+<br><br>
+
+## 👩‍💻 개발 내용
+- 회원가입, 로그인/로그아웃
+- 커뮤니티 기능 (게시글/댓글/공감/스크랩 등)
+- 게시판 페이지네이션
+- 게시글 조회수
+- Quill 에디터를 사용한 이미지 첨부
+- 게시글 제목/내용/작성자별 검색
+
+<br><br>
+
+## 📑 문서
+- [API Documentation] [commu-upgrade-apis](https://www.notion.so/APIs-cee75f461ddd45038a7218c3c7c977c6)
+
+<br><br>
+
+## 🕹 설치 및 실행
+
+### FE 코드 실행
 
 ```
 $ cd client/team-memory4
@@ -44,22 +45,17 @@ $ npm i
 $ npm start
 ```
 
-BE 코드 실행
+### BE 코드 실행
 
 ```
 $ cd server
 $ npm i
 $ npm start
 ```
-
 (Front-End, Back-End 개발자들을 통해 `.env` 파일을 제공받으셔야합니다.)
 
 <br><br>
-## 📑 API 문서
 
-[Community-Upgrade, API Documentation](https://www.notion.so/APIs-cee75f461ddd45038a7218c3c7c977c6)
-
-<br><br>
 ## 👨‍👩‍👧‍👦 Team
 
 - 기획/디자인 : 안나경 @
